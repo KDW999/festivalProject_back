@@ -19,30 +19,33 @@ import com.festival.back.filter.JwtAuthenticationFilter;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
+
     @Autowired private JwtAuthenticationFilter jwtAuthenticationFilter;
+    
     @Bean
     protected SecurityFilterChain config(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-        .cors().and()
-        .csrf().disable()
-        .httpBasic().disable()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-        .authorizeRequests()
-        .antMatchers().authenticated()
-        .antMatchers().permitAll()
-        .antMatchers(HttpMethod.GET).permitAll()
-        .anyRequest().authenticated().and()
-        .exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
+            .cors().and()
+            .csrf().disable()
+            .httpBasic().disable()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+            .authorizeRequests()
+            .antMatchers().authenticated()
+            .antMatchers().permitAll()
+            .antMatchers(HttpMethod.GET).permitAll()
+            .anyRequest().authenticated().and()
+            .exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
 
         httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-        
+
         return httpSecurity.build();
     }
+
     @Bean
-    protected WebSecurityCustomizer webSecurityCustomizer(){
-        return(web)->web.ignoring()
-        .antMatchers("/swagger-ui.html","/swagger-resources/**","/swagger/**","/v2/api-docs","/webjars/**");
+    protected WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring()
+            .antMatchers();
     }
-    
+
 
 }
