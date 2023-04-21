@@ -14,9 +14,6 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.festival.back.filter.JwtAuthenticationFilter;
-
-<<<<<<< HEAD
-
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
@@ -49,34 +46,3 @@ public class WebSecurityConfig {
     }
 
 }
-=======
-@Configuration
-@EnableWebSecurity
-public class WebSecurityConfig {
-    @Autowired private JwtAuthenticationFilter jwtAuthenticationFilter;
-    @Bean
-    protected SecurityFilterChain config(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-        .cors().and()
-        .csrf().disable()
-        .httpBasic().disable()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-        .authorizeRequests()
-        .antMatchers().authenticated()
-        .antMatchers().permitAll()
-        .antMatchers(HttpMethod.GET).permitAll()
-        .anyRequest().authenticated().and()
-        .exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
-
-        httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-        
-        return httpSecurity.build();
-    }
-    @Bean
-    protected WebSecurityCustomizer webSecurityCustomizer(){
-        return(web)->web.ignoring()
-        .antMatchers("/swagger-ui.html","/swagger-resources/**","/swagger/**","/v2/api-docs","/webjars/**");
-    }
-    
-}
->>>>>>> 95a5e53a88c923b97bcf41bc5288b4964d746c7b
