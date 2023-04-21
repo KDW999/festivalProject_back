@@ -21,7 +21,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
-    private com.festival.back.provider.tokenProvider tokenProvider;
+
+    private com.festival.back.provider.TokenProvider tokenProvider;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -53,7 +54,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
         
             }
-
 
     private String parseToken(HttpServletRequest request) {
 
