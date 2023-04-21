@@ -1,4 +1,4 @@
-package com.festival.provider;
+package com.festival.back.provider;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -11,7 +11,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 import org.springframework.beans.factory.annotation.Value;
-
 @Component
 public class TokenProvider {
 
