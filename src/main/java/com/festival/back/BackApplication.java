@@ -1,4 +1,4 @@
-package com.festival.back;
+package com.festival;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
