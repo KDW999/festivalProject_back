@@ -4,16 +4,17 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+
+import org.springframework.beans.factory.annotation.Value;
 @Component
-public class tokenProvider {
-    
-    @Value("${jwt.security-key}")
+public class TokenProvider {
+
+    @Value("${jwt.scurity-key}")
     private String SECURITY_KEY;
     
     public String create(String email) {
@@ -37,5 +38,7 @@ public class tokenProvider {
         return claims.getSubject();
 
     }
-    
+
 }
+
+ 
