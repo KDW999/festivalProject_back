@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.festival.back.common.constant.ApiPattern;
-import com.festival.back.dto.ResponseDto;
 import com.festival.back.dto.request.board.RecommendRequestDto;
+import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.board.RecommendResponseDto;
 import com.festival.back.service.BoardService;
 

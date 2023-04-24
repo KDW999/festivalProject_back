@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.festival.back.common.constant.ResponseMessage;
-import com.festival.back.dto.ResponseDto;
 import com.festival.back.dto.request.board.RecommendRequestDto;
+import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.board.RecommendResponseDto;
 import com.festival.back.entity.BoardEntity;
 import com.festival.back.entity.CommentEntity;

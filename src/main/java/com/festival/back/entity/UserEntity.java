@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.festival.back.dto.request.auth.SignUpRequestDto;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,8 +22,16 @@ public class UserEntity {
     private String profileUrl;
     private String nickname;
     private String telNumber;
+    private String interestedFestival;
     private boolean adminCheck;
     private boolean reportUser;
-    private String interestedFestival;
     
+    public UserEntity(SignUpRequestDto dto) {
+        this.userId = dto.getUserId();
+        this.nickname = dto.getNickname();
+        this.password = dto.getPassword();
+        this.profileUrl = dto.getProfileUrl();
+        this.telNumber = dto.getTelNumber();
+        this.interestedFestival = dto.getInterestedFestival();
+    }
 }

@@ -7,7 +7,10 @@ import com.festival.back.entity.UserEntity;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, String> {
-
-    public UserEntity findByUserId(String id);
     
+    public boolean existsById(String userId);
+    public boolean existsByNickname(String nickname);
+    public boolean existsByTelNumber(String TelNumber);
+
+    public UserEntity findByUserId(String userId);
 }
