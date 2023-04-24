@@ -24,7 +24,5 @@ public class CommentEntity {
     private String writerId;
     private String writeDatetime;
     private String writerProfileUrl;
-    private String writerNickname;
-    
-    
+    private String writerNickname;    
 }

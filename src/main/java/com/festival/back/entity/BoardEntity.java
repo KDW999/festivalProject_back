@@ -24,14 +24,19 @@ public class BoardEntity {
     private String boardTitle;
     private String boardContent;
     private String boardImgUrl;
-    private String boardWriteDatetitme;
+    private String boardWriteDatetime;
     private int viewCount;
-    private int recommentCount;
+    private int recommendCount;
     private String writerId;
     private String writerProfileUrl;
     private String writerNickname;
     private int festivalNumber;
-    
 
-    
+    public void increaseRecommendCount(){
+        this.recommendCount++;
+    }
+
+    public void decreaseRecommendCount(){
+        this.recommendCount--;
+    }
 }

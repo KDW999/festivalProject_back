@@ -33,6 +33,7 @@ public class WebSecurityConfig {
             .antMatchers().authenticated()
             .antMatchers("/auth/**").permitAll()
             .antMatchers(HttpMethod.GET).permitAll()
+            .antMatchers(HttpMethod.POST).permitAll()
             .anyRequest().authenticated().and()
             .exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
 
@@ -46,5 +47,6 @@ public class WebSecurityConfig {
         return (web) -> web.ignoring()
             .antMatchers();
     }
+
 
 }
