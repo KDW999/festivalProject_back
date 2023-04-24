@@ -1,11 +1,13 @@
 package com.festival.back.service;
 
-import com.festival.back.dto.ResponseDto;
+import com.festival.back.dto.request.PostReviewBoardRequestDto;
+import com.festival.back.dto.response.PostFestivalReviewBoardResponseDto;
+import com.festival.back.dto.response.ResponseDto;
 
 public interface BoardService {
 
 
-    public ResponseDto<PostFestivalReviewBoardResponseDto> postReviewBoard(PostReviewBoard dto);
+    public ResponseDto<PostFestivalReviewBoardResponseDto> postReviewBoard(PostReviewBoardRequestDto dto,String userId);
 
     
 }
