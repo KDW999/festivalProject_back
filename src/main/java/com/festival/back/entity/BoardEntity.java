@@ -29,7 +29,7 @@ public class BoardEntity {
     private String boardTitle;
     private String boardContent;
     private String boardImgUrl;
-    private String boardWriteDatetitme;
+    private String boardWriteDatetime;
     private int viewCount;
     private int recommendCount;
     private String writerId;
@@ -44,7 +44,7 @@ public class BoardEntity {
         this.boardTitle = postBoardDto.getBoardTitle();
         this.boardContent = postBoardDto.getBoardContent();
         this.boardImgUrl = postBoardDto.getBoardImgUrl();
-        this.boardWriteDatetitme = simpleDateFormat.format(now);
+        this.boardWriteDatetime = simpleDateFormat.format(now);
         this.viewCount = 0;
         this.recommendCount = 0;
     }

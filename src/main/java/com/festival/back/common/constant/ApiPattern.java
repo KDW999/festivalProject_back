@@ -6,5 +6,6 @@ public class ApiPattern {
     public static final String USER = "/api/user";
     public static final String BOARD = "/api/board";
     
-    
+    public static final String FESTIVAL = "/api/festival";
+    public static final String ONE_LINE_REVIEW = "/api/one-line-review";
 }

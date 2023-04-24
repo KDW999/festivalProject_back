@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class PostBoardDto {
+public class PostBoardRequestDto {
     
     @ApiModelProperty(value="게시물 제목", example="Board Title", required=true)
     @NotBlank
