@@ -32,4 +32,10 @@ public class RecommendEntity {
         this.userNickname = userEntity.getNickname();
     }
     
+    public RecommendEntity(UserEntity userEntity, int boardNumber) {
+        this.userId = userEntity.getUserId();
+        this.boardNumber = boardNumber;
+        this.userProfileUrl = userEntity.getProfileUrl();
+        this.userNickname = userEntity.getNickname();
+    }
 }
