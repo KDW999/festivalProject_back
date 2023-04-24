@@ -67,13 +67,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = request.getHeader("Authorization");
 
         boolean hasToken = StringUtils.hasText(token);
-<<<<<<< HEAD
 
-        if (!hasToken)
-            return null;
-=======
         if (!hasToken) return null;
->>>>>>> ecff12a2ee075f06801c6e88c10200146dc1672c
 
         boolean isBearer = token.startsWith("Bearer ");
         if (!isBearer) return null;
@@ -81,8 +76,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String jwt = token.substring(7);
         return jwt;
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> ecff12a2ee075f06801c6e88c10200146dc1672c
 }
