@@ -26,7 +26,7 @@ public class BoardServiceImplements implements BoardService {
          int festivalNumber=dto.getFestivalNumber();
 
         try {
-            UserEntity userEntity =userRepository.FindByuserId(userId);
+            UserEntity userEntity =userRepository.findByUserId(userId);
             if(userEntity == null){
                 return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
             }

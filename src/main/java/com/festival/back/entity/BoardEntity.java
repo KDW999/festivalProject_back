@@ -38,12 +38,12 @@ public class BoardEntity {
     private String writerNickname;
     private int festivalNumber;
     
-    public BoardEntity(UserEntity userEntity,PostReviewBoardRequestDto reviewBoardRquestDto,FestivalEntity festivalEntity){
+    public BoardEntity(UserEntity userEntity,PostReviewBoardRequestDto postreviewBoardRquestDto,FestivalEntity festivalEntity){
         Date  now= new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        this.boardTitle=reviewBoardRquestDto.getBoardTitle();
-        this.boardContent=reviewBoardRquestDto.getBoardContent();
-        this.boardImgUrl=reviewBoardRquestDto.getBoradImgUrl();
+        this.boardTitle=postreviewBoardRquestDto.getBoardTitle();
+        this.boardContent=postreviewBoardRquestDto.getBoardContent();
+        this.boardImgUrl=postreviewBoardRquestDto.getBoradImgUrl();
         this.boardWriteDatetime=simpleDateFormat.format(now);
         this.writerId=userEntity.getUserId();
         this.writerProfileUrl=userEntity.getProfileUrl();
