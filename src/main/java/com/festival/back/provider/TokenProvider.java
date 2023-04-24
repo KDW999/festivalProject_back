@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 @Component
 public class TokenProvider {
 
-    @Value("${jwt.scurity-key}")
+    @Value("${jwt.security-key}")
     private String SECURITY_KEY;
     
     public String create(String email) {
