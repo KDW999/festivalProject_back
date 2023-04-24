@@ -1,4 +1,4 @@
-package com.festival.back.dto;
+package com.festival.back.dto.response;
 
 import com.festival.back.common.constant.ResponseMessage;
 
