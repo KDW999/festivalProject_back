@@ -20,8 +20,10 @@ import com.festival.back.service.BoardService;
 public class BoardController {
 
     @Autowired private BoardService boardService;
-
+    
+    private final String RECOMMEND = "/recommend";
     private final String POST_COMMENT = "/comment";
+
 
     @PostMapping(POST_COMMENT)
     public ResponseDto<PostCommentResponseDto> postComment(
@@ -31,4 +33,22 @@ public class BoardController {
         ResponseDto<PostCommentResponseDto> response = boardService.postComment(id, requestBody);
         return response;
     }
+    
+
+
+    
+    //? 글 추천하기
+    @ApiOperation(value = "추천 기능", notes = "Request Header Authorization에 Bearer JWT를 포함하고 " +
+    "Request Body에 boardNumber를 포함하여 요청을 하면, 성공 시 게시물 전체 데이터를 반환")
+    @PostMapping(RECOMMEND)
+    public ResponseDto<RecommendResponseDto> recommend(
+    @ApiParam(hidden = true) 
+    @AuthenticationPrincipal String userId, @Valid @RequestBody RecommendRequestDto requestBody){
+        ResponseDto<RecommendResponseDto> response = boardService.recommend(userId, requestBody);
+        return response;       
+    }
+
+    
+
+>>>>>>> d91b9813e42babb0de2fd99ea077b9ef33e1d600
 }

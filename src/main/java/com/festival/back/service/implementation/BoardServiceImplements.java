@@ -7,7 +7,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.festival.back.common.constant.ResponseMessage;
@@ -25,7 +24,6 @@ import com.festival.back.repository.RecommendRepository;
 import com.festival.back.repository.UserRepository;
 import com.festival.back.service.BoardService;
 
-@Service
 public class BoardServiceImplements implements BoardService {
     
 

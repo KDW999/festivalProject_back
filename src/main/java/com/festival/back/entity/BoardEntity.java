@@ -52,5 +52,8 @@ public class BoardEntity {
     public void increaseRecommendCount() {
         this.recommendCount++;
     }
-    
+
+    public void decreaseRecommendCount(){
+        this.recommendCount--;
+    }
 }
