@@ -11,11 +11,10 @@ import javax.persistence.Table;
 
 import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-
 
 @Data
 @NoArgsConstructor
@@ -53,14 +52,10 @@ public class BoardEntity {
         this.recommendCount=0;
         this.commentCount=0;
 
-
-
     }
     public void increaseViewCount(){
         this.viewCount++;
     }
-
-  
 
     public void increaseRecommendCount() {
         this.recommendCount++;
