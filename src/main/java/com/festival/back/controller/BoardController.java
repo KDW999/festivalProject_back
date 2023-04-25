@@ -56,7 +56,7 @@ public class BoardController {
         ResponseDto<RecommendResponseDto> response = boardService.recommend(userId, requestBody);
         return response;       
     }
-    
+
     @PostMapping(POST_FESTIVAL_REVIEW_BOARD)
     public ResponseDto<PostFestivalReviewBoardResponseDto> 
     postFestivalReviewBoard(@AuthenticationPrincipal String userId,
