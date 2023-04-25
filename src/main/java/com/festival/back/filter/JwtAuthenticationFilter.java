@@ -18,6 +18,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+
+
 import com.festival.back.provider.TokenProvider;
 
 
@@ -25,6 +27,8 @@ import com.festival.back.provider.TokenProvider;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     
     @Autowired private TokenProvider tokenProvider;
+
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -40,10 +44,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
                 return;
             }
-            String id = tokenProvider.validate(jwt);
+            String userId = tokenProvider.validate(jwt);
 
             AbstractAuthenticationToken authenticationToken = 
-                new UsernamePasswordAuthenticationToken(id, null, AuthorityUtils.NO_AUTHORITIES);
+                new UsernamePasswordAuthenticationToken(userId, null, AuthorityUtils.NO_AUTHORITIES);
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
             SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
@@ -63,6 +67,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = request.getHeader("Authorization");
 
         boolean hasToken = StringUtils.hasText(token);
+
         if (!hasToken) return null;
 
         boolean isBearer = token.startsWith("Bearer ");
@@ -70,7 +75,5 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String jwt = token.substring(7);
         return jwt;
-
     }
-
 }

@@ -9,7 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.festival.back.dto.request.PostReviewBoardRequestDto;
+import com.festival.back.dto.request.board.PostBoardRequestDto;
+import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,7 +39,7 @@ public class BoardEntity {
     private String writerNickname;
     private int festivalNumber;
     
-    public BoardEntity(UserEntity userEntity,PostReviewBoardRequestDto postreviewBoardRquestDto,FestivalEntity festivalEntity){
+    public BoardEntity(UserEntity userEntity,PostReviewBoardRequestDto postreviewBoardRquestDto){
         Date  now= new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.boardTitle=postreviewBoardRquestDto.getBoardTitle();
@@ -48,7 +49,7 @@ public class BoardEntity {
         this.writerId=userEntity.getUserId();
         this.writerProfileUrl=userEntity.getProfileUrl();
         this.writerNickname=userEntity.getNickname();
-        this.festivalNumber=festivalEntity.getFestivalNumber();
+        this.festivalNumber=postreviewBoardRquestDto.getFestivalNumber();
         this.viewCount=0;
         this.recommendCount=0;
         this.commentCount=0;
@@ -57,6 +58,23 @@ public class BoardEntity {
 
     }
 
+    // public BoardEntity(UserEntity userEntity, PostBoardRequestDto postBoardDto) {
+    //     Date now = new Date();
+    //     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    
+    //     this.boardTitle = postBoardDto.getBoardTitle();
+    //     this.boardContent = postBoardDto.getBoardContent();
+    //     this.boardImgUrl = postBoardDto.getBoardImgUrl();
+    //     this.boardWriteDatetime = simpleDateFormat.format(now);
+    //     this.viewCount = 0;
+    //     this.recommendCount = 0;
+    // }
+
+    public void increaseRecommendCount() {
+        this.recommendCount++;
+    }
+
+    public void decreaseRecommendCount(){
+        this.recommendCount--;
+    }
 }

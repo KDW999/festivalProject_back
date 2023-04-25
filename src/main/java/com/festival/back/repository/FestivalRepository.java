@@ -7,6 +7,6 @@ import com.festival.back.entity.FestivalEntity;
 
 @Repository
 public interface FestivalRepository extends JpaRepository<FestivalEntity,Integer>  {
+      public FestivalEntity findByFestivalNumber(int festivalNumber);
 
-      public FestivalEntity FindByFestivalNumber(int festivalNumber);
 }

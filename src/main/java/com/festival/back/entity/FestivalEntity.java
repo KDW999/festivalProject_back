@@ -21,8 +21,8 @@ public class FestivalEntity {
     private int festivalNumber;
     private String festivalName;
     private String festivalType;
-    private String festivalDruationStart;
-    private String festivalDruationEnd;
+    private String festivalDurationStart;
+    private String festivalDurationEnd;
     private String festivalTime;
     private String festivalArea;
     private String festivalCost;

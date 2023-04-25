@@ -1,10 +1,11 @@
-package com.festival.back.dto.response;
+package com.festival.back.dto.response.board;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.festival.back.entity.BoardEntity;
 import com.festival.back.entity.CommentEntity;
+import com.festival.back.entity.FestivalEntity;
 import com.festival.back.entity.RecommendEntity;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -23,9 +24,12 @@ public class PostFestivalReviewBoardResponseDto {
     private List<RecommendEntity> recommendList ;
     @ApiModelProperty(value = "댓글 List",required = true)
     private List<CommentEntity> commentList;
+    @ApiModelProperty(value = "후기 축제 정보",required = true)
+    private FestivalEntity festivalBoard;
 
-    public PostFestivalReviewBoardResponseDto(BoardEntity board){
+    public PostFestivalReviewBoardResponseDto(BoardEntity board,FestivalEntity festivalBoard){
         this.board=board;
+        this.festivalBoard=festivalBoard;
         this.recommendList=new ArrayList<>();
         this.commentList=new ArrayList<>();
     }
