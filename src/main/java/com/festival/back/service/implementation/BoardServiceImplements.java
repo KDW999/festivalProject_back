@@ -3,9 +3,7 @@ package com.festival.back.service.implementation;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.festival.back.common.constant.ResponseMessage;
 import com.festival.back.dto.request.board.GetFestivalReviewBoardReqeustDto;

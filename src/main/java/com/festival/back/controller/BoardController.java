@@ -27,7 +27,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 
-
 @RestController
 @RequestMapping(ApiPattern.BOARD)
 public class BoardController {
@@ -59,6 +58,7 @@ public class BoardController {
         ResponseDto<RecommendResponseDto> response = boardService.recommend(userId, requestBody);
         return response;       
     }
+
     // ? 축제 후기 게시판 작성 -김종빈
     @PostMapping(POST_FESTIVAL_REVIEW_BOARD)
     public ResponseDto<PostFestivalReviewBoardResponseDto> 
