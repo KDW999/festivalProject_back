@@ -3,6 +3,8 @@ package com.festival.back.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -10,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.festival.back.common.constant.ApiPattern;
+import com.festival.back.dto.request.board.GetFestivalReviewBoardReqeustDto;
 import com.festival.back.dto.request.board.PostCommentRequestDto;
 import com.festival.back.dto.request.board.RecommendRequestDto;
 import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
 import com.festival.back.dto.response.ResponseDto;
+import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.PostCommentResponseDto;
 import com.festival.back.dto.response.board.PostFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.RecommendResponseDto;
@@ -21,6 +25,7 @@ import com.festival.back.service.BoardService;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+
 
 @RestController
 @RequestMapping(ApiPattern.BOARD)
@@ -30,6 +35,8 @@ public class BoardController {
     private final String POST_FESTIVAL_REVIEW_BOARD = "";
     private final String RECOMMEND = "/recommend";
     private final String POST_COMMENT = "/comment";
+    private final String GET_FESTIVAL_REVIEW_BOARD="/{festivalNumber}/{boardNumber}";
+    private final String GET_FESTIVAL_REVIEW="/{festivalNumber}";
 
 
     //? 글 댓글 달기
@@ -52,6 +59,7 @@ public class BoardController {
         return response;       
     }
 
+    // ? 축제 후기 게시판 작성 -김종빈
     @PostMapping(POST_FESTIVAL_REVIEW_BOARD)
     public ResponseDto<PostFestivalReviewBoardResponseDto> 
     postFestivalReviewBoard(@AuthenticationPrincipal String userId,
@@ -59,6 +67,13 @@ public class BoardController {
         ResponseDto<PostFestivalReviewBoardResponseDto> 
         response=boardService.postFestivalReviewBoard(userId,requestbody);
         return response;
+        
+    }
+    // ? 특정 축제 특정 후기 게시글 불러오기 -김종빈
+    @GetMapping(value={GET_FESTIVAL_REVIEW_BOARD,GET_FESTIVAL_REVIEW})
+        public ResponseDto<GetFestivalReviewBoardResponseDto> getFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber,@PathVariable(name="boardNumber") Integer boardNumber){
+            ResponseDto<GetFestivalReviewBoardResponseDto> response=boardService.getFestivalReviewBoard(festivalNumber,boardNumber );
+            return response;
         
     }
 

@@ -56,18 +56,11 @@ public class BoardEntity {
 
 
     }
+    public void increaseViewCount(){
+        this.viewCount++;
+    }
 
-    // public BoardEntity(UserEntity userEntity, PostBoardRequestDto postBoardDto) {
-    //     Date now = new Date();
-    //     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-    //     this.boardTitle = postBoardDto.getBoardTitle();
-    //     this.boardContent = postBoardDto.getBoardContent();
-    //     this.boardImgUrl = postBoardDto.getBoardImgUrl();
-    //     this.boardWriteDatetime = simpleDateFormat.format(now);
-    //     this.viewCount = 0;
-    //     this.recommendCount = 0;
-    // }
+  
 
     public void increaseRecommendCount() {
         this.recommendCount++;

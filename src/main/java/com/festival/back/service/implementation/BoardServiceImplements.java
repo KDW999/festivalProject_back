@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.festival.back.common.constant.ResponseMessage;
+import com.festival.back.dto.request.board.GetFestivalReviewBoardReqeustDto;
 import com.festival.back.dto.request.board.PostCommentRequestDto;
 import com.festival.back.dto.request.board.RecommendRequestDto;
 import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
 import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.board.RecommendResponseDto;
+import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.PostCommentResponseDto;
 import com.festival.back.dto.response.board.PostFestivalReviewBoardResponseDto;
 import com.festival.back.entity.BoardEntity;
@@ -37,7 +39,6 @@ public class BoardServiceImplements implements BoardService {
     //? 댓글 작성
 
 
-    @Override
     public ResponseDto<PostCommentResponseDto> postComment(String userId, PostCommentRequestDto dto) {
         PostCommentResponseDto data = null;
 
@@ -114,7 +115,7 @@ public class BoardServiceImplements implements BoardService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
    
-
+//   ? 축제 후기 게시글 작성 -김종빈
     public ResponseDto<PostFestivalReviewBoardResponseDto> postFestivalReviewBoard(String userId,PostReviewBoardRequestDto dto) {
         PostFestivalReviewBoardResponseDto data = null;
         int festivalNumber=dto.getFestivalNumber();
@@ -138,6 +139,33 @@ public class BoardServiceImplements implements BoardService {
 
         }
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+    }
+
+    @Override
+    public ResponseDto<GetFestivalReviewBoardResponseDto> getFestivalReviewBoard(int festivalNumber,Integer boardNumber) {
+        GetFestivalReviewBoardResponseDto data= null;
+        // int boardNumber=dto.getBoardNumber();
+        // int festivalNumber=dto.getFestivalNumber();  
+
+        try {
+            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+            if(boardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
+            List<RecommendEntity> recommdList=recommendRepository.findByBoardNumber(boardNumber);
+            List<CommentEntity> commentList=commentRepository.findByBoardNumberOrderByWriteDatetimeDesc(boardNumber);
+            FestivalEntity festivalEntity =festivalRepository.findByFestivalNumber(festivalNumber);
+            if(festivalEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_FESTIVAL_NUMBER);
+
+            boardEntity.increaseViewCount();
+            boardRepository.save(boardEntity);
+            data=new GetFestivalReviewBoardResponseDto(boardEntity, recommdList, commentList, festivalEntity);
+            System.out.println(boardEntity.toString());
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+
     }
 
   
