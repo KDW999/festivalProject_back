@@ -4,39 +4,78 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.festival.back.common.constant.ApiPattern;
+import com.festival.back.dto.request.board.PatchCommentRequestDto;
 import com.festival.back.dto.request.board.PostCommentRequestDto;
-import com.festival.back.dto.response.PostCommentResponseDto;
+import com.festival.back.dto.request.board.RecommendRequestDto;
 import com.festival.back.dto.response.ResponseDto;
+import com.festival.back.dto.response.board.DeleteCommentResponseDto;
+import com.festival.back.dto.response.board.PatchCommentResponseDto;
+import com.festival.back.dto.response.board.PostCommentResponseDto;
+import com.festival.back.dto.response.board.RecommendResponseDto;
 import com.festival.back.service.BoardService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
+@Api(description="게시글 모듈")
 @RestController
 @RequestMapping(ApiPattern.BOARD)
 public class BoardController {
 
     @Autowired private BoardService boardService;
-    
+
     private final String RECOMMEND = "/recommend";
-    private final String POST_COMMENT = "/comment";
+    private final String POST_COMMENT = "/post-comment/{commentNumber}";
+    private final String PATCH_COMMENT = "/patch-comment";
+    private final String DELETE_COMMENT = "/delete-comment/{commentNumber}";
 
-
+    //? 댓글 작성
+    @ApiOperation(value="댓글 작성", notes="Request Header Authorization에 Bearer JWT를 포함하고 Request Body에 boardNumber, content를 포함하여 요청을 하면, 성공시 게시물 전체 데이터를 반환, 실패시 실패 메세지를 반환")
     @PostMapping(POST_COMMENT)
     public ResponseDto<PostCommentResponseDto> postComment(
-        @AuthenticationPrincipal String id,
+        @ApiParam(hidden=true)
+        @AuthenticationPrincipal String userId,
         @Valid @RequestBody PostCommentRequestDto requestBody
     ) {
-        ResponseDto<PostCommentResponseDto> response = boardService.postComment(id, requestBody);
+        ResponseDto<PostCommentResponseDto> response = boardService.postComment(userId, requestBody);
         return response;
     }
-    
 
+    //? 댓글 수정
+    @ApiOperation(value="댓글 수정", notes="게시물 번호, 게시물 내용을 전송하면 게시물 작성 결과로 작성된 게시물 정보를 반환, 실패시 실패 메시지를 반환")
+    @PatchMapping(PATCH_COMMENT)
+    public ResponseDto<PatchCommentResponseDto> patchComment(
+        @ApiParam(hidden=true)
+        @AuthenticationPrincipal String userId,
+        @Valid @RequestBody PatchCommentRequestDto requestBody
+    ) {
+        ResponseDto<PatchCommentResponseDto> response = boardService.patchComment(userId, requestBody);
+        return response;
+    }
 
-    
+    //? 댓글 삭제
+    @ApiOperation(value="댓글 삭제", notes="Request Header Authorization에 Bearer JWT를 포함하고 Path Variable에 boardNumer를 포함해 요청하면, 성공시 true를 반환, 실패시 false를 반환")
+    @DeleteMapping(DELETE_COMMENT)
+    public ResponseDto<DeleteCommentResponseDto> deleteComment(
+        @ApiParam(hidden=true)
+        @AuthenticationPrincipal String userId,
+        @ApiParam(value="댓글 번호", example="1", required=true)
+        @PathVariable("commentNumber") int commentNumber
+    ) {
+        ResponseDto<DeleteCommentResponseDto> response = boardService.deleteComment(userId, commentNumber);
+        return response;
+    }
+
     //? 글 추천하기
     @ApiOperation(value = "추천 기능", notes = "Request Header Authorization에 Bearer JWT를 포함하고 " +
     "Request Body에 boardNumber를 포함하여 요청을 하면, 성공 시 게시물 전체 데이터를 반환")
@@ -50,5 +89,4 @@ public class BoardController {
 
     
 
->>>>>>> d91b9813e42babb0de2fd99ea077b9ef33e1d600
 }

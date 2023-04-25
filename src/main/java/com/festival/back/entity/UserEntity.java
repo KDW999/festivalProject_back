@@ -18,14 +18,9 @@ import lombok.NoArgsConstructor;
 public class UserEntity {
     @Id
     private String userId;
-<<<<<<< HEAD
-
     private String nickname;
-=======
->>>>>>> d91b9813e42babb0de2fd99ea077b9ef33e1d600
     private String password;
     private String profileUrl;
-    private String nickname;
     private String telNumber;
     private String interestedFestival;
     private boolean adminCheck;
