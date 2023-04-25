@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.festival.back.dto.request.board.PostBoardRequestDto;
 import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
 
 import lombok.AllArgsConstructor;
