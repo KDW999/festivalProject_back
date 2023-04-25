@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.festival.back.dto.request.board.PostBoardRequestDto;
+import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,22 +33,42 @@ public class BoardEntity {
     private String boardWriteDatetime;
     private int viewCount;
     private int recommendCount;
+    private int commentCount;
     private String writerId;
     private String writerProfileUrl;
     private String writerNickname;
     private int festivalNumber;
     
-    public BoardEntity(UserEntity userEntity, PostBoardRequestDto postBoardDto) {
-        Date now = new Date();
+    public BoardEntity(UserEntity userEntity,PostReviewBoardRequestDto postreviewBoardRquestDto){
+        Date  now= new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        this.boardTitle=postreviewBoardRquestDto.getBoardTitle();
+        this.boardContent=postreviewBoardRquestDto.getBoardContent();
+        this.boardImgUrl=postreviewBoardRquestDto.getBoradImgUrl();
+        this.boardWriteDatetime=simpleDateFormat.format(now);
+        this.writerId=userEntity.getUserId();
+        this.writerProfileUrl=userEntity.getProfileUrl();
+        this.writerNickname=userEntity.getNickname();
+        this.festivalNumber=postreviewBoardRquestDto.getFestivalNumber();
+        this.viewCount=0;
+        this.recommendCount=0;
+        this.commentCount=0;
 
-        this.boardTitle = postBoardDto.getBoardTitle();
-        this.boardContent = postBoardDto.getBoardContent();
-        this.boardImgUrl = postBoardDto.getBoardImgUrl();
-        this.boardWriteDatetime = simpleDateFormat.format(now);
-        this.viewCount = 0;
-        this.recommendCount = 0;
+
+
     }
+
+    // public BoardEntity(UserEntity userEntity, PostBoardRequestDto postBoardDto) {
+    //     Date now = new Date();
+    //     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    //     this.boardTitle = postBoardDto.getBoardTitle();
+    //     this.boardContent = postBoardDto.getBoardContent();
+    //     this.boardImgUrl = postBoardDto.getBoardImgUrl();
+    //     this.boardWriteDatetime = simpleDateFormat.format(now);
+    //     this.viewCount = 0;
+    //     this.recommendCount = 0;
+    // }
 
     public void increaseRecommendCount() {
         this.recommendCount++;

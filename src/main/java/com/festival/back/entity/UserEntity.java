@@ -18,13 +18,13 @@ import lombok.NoArgsConstructor;
 public class UserEntity {
     @Id
     private String userId;
+    private String nickname;
     private String password;
     private String profileUrl;
-    private String nickname;
     private String telNumber;
-    private String interestedFestival;
     private boolean adminCheck;
     private boolean reportUser;
+    private String interestedFestival;
     
     public UserEntity(SignUpRequestDto dto) {
         this.userId = dto.getUserId();
