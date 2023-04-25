@@ -30,6 +30,7 @@ public class BoardController {
     private final String POST_COMMENT = "/comment";
 
 
+    //? 글 댓글 달기
     @PostMapping(POST_COMMENT)
     public ResponseDto<PostCommentResponseDto> postComment(
         @AuthenticationPrincipal String id,
@@ -38,9 +39,6 @@ public class BoardController {
         ResponseDto<PostCommentResponseDto> response = boardService.postComment(id, requestBody);
         return response;
     }
-    
-
-
     
     //? 글 추천하기
     @ApiOperation(value = "추천 기능", notes = "Request Header Authorization에 Bearer JWT를 포함하고 " +
@@ -52,6 +50,4 @@ public class BoardController {
         ResponseDto<RecommendResponseDto> response = boardService.recommend(userId, requestBody);
         return response;       
     }
-
-    
 }
