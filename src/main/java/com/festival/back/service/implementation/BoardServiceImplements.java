@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.festival.back.common.constant.ResponseMessage;
+<<<<<<< HEAD
 import com.festival.back.dto.request.board.PatchCommentRequestDto;
 import com.festival.back.dto.request.board.PostCommentRequestDto;
 import com.festival.back.dto.request.board.RecommendRequestDto;
@@ -13,28 +14,47 @@ import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.board.PatchCommentResponseDto;
 import com.festival.back.dto.response.board.PostCommentResponseDto;
 import com.festival.back.dto.response.board.RecommendResponseDto;
+=======
+import com.festival.back.dto.request.board.GetFestivalReviewBoardReqeustDto;
+import com.festival.back.dto.request.board.PostCommentRequestDto;
+import com.festival.back.dto.request.board.RecommendRequestDto;
+import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
+import com.festival.back.dto.response.ResponseDto;
+import com.festival.back.dto.response.board.RecommendResponseDto;
+import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
+import com.festival.back.dto.response.board.PostCommentResponseDto;
+import com.festival.back.dto.response.board.PostFestivalReviewBoardResponseDto;
+>>>>>>> 9628635336e09a5b805ee9ae98e0286bf9f6d77c
 import com.festival.back.entity.BoardEntity;
 import com.festival.back.entity.CommentEntity;
+import com.festival.back.entity.FestivalEntity;
 import com.festival.back.entity.RecommendEntity;
 import com.festival.back.entity.UserEntity;
 import com.festival.back.repository.BoardRepository;
 import com.festival.back.repository.CommentRepository;
+import com.festival.back.repository.FestivalRepository;
 import com.festival.back.repository.RecommendRepository;
 import com.festival.back.repository.UserRepository;
 import com.festival.back.service.BoardService;
 
 @Service
 public class BoardServiceImplements implements BoardService {
-    
 
     @Autowired private BoardRepository boardRepository;
     @Autowired private UserRepository userRepository;
     @Autowired private CommentRepository commentRepository;
     @Autowired private RecommendRepository recommendRepository;
+    @Autowired private FestivalRepository festivalRepository;
+    
+    //? 댓글 작성
 
+<<<<<<< HEAD
     //? 댓글 작성
     public ResponseDto<PostCommentResponseDto> postComment(String userId, PostCommentRequestDto dto){
+=======
+>>>>>>> 9628635336e09a5b805ee9ae98e0286bf9f6d77c
 
+    public ResponseDto<PostCommentResponseDto> postComment(String userId, PostCommentRequestDto dto) {
         PostCommentResponseDto data = null;
 
         int boardNumber = dto.getBoardNumber();
@@ -66,6 +86,7 @@ public class BoardServiceImplements implements BoardService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
+<<<<<<< HEAD
     public ResponseDto<PatchCommentResponseDto> patchComment(String userId, PatchCommentRequestDto dto){
 
         PatchCommentResponseDto data = null;
@@ -97,6 +118,8 @@ public class BoardServiceImplements implements BoardService {
 
     }
     
+=======
+>>>>>>> 9628635336e09a5b805ee9ae98e0286bf9f6d77c
     //? 추천 기능
     public ResponseDto<RecommendResponseDto> recommend(String id, RecommendRequestDto dto) {
 
@@ -140,6 +163,65 @@ public class BoardServiceImplements implements BoardService {
 
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
+<<<<<<< HEAD
 
+=======
+   
+//   ? 축제 후기 게시글 작성 -김종빈
+    public ResponseDto<PostFestivalReviewBoardResponseDto> postFestivalReviewBoard(String userId,PostReviewBoardRequestDto dto) {
+        PostFestivalReviewBoardResponseDto data = null;
+        int festivalNumber=dto.getFestivalNumber();
+
+        try {
+            UserEntity userEntity =userRepository.findByUserId(userId);
+            if(userEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
+
+            FestivalEntity festivalEntity=festivalRepository.findByFestivalNumber(festivalNumber);
+            if(festivalEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_FESTIVAL_NUMBER);
+
+             BoardEntity boardEntity =new BoardEntity(userEntity,dto);
+             boardRepository.save(boardEntity);
+             System.out.println(boardEntity);
+             data = new PostFestivalReviewBoardResponseDto(boardEntity,festivalEntity);
+
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+    }
+
+    @Override
+    public ResponseDto<GetFestivalReviewBoardResponseDto> getFestivalReviewBoard(int festivalNumber,Integer boardNumber) {
+        GetFestivalReviewBoardResponseDto data= null;
+        // int boardNumber=dto.getBoardNumber();
+        // int festivalNumber=dto.getFestivalNumber();  
+
+        try {
+            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+            if(boardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
+            List<RecommendEntity> recommdList=recommendRepository.findByBoardNumber(boardNumber);
+            List<CommentEntity> commentList=commentRepository.findByBoardNumberOrderByWriteDatetimeDesc(boardNumber);
+            FestivalEntity festivalEntity =festivalRepository.findByFestivalNumber(festivalNumber);
+            if(festivalEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_FESTIVAL_NUMBER);
+
+            boardEntity.increaseViewCount();
+            boardRepository.save(boardEntity);
+            data=new GetFestivalReviewBoardResponseDto(boardEntity, recommdList, commentList, festivalEntity);
+            System.out.println(boardEntity.toString());
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+
+    }
+
+  
+    
+>>>>>>> 9628635336e09a5b805ee9ae98e0286bf9f6d77c
     
 }

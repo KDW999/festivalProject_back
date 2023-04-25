@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +28,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
+import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
+import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
+import com.festival.back.dto.response.board.PostFestivalReviewBoardResponseDto;
+
 @Api(description="게시글 모듈")
 @RestController
 @RequestMapping(ApiPattern.BOARD)
@@ -38,6 +43,9 @@ public class BoardController {
     private final String POST_COMMENT = "/post-comment/{commentNumber}";
     private final String PATCH_COMMENT = "/patch-comment";
     private final String DELETE_COMMENT = "/delete-comment/{commentNumber}";
+    private final String POST_FESTIVAL_REVIEW_BOARD = "";
+    private final String GET_FESTIVAL_REVIEW_BOARD="/{festivalNumber}/{boardNumber}";
+    private final String GET_FESTIVAL_REVIEW="/{festivalNumber}";
 
     //? 댓글 작성
     @ApiOperation(value="댓글 작성", notes="Request Header Authorization에 Bearer JWT를 포함하고 Request Body에 boardNumber, content를 포함하여 요청을 하면, 성공시 게시물 전체 데이터를 반환, 실패시 실패 메세지를 반환")
@@ -80,11 +88,29 @@ public class BoardController {
     @ApiOperation(value = "추천 기능", notes = "Request Header Authorization에 Bearer JWT를 포함하고 " +
     "Request Body에 boardNumber를 포함하여 요청을 하면, 성공 시 게시물 전체 데이터를 반환")
     @PostMapping(RECOMMEND)
-    public ResponseDto<RecommendResponseDto> recommend(
-    @ApiParam(hidden = true) 
+    public ResponseDto<RecommendResponseDto> 
+    recommend(@ApiParam(hidden = true) 
     @AuthenticationPrincipal String userId, @Valid @RequestBody RecommendRequestDto requestBody){
         ResponseDto<RecommendResponseDto> response = boardService.recommend(userId, requestBody);
         return response;       
+    }
+
+    // ? 축제 후기 게시판 작성 -김종빈
+    @PostMapping(POST_FESTIVAL_REVIEW_BOARD)
+    public ResponseDto<PostFestivalReviewBoardResponseDto> 
+    postFestivalReviewBoard(@AuthenticationPrincipal String userId,
+    @Valid @RequestBody PostReviewBoardRequestDto requestbody){
+        ResponseDto<PostFestivalReviewBoardResponseDto> 
+        response=boardService.postFestivalReviewBoard(userId,requestbody);
+        return response;
+        
+    }
+    // ? 특정 축제 특정 후기 게시글 불러오기 -김종빈
+    @GetMapping(value={GET_FESTIVAL_REVIEW_BOARD,GET_FESTIVAL_REVIEW})
+        public ResponseDto<GetFestivalReviewBoardResponseDto> getFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber,@PathVariable(name="boardNumber") Integer boardNumber){
+            ResponseDto<GetFestivalReviewBoardResponseDto> response=boardService.getFestivalReviewBoard(festivalNumber,boardNumber );
+            return response;
+        
     }
 
     

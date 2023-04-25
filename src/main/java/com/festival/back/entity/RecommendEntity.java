@@ -25,7 +25,7 @@ public class RecommendEntity {
     private String userProfileUrl;
     private String userNickname;
 
-    public RecommendEntity(UserEntity userEntity, int boardNumber){
+    public RecommendEntity(UserEntity userEntity, int boardNumber) {
         this.userId = userEntity.getUserId();
         this.boardNumber = boardNumber;
         this.userProfileUrl = userEntity.getProfileUrl();
