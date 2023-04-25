@@ -50,7 +50,4 @@ public class BoardController {
         ResponseDto<RecommendResponseDto> response = boardService.recommend(userId, requestBody);
         return response;       
     }
-
-    
-
 }
