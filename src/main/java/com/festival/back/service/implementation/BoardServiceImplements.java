@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.festival.back.common.constant.ResponseMessage;
-<<<<<<< HEAD
 import com.festival.back.dto.request.board.PatchCommentRequestDto;
 import com.festival.back.dto.request.board.PostCommentRequestDto;
 import com.festival.back.dto.request.board.RecommendRequestDto;
@@ -14,17 +13,9 @@ import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.board.PatchCommentResponseDto;
 import com.festival.back.dto.response.board.PostCommentResponseDto;
 import com.festival.back.dto.response.board.RecommendResponseDto;
-=======
-import com.festival.back.dto.request.board.GetFestivalReviewBoardReqeustDto;
-import com.festival.back.dto.request.board.PostCommentRequestDto;
-import com.festival.back.dto.request.board.RecommendRequestDto;
 import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
-import com.festival.back.dto.response.ResponseDto;
-import com.festival.back.dto.response.board.RecommendResponseDto;
 import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
-import com.festival.back.dto.response.board.PostCommentResponseDto;
 import com.festival.back.dto.response.board.PostFestivalReviewBoardResponseDto;
->>>>>>> 9628635336e09a5b805ee9ae98e0286bf9f6d77c
 import com.festival.back.entity.BoardEntity;
 import com.festival.back.entity.CommentEntity;
 import com.festival.back.entity.FestivalEntity;
@@ -47,13 +38,6 @@ public class BoardServiceImplements implements BoardService {
     @Autowired private FestivalRepository festivalRepository;
     
     //? 댓글 작성
-
-<<<<<<< HEAD
-    //? 댓글 작성
-    public ResponseDto<PostCommentResponseDto> postComment(String userId, PostCommentRequestDto dto){
-=======
->>>>>>> 9628635336e09a5b805ee9ae98e0286bf9f6d77c
-
     public ResponseDto<PostCommentResponseDto> postComment(String userId, PostCommentRequestDto dto) {
         PostCommentResponseDto data = null;
 
@@ -86,7 +70,6 @@ public class BoardServiceImplements implements BoardService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
-<<<<<<< HEAD
     public ResponseDto<PatchCommentResponseDto> patchComment(String userId, PatchCommentRequestDto dto){
 
         PatchCommentResponseDto data = null;
@@ -118,8 +101,6 @@ public class BoardServiceImplements implements BoardService {
 
     }
     
-=======
->>>>>>> 9628635336e09a5b805ee9ae98e0286bf9f6d77c
     //? 추천 기능
     public ResponseDto<RecommendResponseDto> recommend(String id, RecommendRequestDto dto) {
 
@@ -163,10 +144,7 @@ public class BoardServiceImplements implements BoardService {
 
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
-<<<<<<< HEAD
 
-=======
-   
 //   ? 축제 후기 게시글 작성 -김종빈
     public ResponseDto<PostFestivalReviewBoardResponseDto> postFestivalReviewBoard(String userId,PostReviewBoardRequestDto dto) {
         PostFestivalReviewBoardResponseDto data = null;
@@ -179,10 +157,10 @@ public class BoardServiceImplements implements BoardService {
             FestivalEntity festivalEntity=festivalRepository.findByFestivalNumber(festivalNumber);
             if(festivalEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_FESTIVAL_NUMBER);
 
-             BoardEntity boardEntity =new BoardEntity(userEntity,dto);
-             boardRepository.save(boardEntity);
-             System.out.println(boardEntity);
-             data = new PostFestivalReviewBoardResponseDto(boardEntity,festivalEntity);
+            BoardEntity boardEntity =new BoardEntity(userEntity,dto);
+            boardRepository.save(boardEntity);
+            System.out.println(boardEntity);
+            data = new PostFestivalReviewBoardResponseDto(boardEntity,festivalEntity);
 
             
         } catch (Exception e) {
@@ -220,8 +198,4 @@ public class BoardServiceImplements implements BoardService {
 
     }
 
-  
-    
->>>>>>> 9628635336e09a5b805ee9ae98e0286bf9f6d77c
-    
 }

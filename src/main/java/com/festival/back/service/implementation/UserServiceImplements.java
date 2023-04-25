@@ -16,6 +16,7 @@ public class UserServiceImplements implements UserService {
 
     @Autowired UserRepository userRepository;
     
+    //? 닉네임 및 프로필 사진 URL 수정 기능     -감재현
     public ResponseDto<PatchProfileResponseDto> patchProfile (String userId, PatchProfileRequestDto dto) {
 
         PatchProfileResponseDto data = null;
