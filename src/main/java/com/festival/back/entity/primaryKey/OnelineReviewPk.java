@@ -7,7 +7,7 @@ import javax.persistence.Column;
 import lombok.Data;
 
 @Data
-public class OnelineReviewPk implements Serializable {
+public class OneLineReviewPk implements Serializable {
     @Column(name = "user_id")
     private String userId;
     @Column(name = "festival_number")
