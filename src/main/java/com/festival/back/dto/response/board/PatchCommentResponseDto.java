@@ -18,8 +18,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PatchCommentResponseDto {
     
-    @ApiModelProperty(value="게시물 Entity", required=true)
+    @ApiModelProperty(value="댓글 Entity", required=true)
     private CommentEntity comment;
+
+    @ApiModelProperty(value="게시물 Entity", required=true)
+    private BoardEntity board;
 
     @ApiModelProperty(value="추천 EntityList", required=true)
     private List<RecommendEntity> recommendList;
