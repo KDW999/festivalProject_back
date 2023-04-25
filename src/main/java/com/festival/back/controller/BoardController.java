@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.festival.back.common.constant.ApiPattern;
+
 import com.festival.back.dto.request.board.PatchCommentRequestDto;
 import com.festival.back.dto.request.board.PostCommentRequestDto;
 import com.festival.back.dto.request.board.RecommendRequestDto;
@@ -27,6 +28,8 @@ import com.festival.back.service.BoardService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
@@ -43,11 +46,14 @@ public class BoardController {
 
     private final String RECOMMEND = "/recommend";
     private final String POST_COMMENT = "/post-comment/{commentNumber}";
-    private final String PATCH_COMMENT = "/patch-comment";
-    private final String DELETE_COMMENT = "/delete-comment/{commentNumber}";
     private final String POST_FESTIVAL_REVIEW_BOARD = "";
+
     private final String GET_FESTIVAL_REVIEW_BOARD="/{festivalNumber}/{boardNumber}";
     private final String GET_FESTIVAL_REVIEW="/{festivalNumber}";
+
+    private final String PATCH_COMMENT = "/patch-comment";
+
+    private final String DELETE_COMMENT = "/delete-comment/{commentNumber}";
 
     //? 댓글 작성
     @ApiOperation(value="댓글 작성", notes="Request Header Authorization에 Bearer JWT를 포함하고 Request Body에 boardNumber, content를 포함하여 요청을 하면, 성공시 게시물 전체 데이터를 반환, 실패시 실패 메세지를 반환")
@@ -110,6 +116,7 @@ public class BoardController {
         return response;
         
     }
+
     // ? 특정 축제 특정 후기 게시글 불러오기 -김종빈
     @GetMapping(value={GET_FESTIVAL_REVIEW_BOARD,GET_FESTIVAL_REVIEW})
         public ResponseDto<GetFestivalReviewBoardResponseDto> getFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber,@PathVariable(name="boardNumber") Integer boardNumber){
@@ -118,6 +125,12 @@ public class BoardController {
         
     }
 
+    //추천 페스티벌 리스트 받아오기
+    // @GetMapping(value="path")
+    // public SomeData getMethodName(@RequestParam String param) {
+    //     return new SomeData();
+    // }
+    
     
 
 }
