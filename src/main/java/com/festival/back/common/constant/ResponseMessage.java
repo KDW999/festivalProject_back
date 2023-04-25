@@ -8,6 +8,7 @@ public class ResponseMessage {
     
     public static final String NOT_EXIST_USER = "존재하지 않는 유저입니다.";
     public static final String NOT_EXIST_BOARD = "존재하지 않는 게시물입니다.";
+    public static final String NOT_EXIST_FESTIVAL_NUMBER = "존재하지 않는 축제 번호입니다.";
     
     public static final String EXIST_ID = "존재하는 아이디 입니다.";
     public static final String EXIST_NICKNAME = "존재하는 닉네임 입니다.";

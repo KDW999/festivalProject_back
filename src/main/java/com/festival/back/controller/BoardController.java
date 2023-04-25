@@ -20,6 +20,7 @@ import com.festival.back.service.BoardService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
+//^ 여기 후기 게시판 
 @RestController
 @RequestMapping(ApiPattern.BOARD)
 public class BoardController {
