@@ -1,7 +1,9 @@
 package com.festival.back.service;
 
 import com.festival.back.dto.response.ResponseDto;
-import com.festival.back.dto.request.board.GetFestivalReviewBoardReqeustDto;
+
+import java.util.List;
+
 import com.festival.back.dto.request.board.PostCommentRequestDto;
 import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
 import com.festival.back.dto.request.board.RecommendRequestDto;
@@ -22,7 +24,7 @@ public interface BoardService {
 
     public ResponseDto<GetFestivalReviewBoardResponseDto> getFestivalReviewBoard(int boardNumber,Integer festivalNumber);
 
-    public ResponseDto<GetFestivalReviewBoardListResponseDto> getFestivalReviewBoardList(int festivalNumber);
+    public ResponseDto<List<GetFestivalReviewBoardListResponseDto>> getFestivalReviewBoardList(Integer festivalNumber);
 
     
 }

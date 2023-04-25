@@ -1,5 +1,7 @@
 package com.festival.back.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.festival.back.common.constant.ApiPattern;
-import com.festival.back.dto.request.board.GetFestivalReviewBoardReqeustDto;
 import com.festival.back.dto.request.board.PostCommentRequestDto;
 import com.festival.back.dto.request.board.RecommendRequestDto;
 import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
 import com.festival.back.dto.response.ResponseDto;
+import com.festival.back.dto.response.board.GetFestivalReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.PostCommentResponseDto;
 import com.festival.back.dto.response.board.PostFestivalReviewBoardResponseDto;
@@ -37,7 +39,7 @@ public class BoardController {
     private final String RECOMMEND = "/recommend";
     private final String POST_COMMENT = "/comment";
     private final String GET_FESTIVAL_REVIEW_BOARD="/{festivalNumber}/{boardNumber}";
-    private final String GET_FESTIVAL_REVIEW="/{festivalNumber}";
+    private final String GET_FESTIVAL="/{festivalNumber}";
 
 
     //? 글 댓글 달기
@@ -70,12 +72,18 @@ public class BoardController {
         
     }
     // ? 특정 축제 특정 후기 게시글 불러오기 -김종빈
-    @GetMapping(value={GET_FESTIVAL_REVIEW_BOARD,GET_FESTIVAL_REVIEW})
+    @GetMapping(value={GET_FESTIVAL_REVIEW_BOARD,GET_FESTIVAL})
         public ResponseDto<GetFestivalReviewBoardResponseDto> getFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber,@PathVariable(name="boardNumber") Integer boardNumber){
             ResponseDto<GetFestivalReviewBoardResponseDto> response=boardService.getFestivalReviewBoard(festivalNumber,boardNumber );
             return response;
         
     }
+     // ? 특정축제 전체 후기 게시글 불러오기 -김종빈
+     @GetMapping(GET_FESTIVAL)
+     public ResponseDto<List<GetFestivalReviewBoardListResponseDto>> getFestivalReviewBoardList(@PathVariable("festivalNumber")Integer festivalNumber){
+        ResponseDto<List<GetFestivalReviewBoardListResponseDto>> response =boardService.getFestivalReviewBoardList(festivalNumber);
+        return response;
+     }
 
     
 

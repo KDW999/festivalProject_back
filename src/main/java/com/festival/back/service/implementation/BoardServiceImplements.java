@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.festival.back.common.constant.ResponseMessage;
-import com.festival.back.dto.request.board.GetFestivalReviewBoardReqeustDto;
 import com.festival.back.dto.request.board.PostCommentRequestDto;
 import com.festival.back.dto.request.board.RecommendRequestDto;
 import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
 import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.board.RecommendResponseDto;
+import com.festival.back.dto.response.board.GetFestivalReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.PostCommentResponseDto;
 import com.festival.back.dto.response.board.PostFestivalReviewBoardResponseDto;
@@ -168,6 +168,21 @@ public class BoardServiceImplements implements BoardService {
         }
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
 
+    }
+
+    // ? 특정축제 전체 후기 게시글 불러오기 -김종빈
+    public ResponseDto<List<GetFestivalReviewBoardListResponseDto>> getFestivalReviewBoardList(Integer festivalNumber) {
+        List<GetFestivalReviewBoardListResponseDto> data = null;
+
+        try {
+            List<BoardEntity> boardEntityList=boardRepository.findByFestivalNumberOrderByBoardWriteDatetimeDesc(festivalNumber);
+            data=GetFestivalReviewBoardListResponseDto.copyList(boardEntityList);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
   
