@@ -31,11 +31,13 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
+
 import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
 import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.PostFestivalReviewBoardResponseDto;
 
 @Api(description="게시글 모듈")
+
 @RestController
 @RequestMapping(ApiPattern.BOARD)
 public class BoardController {
