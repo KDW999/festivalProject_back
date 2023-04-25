@@ -11,13 +11,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.festival.back.common.constant.ApiPattern;
 import com.festival.back.dto.request.board.PostCommentRequestDto;
+import com.festival.back.dto.request.board.RecommendRequestDto;
 import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
 import com.festival.back.dto.request.board.RecommendRequestDto;
 import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.board.PostCommentResponseDto;
 import com.festival.back.dto.response.board.PostFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.RecommendResponseDto;
+import com.festival.back.dto.response.board.RecommendResponseDto;
 import com.festival.back.service.BoardService;
+
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -31,19 +36,8 @@ public class BoardController {
     private final String RECOMMEND = "/recommend";
     private final String POST_COMMENT = "/comment";
 
-    
-    @PostMapping(POST_FESTIVAL_REVIEW_BOARD)
-    public ResponseDto<PostFestivalReviewBoardResponseDto> 
-    postFestivalReviewBoard(@AuthenticationPrincipal String userId,
-    @Valid @RequestBody PostReviewBoardRequestDto requestbody){
-        ResponseDto<PostFestivalReviewBoardResponseDto> 
-        response=boardService.postFestivalReviewBoard(userId,requestbody);
-        return response;
-        
-    }
 
-
-
+    //? 글 댓글 달기
     @PostMapping(POST_COMMENT)
     public ResponseDto<PostCommentResponseDto> 
     postComment(@AuthenticationPrincipal String id, @Valid @RequestBody PostCommentRequestDto requestBody ) {
@@ -61,6 +55,16 @@ public class BoardController {
     @AuthenticationPrincipal String userId, @Valid @RequestBody RecommendRequestDto requestBody){
         ResponseDto<RecommendResponseDto> response = boardService.recommend(userId, requestBody);
         return response;       
+    }
+    
+    @PostMapping(POST_FESTIVAL_REVIEW_BOARD)
+    public ResponseDto<PostFestivalReviewBoardResponseDto> 
+    postFestivalReviewBoard(@AuthenticationPrincipal String userId,
+    @Valid @RequestBody PostReviewBoardRequestDto requestbody){
+        ResponseDto<PostFestivalReviewBoardResponseDto> 
+        response=boardService.postFestivalReviewBoard(userId,requestbody);
+        return response;
+        
     }
 
     
