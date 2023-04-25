@@ -11,9 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.festival.back.common.constant.ApiPattern;
 import com.festival.back.dto.request.board.PostCommentRequestDto;
+import com.festival.back.dto.request.board.RecommendRequestDto;
 import com.festival.back.dto.response.PostCommentResponseDto;
 import com.festival.back.dto.response.ResponseDto;
+import com.festival.back.dto.response.board.RecommendResponseDto;
 import com.festival.back.service.BoardService;
+
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping(ApiPattern.BOARD)
@@ -49,6 +54,4 @@ public class BoardController {
     }
 
     
-
->>>>>>> d91b9813e42babb0de2fd99ea077b9ef33e1d600
 }
