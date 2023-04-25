@@ -11,7 +11,6 @@ public interface BoardService {
 
     public ResponseDto<PostCommentResponseDto> postComment(String userId, PostCommentRequestDto dto);
     
-    // public ResponseDto<PostFestivalReviewBoardResponseDto> postReviewBoard(PostReviewBoard dto);
     public ResponseDto<RecommendResponseDto> recommend(String id, RecommendRequestDto dto);
 
     
