@@ -28,11 +28,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
+
 import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
 import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.PostFestivalReviewBoardResponseDto;
 
 @Api(description="게시글 모듈")
+
 @RestController
 @RequestMapping(ApiPattern.BOARD)
 public class BoardController {
