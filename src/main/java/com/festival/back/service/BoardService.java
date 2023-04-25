@@ -1,7 +1,6 @@
 package com.festival.back.service;
 
 import com.festival.back.dto.response.ResponseDto;
-import com.festival.back.dto.request.board.GetFestivalReviewBoardReqeustDto;
 import com.festival.back.dto.request.board.PostCommentRequestDto;
 import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
 import com.festival.back.dto.request.board.RecommendRequestDto;

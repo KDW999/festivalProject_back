@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.festival.back.common.constant.ApiPattern;
-import com.festival.back.dto.request.board.GetFestivalReviewBoardReqeustDto;
 import com.festival.back.dto.request.board.PostCommentRequestDto;
 import com.festival.back.dto.request.board.RecommendRequestDto;
 import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
@@ -25,6 +24,8 @@ import com.festival.back.service.BoardService;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -35,7 +36,9 @@ public class BoardController {
     private final String POST_FESTIVAL_REVIEW_BOARD = "";
     private final String RECOMMEND = "/recommend";
     private final String POST_COMMENT = "/comment";
+
     private final String GET_FESTIVAL_REVIEW_BOARD="/{festivalNumber}/{boardNumber}";
+    private final String GET_FESTIVAL_REVIEW="/{festivalNumber}";
     private final String GET_FESTIVAL_REVIEW="/{festivalNumber}";
 
 
@@ -69,6 +72,7 @@ public class BoardController {
         return response;
         
     }
+
     // ? 특정 축제 특정 후기 게시글 불러오기 -김종빈
     @GetMapping(value={GET_FESTIVAL_REVIEW_BOARD,GET_FESTIVAL_REVIEW})
         public ResponseDto<GetFestivalReviewBoardResponseDto> getFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber,@PathVariable(name="boardNumber") Integer boardNumber){
@@ -77,6 +81,12 @@ public class BoardController {
         
     }
 
+    //추천 페스티벌 리스트 받아오기
+    @GetMapping(value="path")
+    public SomeData getMethodName(@RequestParam String param) {
+        return new SomeData();
+    }
+    
     
 
 }

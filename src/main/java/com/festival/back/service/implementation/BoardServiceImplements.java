@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.festival.back.common.constant.ResponseMessage;
-import com.festival.back.dto.request.board.GetFestivalReviewBoardReqeustDto;
 import com.festival.back.dto.request.board.PostCommentRequestDto;
 import com.festival.back.dto.request.board.RecommendRequestDto;
 import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
@@ -127,10 +126,10 @@ public class BoardServiceImplements implements BoardService {
             FestivalEntity festivalEntity=festivalRepository.findByFestivalNumber(festivalNumber);
             if(festivalEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_FESTIVAL_NUMBER);
 
-             BoardEntity boardEntity =new BoardEntity(userEntity,dto);
-             boardRepository.save(boardEntity);
-             System.out.println(boardEntity);
-             data = new PostFestivalReviewBoardResponseDto(boardEntity,festivalEntity);
+            BoardEntity boardEntity =new BoardEntity(userEntity,dto);
+            boardRepository.save(boardEntity);
+            System.out.println(boardEntity);
+            data = new PostFestivalReviewBoardResponseDto(boardEntity,festivalEntity);
 
             
         } catch (Exception e) {
