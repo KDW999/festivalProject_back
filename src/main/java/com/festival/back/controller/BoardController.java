@@ -84,6 +84,9 @@ public class BoardController {
         return response;
     }
 
+    
+
+
     //? 글 추천하기
     @ApiOperation(value = "추천 기능", notes = "Request Header Authorization에 Bearer JWT를 포함하고 " +
     "Request Body에 boardNumber를 포함하여 요청을 하면, 성공 시 게시물 전체 데이터를 반환")
