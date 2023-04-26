@@ -6,17 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.festival.back.common.constant.ResponseMessage;
+import com.festival.back.dto.request.board.PostFestivalRequestDto;
+import com.festival.back.dto.response.ResponseDto;
+import com.festival.back.dto.response.board.PostFestivalResponseDto;
+import com.festival.back.entity.FestivalEntity;
+import com.festival.back.entity.UserEntity;
+import com.festival.back.repository.FestivalRepository;
 import com.festival.back.dto.request.oneLineReview.PatchOneLineReviewRequestDto;
 import com.festival.back.dto.request.oneLineReview.PostOneLineReviewRequestDto;
-import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.oneLineReveiw.DeleteOneLineReviewResponseDto;
 import com.festival.back.dto.response.oneLineReveiw.PatchOneLineReviewResponseDto;
 import com.festival.back.dto.response.oneLineReveiw.PostOneLineReviewResponseDto;
-import com.festival.back.entity.FestivalEntity;
 import com.festival.back.entity.OneLineReviewEntity;
-import com.festival.back.entity.UserEntity;
 import com.festival.back.entity.primaryKey.OneLineReviewPk;
-import com.festival.back.repository.FestivalRepository;
 import com.festival.back.repository.OneLineReviewRepository;
 import com.festival.back.repository.UserRepository;
 import com.festival.back.service.FestivalService;
@@ -26,6 +28,29 @@ public class FestivalServiceImplements implements FestivalService {
     @Autowired private UserRepository userRepository;
     @Autowired private FestivalRepository festivalRepository;
     @Autowired private OneLineReviewRepository oneLineReviewRepository;
+
+    //? 축제 작성
+    public ResponseDto<PostFestivalResponseDto> postFestival(String userId, PostFestivalRequestDto dto){
+        
+        PostFestivalResponseDto data = null;
+
+        try {
+
+            UserEntity userEntity = userRepository.findByUserId(userId);
+            if(userEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
+
+            FestivalEntity festivalEntity = new FestivalEntity(userEntity, dto);
+            festivalRepository.save(festivalEntity);
+
+            data = new PostFestivalResponseDto(festivalEntity);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+        
+    }
 
     //! 수정을 만들긴 했지만 그냥 로그인한 상태로 한 줄 평 달면 이전에 적었던 게 알아서 덮어씌어짐 
     //? 한 줄 평 작성
