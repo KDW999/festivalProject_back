@@ -29,7 +29,6 @@ public class PostFestivalRequestDto {
     private String festivalDurationEnd;
 
     @ApiModelProperty(value="축제 시간", example="15:00", required=true)
-    @NotBlank
     private String festivalTime;
 
     @ApiModelProperty(value="축제 지역", example="부산", required=true)
