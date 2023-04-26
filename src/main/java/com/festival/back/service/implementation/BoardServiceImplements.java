@@ -7,14 +7,21 @@ import org.springframework.stereotype.Service;
 
 import com.festival.back.common.constant.ResponseMessage;
 import com.festival.back.dto.request.board.PatchCommentRequestDto;
+import com.festival.back.dto.request.board.PatchReviewBoardRequestDto;
 import com.festival.back.dto.request.board.PostCommentRequestDto;
+import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
 import com.festival.back.dto.request.board.RecommendRequestDto;
 import com.festival.back.dto.response.ResponseDto;
+import com.festival.back.dto.response.board.DeleteCommentResponseDto;
+import com.festival.back.dto.response.board.DeleteFestivalReviewBoardResponseDto;
+import com.festival.back.dto.response.board.GetFestivalReviewBoardListResponseDto;
+import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
+import com.festival.back.dto.response.board.GetInterestedFestivalListResponseDto;
+import com.festival.back.dto.response.board.GetMyFestivalReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.PatchCommentResponseDto;
+import com.festival.back.dto.response.board.PatchFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.PostCommentResponseDto;
 import com.festival.back.dto.response.board.RecommendResponseDto;
-import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
-import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.PostFestivalReviewBoardResponseDto;
 import com.festival.back.entity.BoardEntity;
 import com.festival.back.entity.CommentEntity;
@@ -37,7 +44,6 @@ public class BoardServiceImplements implements BoardService {
     @Autowired private RecommendRepository recommendRepository;
     @Autowired private FestivalRepository festivalRepository;
     
-
     //? 댓글 작성
     public ResponseDto<PostCommentResponseDto> postComment(String userId, PostCommentRequestDto dto) {
         PostCommentResponseDto data = null;
@@ -71,17 +77,21 @@ public class BoardServiceImplements implements BoardService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
+    //? 댓글 수정 기능
     public ResponseDto<PatchCommentResponseDto> patchComment(String userId, PatchCommentRequestDto dto){
 
         PatchCommentResponseDto data = null;
 
         int boardNumber = dto.getBoardNumber();
+        int commentNumber = dto.getCommentNumber();
 
-        //? 이거 잘 모르겠습니다. 
-        //? 그런데 댓글 수정이면 CommentEntity에서 하는 게 맞는거 같아서 일단 적었습니다.
         try{
-            CommentEntity commentEntity = commentRepository.findByBoardNumber(boardNumber);
-            if(commentEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
+            
+            CommentEntity commentEntity = commentRepository.findByCommentNumber(commentNumber);
+            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber); 
+            
+            if(boardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
+
 
             boolean isEqualWriter = userId.equals(commentEntity.getWriterId());
             if(!isEqualWriter) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
@@ -92,7 +102,7 @@ public class BoardServiceImplements implements BoardService {
             List<RecommendEntity> recommendList = recommendRepository.findByBoardNumber(boardNumber);
             List<CommentEntity> commentList = commentRepository.findByBoardNumberOrderByWriteDatetimeDesc(boardNumber);
 
-            data = new PatchCommentResponseDto(commentEntity, recommendList, commentList); 
+            data = new PatchCommentResponseDto(boardEntity, recommendList, commentList); 
 
         } catch(Exception exception){
             exception.printStackTrace();
@@ -146,8 +156,7 @@ public class BoardServiceImplements implements BoardService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
-   
-//   ? 축제 후기 게시글 작성 - 김종빈
+//   ? 축제 후기 게시글 작성 -김종빈
     public ResponseDto<PostFestivalReviewBoardResponseDto> postFestivalReviewBoard(String userId,PostReviewBoardRequestDto dto) {
         PostFestivalReviewBoardResponseDto data = null;
         int festivalNumber=dto.getFestivalNumber();
@@ -159,10 +168,9 @@ public class BoardServiceImplements implements BoardService {
             FestivalEntity festivalEntity=festivalRepository.findByFestivalNumber(festivalNumber);
             if(festivalEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_FESTIVAL_NUMBER);
 
-             BoardEntity boardEntity =new BoardEntity(userEntity,dto);
-             boardRepository.save(boardEntity);
-             System.out.println(boardEntity);
-             data = new PostFestivalReviewBoardResponseDto(boardEntity,festivalEntity);
+            BoardEntity boardEntity =new BoardEntity(userEntity,dto);
+            boardRepository.save(boardEntity);
+            data = new PostFestivalReviewBoardResponseDto(boardEntity,festivalEntity);
 
             
         } catch (Exception e) {
@@ -173,7 +181,7 @@ public class BoardServiceImplements implements BoardService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
-    @Override
+    // ? 특정 축제 후기 게시글 불러오기-김종빈
     public ResponseDto<GetFestivalReviewBoardResponseDto> getFestivalReviewBoard(int festivalNumber,Integer boardNumber) {
         GetFestivalReviewBoardResponseDto data= null;
         // int boardNumber=dto.getBoardNumber();
@@ -190,7 +198,6 @@ public class BoardServiceImplements implements BoardService {
             boardEntity.increaseViewCount();
             boardRepository.save(boardEntity);
             data=new GetFestivalReviewBoardResponseDto(boardEntity, recommdList, commentList, festivalEntity);
-            System.out.println(boardEntity.toString());
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -200,4 +207,135 @@ public class BoardServiceImplements implements BoardService {
 
     }
     
+    //? 댓글 삭제
+    public ResponseDto<DeleteCommentResponseDto> deleteComment(String userId, int commentNumber) {
+        
+        DeleteCommentResponseDto data = null;
+
+        try {
+
+            CommentEntity commentEntity = commentRepository.findByCommentNumber(commentNumber);
+            if(commentEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXITST_COMMENT_NUMBER);
+
+            boolean isEqualWriter = userId.equals(commentEntity.getWriterId());
+            if(!isEqualWriter) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSION);
+
+            commentRepository.deleteByCommentNumber(commentNumber);
+
+            commentRepository.delete(commentEntity);
+            data = new DeleteCommentResponseDto(true);
+
+        } catch(Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+    }
+    
+    // ? 특정축제 전체 후기 게시글 불러오기 -김종빈
+    public ResponseDto<List<GetFestivalReviewBoardListResponseDto>> getFestivalReviewBoardList(Integer festivalNumber) {
+        List<GetFestivalReviewBoardListResponseDto> data = null;
+
+        try {
+            List<BoardEntity> boardEntityList=boardRepository.findByFestivalNumberOrderByBoardWriteDatetimeDesc(festivalNumber);
+            if(boardEntityList.isEmpty()) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
+       
+            data=GetFestivalReviewBoardListResponseDto.copyList(boardEntityList);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+    }
+
+// ? 후기 게시글 수정-김종빈
+    public ResponseDto<PatchFestivalReviewBoardResponseDto> patchReivewBoard(String userId,PatchReviewBoardRequestDto dto) {
+        PatchFestivalReviewBoardResponseDto data = null;
+        int festivalNumber=dto.getFestivalNumber();
+        int boardNumber=dto.getBoardNumber();
+
+        try {
+            BoardEntity boardEntity=boardRepository.findByBoardNumber(boardNumber);
+            if(boardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
+
+            boolean isEqulWriter = userId.equals(boardEntity.getWriterId());
+            if (!isEqulWriter) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSION);
+
+            List<RecommendEntity> recommdList=recommendRepository.findByBoardNumber(boardNumber);
+            List<CommentEntity> commentList=commentRepository.findByBoardNumberOrderByWriteDatetimeDesc(boardNumber);
+
+            FestivalEntity festivalEntity =festivalRepository.findByFestivalNumber(festivalNumber);
+            if(festivalEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_FESTIVAL_NUMBER);
+           System.out.println("dto"+dto.toString());
+           System.out.println(boardEntity.toString());
+            boardEntity.patch(dto);
+            boardRepository.save(boardEntity);
+
+            data = new PatchFestivalReviewBoardResponseDto(boardEntity, festivalEntity, commentList, recommdList);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+    }
+   
+    // ? 특정 게시물 삭제-김종빈
+    public ResponseDto<DeleteFestivalReviewBoardResponseDto> deleteBoard(String userId, int boardNumber) {
+        DeleteFestivalReviewBoardResponseDto data = null;
+
+        try {
+            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+            if (boardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
+
+            boolean isEqulWriter = userId.equals(boardEntity.getWriterId());
+            if (!isEqulWriter) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSION);
+
+                commentRepository.deleteByBoardNumber(boardNumber);
+                recommendRepository.deleteByBoardNumber(boardNumber);
+
+            boardRepository.delete(boardEntity);
+            data = new DeleteFestivalReviewBoardResponseDto(true);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+    }
+
+    // ? 내가 쓴 후기 게시글 불러오기 -김종빈
+    public ResponseDto<List<GetMyFestivalReviewBoardListResponseDto>> getMyList(String userId){
+        List<GetMyFestivalReviewBoardListResponseDto> data = null;
+
+        try {
+
+            List<BoardEntity> boardList = boardRepository.findBywriterIdOrderByBoardWriteDatetimeDesc(userId);
+            data = GetMyFestivalReviewBoardListResponseDto.copyList(boardList);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+        
+    }
+
+    // ? 
+    public ResponseDto<List<GetInterestedFestivalListResponseDto>> GetInterestedFestivalList(String userId) {
+        List<GetInterestedFestivalListResponseDto> data = null;
+
+        try {
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+        
+    }
+
+
 }
+

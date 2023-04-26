@@ -17,6 +17,10 @@ public class PatchCommentRequestDto {
     @Min(1)
     private int boardNumber;
 
+    @ApiModelProperty(value="댓글 번호", example="1", required=true)
+    @Min(1)
+    private int commentNumber;
+
     @ApiModelProperty(value="후기 게시물 내용", example="Modified Content", required=true)
     @NotBlank
     private String commentContent;

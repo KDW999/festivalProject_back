@@ -42,10 +42,9 @@ public class CommentEntity {
         this.writerId = userEntity.getUserId();
         this.writerProfileUrl = userEntity.getProfileUrl();
         this.writerNickname = userEntity.getNickname();
-        
-        
+         
     }
-    
+
     public void patch(PatchCommentRequestDto dto){
         this.commentContent = dto.getCommentContent();
     }

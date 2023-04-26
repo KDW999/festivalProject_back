@@ -6,8 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.festival.back.entity.FestivalEntity;
 
 @Repository
-public interface FestivalRepository extends JpaRepository<FestivalEntity, Integer> {
-    
-    public FestivalEntity findByFestivalNumber(int festivalNumber);
+public interface FestivalRepository extends JpaRepository<FestivalEntity,Integer>  {
+      public FestivalEntity findByFestivalNumber(int festivalNumber);
 
 }

@@ -1,5 +1,7 @@
 package com.festival.back.service.implementation;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,19 +13,23 @@ import com.festival.back.dto.request.auth.SignUpRequestDto;
 import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.auth.SignInResponseDto;
 import com.festival.back.dto.response.auth.SignUpResponseDto;
+import com.festival.back.entity.InterestedFestivalEntity;
 import com.festival.back.entity.UserEntity;
 import com.festival.back.provider.TokenProvider;
+import com.festival.back.repository.InterestedFestivalRepository;
 import com.festival.back.repository.UserRepository;
 import com.festival.back.service.AuthService;
 
 @Service
 public class AuthServiceImplements implements AuthService {
 
-    @Autowired UserRepository userRepository;
-    @Autowired TokenProvider tokenProvider;
+    @Autowired private UserRepository userRepository;
+    @Autowired private InterestedFestivalRepository interestedFestivalRepository;
+    @Autowired private TokenProvider tokenProvider;
 
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     
+    //? 회원가입 기능      -감재현
     public ResponseDto<SignUpResponseDto> signUp(SignUpRequestDto dto) {
         
         SignUpResponseDto data = null;
@@ -32,6 +38,7 @@ public class AuthServiceImplements implements AuthService {
         String nickname = dto.getNickname();
         String password = dto.getPassword();
         String telNumber = dto.getTelNumber();
+        List<String> interestedFestivalType = dto.getInterestedFestival();
         
         try {
             boolean hasUserId = userRepository.existsById(userId);
@@ -42,13 +49,17 @@ public class AuthServiceImplements implements AuthService {
 
             boolean hasTelNumber = userRepository.existsByTelNumber(telNumber);
             if (hasTelNumber) return ResponseDto.setFail(ResponseMessage.EXIST_TELNUMBER);
-
+            
             String encodedPassword = passwordEncoder.encode(password);
             dto.setPassword(encodedPassword);
-
+            
             UserEntity userEntity = new UserEntity(dto);
             userRepository.save(userEntity);
-
+            
+            if (interestedFestivalType != null) {
+                List<InterestedFestivalEntity> interestedFestivalEntity = InterestedFestivalEntity.createList(dto);
+                interestedFestivalRepository.saveAll(interestedFestivalEntity);
+            }
             data = new SignUpResponseDto(true);
 
         } catch (Exception exception) {
@@ -58,6 +69,7 @@ public class AuthServiceImplements implements AuthService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
     
+    //? 로그인 기능        -감재현
     public ResponseDto<SignInResponseDto> signIn(SignInRequestDto dto) {
 
         SignInResponseDto data = null;
