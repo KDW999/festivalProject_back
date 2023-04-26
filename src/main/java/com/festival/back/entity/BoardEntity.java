@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.festival.back.dto.request.board.PatchReviewBoardRequestDto;
 import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
 
 
@@ -63,5 +64,10 @@ public class BoardEntity {
 
     public void decreaseRecommendCount(){
         this.recommendCount--;
+    }
+    public void patch(PatchReviewBoardRequestDto dto) {
+        this.boardTitle=dto.getBoardTitle();
+        this.boardContent=dto.getBoardContent();
+        this.boardImgUrl=dto.getBoardImgUrl();
     }
 }
