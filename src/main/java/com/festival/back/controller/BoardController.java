@@ -45,7 +45,7 @@ public class BoardController {
     @Autowired private BoardService boardService;
 
     private final String RECOMMEND = "/recommend";
-    private final String POST_COMMENT = "/post-comment/{commentNumber}";
+    private final String POST_COMMENT = "/post-comment";
     private final String POST_FESTIVAL_REVIEW_BOARD = "";
 
     private final String GET_FESTIVAL_REVIEW_BOARD="/{festivalNumber}/{boardNumber}";
