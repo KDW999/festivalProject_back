@@ -233,16 +233,27 @@ public class BoardServiceImplements implements BoardService {
     }
     
     // ? 특정축제 전체 후기 게시글 불러오기 -김종빈
-    public ResponseDto<List<GetFestivalReviewBoardListResponseDto>> getFestivalReviewBoardList(Integer festivalNumber) {
-        List<GetFestivalReviewBoardListResponseDto> data = null;
+    public ResponseDto<GetFestivalReviewBoardListResponseDto> getFestivalReviewBoardList(Integer festivalNumber) {
+        GetFestivalReviewBoardListResponseDto data = null;
 
         try {
-            List<BoardEntity> boardEntityList=boardRepository.findByFestivalNumberOrderByBoardWriteDatetimeDesc(festivalNumber);
-            if(boardEntityList.isEmpty()) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
+            
+            FestivalEntity festivalEntity = festivalRepository.findByFestivalNumber(festivalNumber);
+            if(festivalEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_FESTIVAL_NUMBER);
+
+            List<BoardEntity> boardEntity = boardRepository.findByFestivalNumberOrderByBoardWriteDatetimeDesc(festivalNumber);
+            if(boardEntity.isEmpty()) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
+
+            
+
+             data = new GetFestivalReviewBoardListResponseDto(festivalEntity,boardEntity);
+
+     
+   
     
         
        
-            data=GetFestivalReviewBoardListResponseDto.copyList(boardEntityList);
+         
             
         } catch (Exception e) {
             e.printStackTrace();

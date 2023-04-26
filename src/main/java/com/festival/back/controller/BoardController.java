@@ -134,9 +134,8 @@ public class BoardController {
     }
      // ? 특정축제 전체 후기 게시글 불러오기 -김종빈
      @GetMapping(GET_FESTIVAL_LIST)
-     public ResponseDto<List<GetFestivalReviewBoardListResponseDto>> getFestivalReviewBoardList(@PathVariable("festivalNumber")Integer festivalNumber){
-        System.out.println(festivalNumber);
-        ResponseDto<List<GetFestivalReviewBoardListResponseDto>> response =boardService.getFestivalReviewBoardList(festivalNumber);
+     public ResponseDto<GetFestivalReviewBoardListResponseDto> getFestivalReviewBoardList(@PathVariable("festivalNumber")Integer festivalNumber){
+        ResponseDto<GetFestivalReviewBoardListResponseDto> response =boardService.getFestivalReviewBoardList(festivalNumber);
         return response;
      }
 
