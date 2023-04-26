@@ -40,6 +40,6 @@ public class SignInResponseDto {
         this.profileUrl = userEntity.getProfileUrl();
         this.telNumber = userEntity.getTelNumber();
         this.token = token;
-        this.expiredTime = 3600000;
+        this.expiredTime = 14400000;
     }
 }
