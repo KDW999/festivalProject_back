@@ -13,5 +13,7 @@ public class ResponseMessage {
     public static final String EXIST_NICKNAME = "존재하는 닉네임 입니다.";
     public static final String EXIST_TELNUMBER = "존재하는 휴대전화번호 입니다.";
     public static final String FAIL_SIGN_IN = "로그인에 실패했습니다.";
+    public static final String NOT_PORMISSION = "수정 권한이 없습니다.";
+
     
 }
