@@ -44,14 +44,6 @@ public class CommentEntity {
         this.writerNickname = userEntity.getNickname();
          
     }
-    
-    // public CommentEntity(UserEntity userEntity, PatchCommentRequestDto dto){
-        
-    //     this.boardNumber = dto.getBoardNumber();
-    //     this.commentNumber = dto.getCommentNumber();
-    //     this.commentContent = dto.getCommentContent();
-        
-    // }
 
     public void patch(PatchCommentRequestDto dto){
         this.commentContent = dto.getCommentContent();
