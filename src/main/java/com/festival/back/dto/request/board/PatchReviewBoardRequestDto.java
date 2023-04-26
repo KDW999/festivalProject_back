@@ -1,6 +1,5 @@
 package com.festival.back.dto.request.board;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 import io.swagger.annotations.ApiModel;

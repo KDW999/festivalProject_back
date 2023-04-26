@@ -25,8 +25,6 @@ public class SignInResponseDto {
     @ApiModelProperty(value="사용자 휴대전화번호", example="010-1234-5678", required=true)
     private String telNumber;
 
-    @ApiModelProperty(value="사용자의 관심있는 축제", example="OO축제", required=true)
-    private String interestedFestival;
     // private boolean adminCheck;
     // private boolean reportUser; api구현후 사용
 
@@ -41,7 +39,6 @@ public class SignInResponseDto {
         this.nickname = userEntity.getNickname();
         this.profileUrl = userEntity.getProfileUrl();
         this.telNumber = userEntity.getTelNumber();
-        this.interestedFestival = userEntity.getInterestedFestival();
         this.token = token;
         this.expiredTime = 3600000;
     }

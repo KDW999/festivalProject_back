@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.festival.back.entity.BoardEntity;
-import com.festival.back.entity.FestivalEntity;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
