@@ -91,7 +91,7 @@ public class BoardController {
     }
 
     //? 댓글 삭제
-    @ApiOperation(value="댓글 삭제", notes="Request Header Authorization에 Bearer JWT를 포함하고 Path Variable에 boardNumer를 포함해 요청하면, 성공시 true를 반환, 실패시 false를 반환")
+    @ApiOperation(value="댓글 삭제", notes="Request Header Authorization에 Bearer JWT를 포함하고 Path Variable에 commentNumber를 포함해 요청하면, 성공시 true를 반환, 실패시 false를 반환")
     @DeleteMapping(DELETE_COMMENT)
     public ResponseDto<DeleteCommentResponseDto> deleteComment(
         @ApiParam(hidden=true)
@@ -170,6 +170,7 @@ public class BoardController {
         return response;
     }
 
+<<<<<<< HEAD
     // ? 추천 페스티벌 리스트 받아오기 -감재현
     @ApiOperation(value="회원가입시 선택한 추천 축제 타입 리스트 받아오기")
     @GetMapping(GET_INTERESTED_FESTIVAL_LIST)
@@ -180,4 +181,6 @@ public class BoardController {
     
     
 
+=======
+>>>>>>> 7a9813ee1e1f2514777feeba18972d07144bd531
 }

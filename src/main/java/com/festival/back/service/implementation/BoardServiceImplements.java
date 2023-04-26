@@ -77,13 +77,13 @@ public class BoardServiceImplements implements BoardService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
+    //? 댓글 수정 기능
     public ResponseDto<PatchCommentResponseDto> patchComment(String userId, PatchCommentRequestDto dto){
 
         PatchCommentResponseDto data = null;
 
         int boardNumber = dto.getBoardNumber();
         int commentNumber = dto.getCommentNumber();
-        // int commentNumber = dto.getCommentNumber();
 
         try{
             
@@ -92,7 +92,6 @@ public class BoardServiceImplements implements BoardService {
             
             if(boardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
 
-            // if(commentNumber == null) return ResponseDto.setFail(ResponseMessage.NOT_EXITST_COMMENT_NUMBER);
 
             boolean isEqualWriter = userId.equals(commentEntity.getWriterId());
             if(!isEqualWriter) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
@@ -207,8 +206,31 @@ public class BoardServiceImplements implements BoardService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
 
     }
+    
+    //? 댓글 삭제
+    public ResponseDto<DeleteCommentResponseDto> deleteComment(String userId, int commentNumber) {
+        
+        DeleteCommentResponseDto data = null;
 
-   
+        try {
+
+            CommentEntity commentEntity = commentRepository.findByCommentNumber(commentNumber);
+            if(commentEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXITST_COMMENT_NUMBER);
+
+            boolean isEqualWriter = userId.equals(commentEntity.getWriterId());
+            if(!isEqualWriter) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSOIN);
+
+            commentRepository.deleteByCommentNumber(commentNumber);
+
+            commentRepository.delete(commentEntity);
+            data = new DeleteCommentResponseDto(true);
+
+        } catch(Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+    }
     
     // ? 특정축제 전체 후기 게시글 불러오기 -김종빈
     public ResponseDto<List<GetFestivalReviewBoardListResponseDto>> getFestivalReviewBoardList(Integer festivalNumber) {
