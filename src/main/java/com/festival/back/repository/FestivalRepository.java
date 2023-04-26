@@ -9,5 +9,5 @@ import com.festival.back.entity.FestivalEntity;
 public interface FestivalRepository extends JpaRepository<FestivalEntity, Integer> {
     
     public FestivalEntity findByFestivalNumber(int festivalNumber);
-    
+
 }

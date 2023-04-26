@@ -10,4 +10,5 @@ public interface ApiPattern {
     
     public static final String FESTIVAL = "/api/festival";
     public static final String ONE_LINE_REVIEW = "/api/one-line-review";
+
 }
