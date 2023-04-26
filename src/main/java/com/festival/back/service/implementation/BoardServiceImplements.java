@@ -1,5 +1,6 @@
 package com.festival.back.service.implementation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -334,11 +335,13 @@ public class BoardServiceImplements implements BoardService {
             UserEntity userEntity = userRepository.findByUserId(userId);
             if (userEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
 
-            InterestedFestivalEntity interestedFestivalEntity = interestedFestivalRepository.findByUserId(userId);
-            if (interestedFestivalEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_INTERESTED_FESTIVAL_TYPE);
+            List<InterestedFestivalEntity> interestedFestivalList = interestedFestivalRepository.findByUserId(userId);
+            if (interestedFestivalList == null || interestedFestivalList.size() == 0) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_INTERESTED_FESTIVAL_TYPE);
 
-            List<InterestedFestivalEntity> interestedFestivalTypeList = interestedFestivalRepository.findByInterestedFestivalType(userId);
-            List<FestivalEntity> festivalList = festivalRepository.findByFestivalType(interestedFestivalTypeList);
+            List<String> interestedFestivalTypeList = new ArrayList<>();
+            for (InterestedFestivalEntity interestedFestival: interestedFestivalList)
+                interestedFestivalTypeList.add(interestedFestival.getInterestedFestivalType());
+            List<FestivalEntity> festivalList = festivalRepository.findByFestivalTypeIn(interestedFestivalTypeList);
 
             data = GetInterestedFestivalListResponseDto.copyList(festivalList);
             
