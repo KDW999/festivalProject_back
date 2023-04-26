@@ -24,7 +24,6 @@ public class UserEntity {
     private String telNumber;
     private boolean adminCheck;
     private boolean reportUser;
-    private String interestedFestival;
     
     public UserEntity(SignUpRequestDto dto) {
         this.userId = dto.getUserId();
@@ -32,6 +31,5 @@ public class UserEntity {
         this.password = dto.getPassword();
         this.profileUrl = dto.getProfileUrl();
         this.telNumber = dto.getTelNumber();
-        this.interestedFestival = dto.getInterestedFestival();
     }
 }
