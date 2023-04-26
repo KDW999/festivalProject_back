@@ -10,6 +10,7 @@ public class ResponseMessage {
     public static final String NOT_EXIST_BOARD = "존재하지 않는 게시물입니다.";
     public static final String NOT_EXITST_COMMENT_NUMBER = "존재하지 않는 댓글 번호입니다.";
     public static final String NOT_PERMISSOIN = "권한을 가지고 있지 않습니다.";
+    public static final String NOT_EXITST_FESTIVAL_NAME = "존재하지 않는 축제 이름입니다.";
 
     public static final String EXIST_ID = "존재하는 아이디 입니다.";
     public static final String EXIST_NICKNAME = "존재하는 닉네임 입니다.";

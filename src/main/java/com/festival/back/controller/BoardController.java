@@ -43,7 +43,6 @@ import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
 import com.festival.back.dto.response.board.PostFestivalReviewBoardResponseDto;
 
 @Api(description="게시글 모듈")
-
 @RestController
 @RequestMapping(ApiPattern.BOARD)
 public class BoardController {
@@ -126,7 +125,7 @@ public class BoardController {
     // ? 특정 축제 특정 후기 게시글 불러오기 -김종빈
     @GetMapping(GET_FESTIVAL_REVIEW_BOARD)
         public ResponseDto<GetFestivalReviewBoardResponseDto> getFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber,@PathVariable(name="boardNumber") Integer boardNumber){
-            ResponseDto<GetFestivalReviewBoardResponseDto> response=boardService.getFestivalReviewBoard(festivalNumber,boardNumber );
+            ResponseDto<GetFestivalReviewBoardResponseDto> response=boardService.getFestivalReviewBoard(festivalNumber, boardNumber);
             return response;
         
     }
