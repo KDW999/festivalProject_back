@@ -1,5 +1,7 @@
 package com.festival.back.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +18,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.festival.back.common.constant.ApiPattern;
 
 import com.festival.back.dto.request.board.PatchCommentRequestDto;
+import com.festival.back.dto.request.board.PatchReviewBoardRequestDto;
 import com.festival.back.dto.request.board.PostCommentRequestDto;
 import com.festival.back.dto.request.board.RecommendRequestDto;
 import com.festival.back.dto.response.ResponseDto;
+import com.festival.back.dto.response.board.GetFestivalReviewBoardListResponseDto;
+import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
+import com.festival.back.dto.response.board.GetMyFestivalReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.DeleteCommentResponseDto;
+import com.festival.back.dto.response.board.DeleteFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.PatchCommentResponseDto;
+import com.festival.back.dto.response.board.PatchFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.PostCommentResponseDto;
 import com.festival.back.dto.response.board.RecommendResponseDto;
 import com.festival.back.service.BoardService;
@@ -29,8 +37,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
+
+
 import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
-import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.PostFestivalReviewBoardResponseDto;
 
 @Api(description="게시글 모듈")
@@ -44,9 +53,12 @@ public class BoardController {
     private final String RECOMMEND = "/recommend";
     private final String POST_COMMENT = "/post-comment";
     private final String POST_FESTIVAL_REVIEW_BOARD = "";
+    private final String PATCH_FESTIVAL_REVIEW_BOARD = "";
+    private final String DELETE_BOARD = "/{boardNumber}";
+    private final String GET_MY_LIST = "/my-reviewboard-list";
 
     private final String GET_FESTIVAL_REVIEW_BOARD="/{festivalNumber}/{boardNumber}";
-    private final String GET_FESTIVAL_REVIEW="/{festivalNumber}";
+    private final String GET_FESTIVAL_LIST="/festival/{festivalNumber}";
 
     private final String PATCH_COMMENT = "/patch-comment";
 
@@ -112,11 +124,48 @@ public class BoardController {
     }
 
     // ? 특정 축제 특정 후기 게시글 불러오기 -김종빈
-    @GetMapping(value={GET_FESTIVAL_REVIEW_BOARD,GET_FESTIVAL_REVIEW})
+    @GetMapping(GET_FESTIVAL_REVIEW_BOARD)
         public ResponseDto<GetFestivalReviewBoardResponseDto> getFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber,@PathVariable(name="boardNumber") Integer boardNumber){
             ResponseDto<GetFestivalReviewBoardResponseDto> response=boardService.getFestivalReviewBoard(festivalNumber,boardNumber );
             return response;
         
+    }
+     // ? 특정축제 전체 후기 게시글 불러오기 -김종빈
+     @GetMapping(GET_FESTIVAL_LIST)
+     public ResponseDto<List<GetFestivalReviewBoardListResponseDto>> getFestivalReviewBoardList(@PathVariable("festivalNumber")Integer festivalNumber){
+        System.out.println(festivalNumber);
+        ResponseDto<List<GetFestivalReviewBoardListResponseDto>> response =boardService.getFestivalReviewBoardList(festivalNumber);
+        return response;
+     }
+
+    //  ?특정 축제 후기 수정하기 -김종빈
+    @PatchMapping(PATCH_FESTIVAL_REVIEW_BOARD)
+    public ResponseDto<PatchFestivalReviewBoardResponseDto> patchReivewBoard(@AuthenticationPrincipal String userId,@Valid @RequestBody PatchReviewBoardRequestDto requestBody){
+        ResponseDto<PatchFestivalReviewBoardResponseDto> response =boardService.patchReivewBoard(userId, requestBody);
+        return response;
+
+    } 
+ 
+    // ? 특정 게시물 삭제-김종빈
+    @ApiOperation(value = "특정 게시물 삭제"
+    ,notes = "Reques Header 에 Athorization 에 Bearer JWT 를 포함하고 pathvariable 에 boardNumber 를 포함하여 반환하면"+
+    "성공시 전체 게시물 데이터를 반환하고,실패시 실패 메세지를 반환")
+    @DeleteMapping(DELETE_BOARD)
+    public ResponseDto<DeleteFestivalReviewBoardResponseDto> deleteBoard(
+        @ApiParam(hidden = true)
+        @AuthenticationPrincipal String email,
+    @ApiParam(value = "게시물 번호",example = "1",required = true)
+    @PathVariable("boardNumber")int boardNumber){
+        ResponseDto<DeleteFestivalReviewBoardResponseDto> response = boardService.deleteBoard(email,boardNumber);
+        return response;
+    }
+// ? 본인이 작성한 전체리스트 불러오기-김종빈
+    @ApiOperation(value = "본인 작성 게시물 리스트 가져오기"
+    ,notes = "Request Header 에 Athorization 에 Bearer JWT 를 포함하여 요청하면 성공시 요청자가 게시물 ")
+    @GetMapping(GET_MY_LIST)
+    public ResponseDto<List<GetMyFestivalReviewBoardListResponseDto>> getMyList(@ApiParam(hidden = true)@AuthenticationPrincipal String userId){
+        ResponseDto<List<GetMyFestivalReviewBoardListResponseDto>> response= boardService.getMyList(userId);
+        return response;
     }
 
 }
