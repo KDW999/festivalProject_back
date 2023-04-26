@@ -14,6 +14,7 @@ import com.festival.back.dto.response.board.PatchCommentResponseDto;
 import com.festival.back.dto.response.board.PostCommentResponseDto;
 import com.festival.back.dto.response.board.RecommendResponseDto;
 import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
+import com.festival.back.dto.response.board.DeleteCommentResponseDto;
 import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.PostFestivalReviewBoardResponseDto;
 import com.festival.back.entity.BoardEntity;
@@ -75,15 +76,17 @@ public class BoardServiceImplements implements BoardService {
         PatchCommentResponseDto data = null;
 
         int boardNumber = dto.getBoardNumber();
+        int commentNumber = dto.getCommentNumber();
+        // int commentNumber = dto.getCommentNumber();
 
-        //? 이거 잘 모르겠습니다. 
-        //? 그런데 댓글 수정이면 CommentEntity에서 하는 게 맞는거 같아서 일단 적었습니다.
         try{
             
-            CommentEntity commentEntity = commentRepository.findByBoardNumber(boardNumber);
-            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+            CommentEntity commentEntity = commentRepository.findByCommentNumber(commentNumber);
+            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber); 
             
-            if(commentEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
+            if(boardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
+
+            // if(commentNumber == null) return ResponseDto.setFail(ResponseMessage.NOT_EXITST_COMMENT_NUMBER);
 
             boolean isEqualWriter = userId.equals(commentEntity.getWriterId());
             if(!isEqualWriter) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
@@ -94,7 +97,7 @@ public class BoardServiceImplements implements BoardService {
             List<RecommendEntity> recommendList = recommendRepository.findByBoardNumber(boardNumber);
             List<CommentEntity> commentList = commentRepository.findByBoardNumberOrderByWriteDatetimeDesc(boardNumber);
 
-            data = new PatchCommentResponseDto(commentEntity, boardEntity, recommendList, commentList); 
+            data = new PatchCommentResponseDto(boardEntity, recommendList, commentList); 
 
         } catch(Exception exception){
             exception.printStackTrace();
@@ -198,6 +201,12 @@ public class BoardServiceImplements implements BoardService {
         }
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
 
+    }
+
+    @Override
+    public ResponseDto<DeleteCommentResponseDto> deleteComment(String userId, int commentNumber) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteComment'");
     }
     
 }

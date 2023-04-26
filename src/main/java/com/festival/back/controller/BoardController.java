@@ -28,9 +28,6 @@ import com.festival.back.service.BoardService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.springframework.web.bind.annotation.RequestParam;
-
-
 
 import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
 import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
@@ -45,7 +42,7 @@ public class BoardController {
     @Autowired private BoardService boardService;
 
     private final String RECOMMEND = "/recommend";
-    private final String POST_COMMENT = "/post-comment/{commentNumber}";
+    private final String POST_COMMENT = "/post-comment";
     private final String POST_FESTIVAL_REVIEW_BOARD = "";
 
     private final String GET_FESTIVAL_REVIEW_BOARD="/{festivalNumber}/{boardNumber}";
@@ -91,9 +88,6 @@ public class BoardController {
         ResponseDto<DeleteCommentResponseDto> response = boardService.deleteComment(userId, commentNumber);
         return response;
     }
-
-    
-
 
     //? 글 추천하기
     @ApiOperation(value = "추천 기능", notes = "Request Header Authorization에 Bearer JWT를 포함하고 " +
