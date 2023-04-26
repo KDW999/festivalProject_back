@@ -28,9 +28,6 @@ import com.festival.back.service.BoardService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.springframework.web.bind.annotation.RequestParam;
-
-
 
 import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
 import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
@@ -91,9 +88,6 @@ public class BoardController {
         ResponseDto<DeleteCommentResponseDto> response = boardService.deleteComment(userId, commentNumber);
         return response;
     }
-
-    
-
 
     //? 글 추천하기
     @ApiOperation(value = "추천 기능", notes = "Request Header Authorization에 Bearer JWT를 포함하고 " +

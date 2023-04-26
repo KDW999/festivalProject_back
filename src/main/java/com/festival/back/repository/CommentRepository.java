@@ -10,5 +10,5 @@ import com.festival.back.entity.CommentEntity;
 public interface CommentRepository extends JpaRepository<CommentEntity, Integer> {
 
     public List<CommentEntity> findByBoardNumberOrderByWriteDatetimeDesc(int boardNumber);
-    public CommentEntity findByBoardNumber(int boardNumber);
+    public CommentEntity findByCommentNumber(int commentNumber);
 }
