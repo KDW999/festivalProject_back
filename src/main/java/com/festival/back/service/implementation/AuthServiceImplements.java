@@ -1,5 +1,7 @@
 package com.festival.back.service.implementation;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,7 +16,7 @@ import com.festival.back.dto.response.auth.SignUpResponseDto;
 import com.festival.back.entity.InterestedFestivalEntity;
 import com.festival.back.entity.UserEntity;
 import com.festival.back.provider.TokenProvider;
-import com.festival.back.repository.InterstedFestivalRepository;
+import com.festival.back.repository.InterestedFestivalRepository;
 import com.festival.back.repository.UserRepository;
 import com.festival.back.service.AuthService;
 
@@ -22,7 +24,7 @@ import com.festival.back.service.AuthService;
 public class AuthServiceImplements implements AuthService {
 
     @Autowired private UserRepository userRepository;
-    @Autowired private InterstedFestivalRepository interstedFestivalRepository;
+    @Autowired private InterestedFestivalRepository interestedFestivalRepository;
     @Autowired private TokenProvider tokenProvider;
 
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -36,7 +38,7 @@ public class AuthServiceImplements implements AuthService {
         String nickname = dto.getNickname();
         String password = dto.getPassword();
         String telNumber = dto.getTelNumber();
-        String interestedFestivalType = dto.getInterestedFestival();
+        List<String> interestedFestivalType = dto.getInterestedFestival();
         
         try {
             boolean hasUserId = userRepository.existsById(userId);
@@ -47,18 +49,17 @@ public class AuthServiceImplements implements AuthService {
 
             boolean hasTelNumber = userRepository.existsByTelNumber(telNumber);
             if (hasTelNumber) return ResponseDto.setFail(ResponseMessage.EXIST_TELNUMBER);
-
-            if (interestedFestivalType != null) {
-                InterestedFestivalEntity interestedFestivalEntity = new InterestedFestivalEntity(userId, interestedFestivalType);
-                interstedFestivalRepository.save(interestedFestivalEntity);
-            }
-
+            
             String encodedPassword = passwordEncoder.encode(password);
             dto.setPassword(encodedPassword);
-
+            
             UserEntity userEntity = new UserEntity(dto);
             userRepository.save(userEntity);
-
+            
+            if (interestedFestivalType != null) {
+                List<InterestedFestivalEntity> interestedFestivalEntity = InterestedFestivalEntity.createList(dto);
+                interestedFestivalRepository.saveAll(interestedFestivalEntity);
+            }
             data = new SignUpResponseDto(true);
 
         } catch (Exception exception) {

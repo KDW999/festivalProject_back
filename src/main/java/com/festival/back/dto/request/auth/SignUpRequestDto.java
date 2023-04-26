@@ -1,5 +1,7 @@
 package com.festival.back.dto.request.auth;
 
+import java.util.List;
+
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.Length;
@@ -39,5 +41,5 @@ public class SignUpRequestDto {
     private String telNumber;
 
     @ApiModelProperty(value="사용자의 관심있는 축제", example="OO축제", required=false)
-    private String interestedFestival;
+    private List<String> interestedFestival;
 }

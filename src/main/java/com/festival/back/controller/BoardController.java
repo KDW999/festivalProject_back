@@ -170,7 +170,6 @@ public class BoardController {
         return response;
     }
 
-<<<<<<< HEAD
     // ? 추천 페스티벌 리스트 받아오기 -감재현
     @ApiOperation(value="회원가입시 선택한 추천 축제 타입 리스트 받아오기")
     @GetMapping(GET_INTERESTED_FESTIVAL_LIST)
@@ -181,6 +180,4 @@ public class BoardController {
     
     
 
-=======
->>>>>>> 7a9813ee1e1f2514777feeba18972d07144bd531
 }
