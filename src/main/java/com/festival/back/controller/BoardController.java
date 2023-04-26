@@ -24,6 +24,7 @@ import com.festival.back.dto.request.board.RecommendRequestDto;
 import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.board.GetFestivalReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
+import com.festival.back.dto.response.board.GetInterestedFestivalListResponseDto;
 import com.festival.back.dto.response.board.GetMyFestivalReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.DeleteCommentResponseDto;
 import com.festival.back.dto.response.board.DeleteFestivalReviewBoardResponseDto;
@@ -36,8 +37,6 @@ import com.festival.back.service.BoardService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-
-
 
 import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
 import com.festival.back.dto.response.board.PostFestivalReviewBoardResponseDto;
@@ -57,6 +56,7 @@ public class BoardController {
     private final String GET_MY_LIST = "/my-reviewboard-list";
 
     private final String GET_FESTIVAL_REVIEW_BOARD="/{festivalNumber}/{boardNumber}";
+    private final String GET_INTERESTED_FESTIVAL_LIST = "/festival/interested-list";
     private final String GET_FESTIVAL_LIST="/festival/{festivalNumber}";
 
     private final String PATCH_COMMENT = "/patch-comment";
@@ -100,7 +100,7 @@ public class BoardController {
         return response;
     }
 
-    //? 글 추천하기
+    //? 후기 게시물 추천하기
     @ApiOperation(value = "추천 기능", notes = "Request Header Authorization에 Bearer JWT를 포함하고 " +
     "Request Body에 boardNumber를 포함하여 요청을 하면, 성공 시 게시물 전체 데이터를 반환")
     @PostMapping(RECOMMEND)
@@ -111,7 +111,7 @@ public class BoardController {
         return response;       
     }
 
-    // ? 축제 후기 게시판 작성 -김종빈
+    // ? 축제 후기 게시물 작성 -김종빈
     @PostMapping(POST_FESTIVAL_REVIEW_BOARD)
     public ResponseDto<PostFestivalReviewBoardResponseDto> 
     postFestivalReviewBoard(@AuthenticationPrincipal String userId,
@@ -166,5 +166,15 @@ public class BoardController {
         ResponseDto<List<GetMyFestivalReviewBoardListResponseDto>> response= boardService.getMyList(userId);
         return response;
     }
+
+    // ? 추천 페스티벌 리스트 받아오기 -감재현
+    @ApiOperation(value="회원가입시 선택한 추천 축제 타입 리스트 받아오기")
+    @GetMapping(GET_INTERESTED_FESTIVAL_LIST)
+    public ResponseDto<List<GetInterestedFestivalListResponseDto>> GetInterestedFestivalList(@ApiParam(hidden = true) @AuthenticationPrincipal String userId) {
+        ResponseDto<List<GetInterestedFestivalListResponseDto>> response = boardService.GetInterestedFestivalList(userId);
+        return response;
+    }
+    
+    
 
 }

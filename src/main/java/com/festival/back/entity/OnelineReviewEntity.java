@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
 
+import com.festival.back.dto.request.oneLineReview.PatchOneLineReviewRequestDto;
 import com.festival.back.dto.request.oneLineReview.PostOneLineReviewRequestDto;
 import com.festival.back.entity.primaryKey.OneLineReviewPk;
 
@@ -45,6 +46,11 @@ public class OneLineReviewEntity {
         this.userNickname = userEntity.getNickname();
         this.writeDatetime = simpleDateFormat.format(now);
          
+    }
+
+    public void patch(PatchOneLineReviewRequestDto dto){
+        this.average = dto.getAverage();
+        this.oneLineReviewContent = dto.getOneLineReviewContent();
     }
 
     

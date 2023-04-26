@@ -12,15 +12,16 @@ import com.festival.back.dto.request.board.PostCommentRequestDto;
 import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
 import com.festival.back.dto.request.board.RecommendRequestDto;
 import com.festival.back.dto.response.ResponseDto;
-import com.festival.back.dto.response.board.PatchCommentResponseDto;
-import com.festival.back.dto.response.board.PatchFestivalReviewBoardResponseDto;
-import com.festival.back.dto.response.board.PostCommentResponseDto;
-import com.festival.back.dto.response.board.RecommendResponseDto;
 import com.festival.back.dto.response.board.DeleteCommentResponseDto;
 import com.festival.back.dto.response.board.DeleteFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.GetFestivalReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
+import com.festival.back.dto.response.board.GetInterestedFestivalListResponseDto;
 import com.festival.back.dto.response.board.GetMyFestivalReviewBoardListResponseDto;
+import com.festival.back.dto.response.board.PatchCommentResponseDto;
+import com.festival.back.dto.response.board.PatchFestivalReviewBoardResponseDto;
+import com.festival.back.dto.response.board.PostCommentResponseDto;
+import com.festival.back.dto.response.board.RecommendResponseDto;
 import com.festival.back.dto.response.board.PostFestivalReviewBoardResponseDto;
 import com.festival.back.entity.BoardEntity;
 import com.festival.back.entity.CommentEntity;
@@ -110,7 +111,7 @@ public class BoardServiceImplements implements BoardService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
 
     }
-
+    
     //? 추천 기능
     public ResponseDto<RecommendResponseDto> recommend(String id, RecommendRequestDto dto) {
 
@@ -217,7 +218,7 @@ public class BoardServiceImplements implements BoardService {
             if(commentEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXITST_COMMENT_NUMBER);
 
             boolean isEqualWriter = userId.equals(commentEntity.getWriterId());
-            if(!isEqualWriter) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSOIN);
+            if(!isEqualWriter) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSION);
 
             commentRepository.deleteByCommentNumber(commentNumber);
 
@@ -238,8 +239,6 @@ public class BoardServiceImplements implements BoardService {
         try {
             List<BoardEntity> boardEntityList=boardRepository.findByFestivalNumberOrderByBoardWriteDatetimeDesc(festivalNumber);
             if(boardEntityList.isEmpty()) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
-    
-        
        
             data=GetFestivalReviewBoardListResponseDto.copyList(boardEntityList);
             
@@ -261,7 +260,7 @@ public class BoardServiceImplements implements BoardService {
             if(boardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
 
             boolean isEqulWriter = userId.equals(boardEntity.getWriterId());
-            if (!isEqulWriter) return ResponseDto.setFail(ResponseMessage.NOT_PORMISSION);
+            if (!isEqulWriter) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSION);
 
             List<RecommendEntity> recommdList=recommendRepository.findByBoardNumber(boardNumber);
             List<CommentEntity> commentList=commentRepository.findByBoardNumberOrderByWriteDatetimeDesc(boardNumber);
@@ -291,7 +290,7 @@ public class BoardServiceImplements implements BoardService {
             if (boardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
 
             boolean isEqulWriter = userId.equals(boardEntity.getWriterId());
-            if (!isEqulWriter) return ResponseDto.setFail(ResponseMessage.NOT_PORMISSION);
+            if (!isEqulWriter) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSION);
 
                 commentRepository.deleteByBoardNumber(boardNumber);
                 recommendRepository.deleteByBoardNumber(boardNumber);
@@ -317,6 +316,20 @@ public class BoardServiceImplements implements BoardService {
             
         } catch (Exception e) {
             e.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+        
+    }
+
+    // ? 
+    public ResponseDto<List<GetInterestedFestivalListResponseDto>> GetInterestedFestivalList(String userId) {
+        List<GetInterestedFestivalListResponseDto> data = null;
+
+        try {
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
         }
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
