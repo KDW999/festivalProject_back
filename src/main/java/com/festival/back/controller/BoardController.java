@@ -47,6 +47,7 @@ public class BoardController {
 
     private final String GET_FESTIVAL_REVIEW_BOARD="/{festivalNumber}/{boardNumber}";
     private final String GET_FESTIVAL_REVIEW="/{festivalNumber}";
+    private final String GET_INTERESTED_FESTIVAL_LIST = ""
 
     private final String PATCH_COMMENT = "/patch-comment";
 
@@ -119,8 +120,8 @@ public class BoardController {
         
     }
 
-    //추천 페스티벌 리스트 받아오기
-    // @GetMapping(value="path")
+    // ? 추천 페스티벌 리스트 받아오기
+    // @GetMapping()
     // public SomeData getMethodName(@RequestParam String param) {
     //     return new SomeData();
     // }
