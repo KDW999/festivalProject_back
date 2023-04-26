@@ -15,4 +15,5 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Integer>
     public CommentEntity findByBoardNumber(int boardNumber);
     @Transactional
     public void deleteByBoardNumber(int boardNumber);
+    public CommentEntity findByCommentNumber(int commentNumber);
 }

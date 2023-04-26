@@ -1,7 +1,6 @@
 package com.festival.back.dto.request.board;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -18,6 +17,5 @@ public class PostCommentRequestDto {
     private int boardNumber;
 
     @ApiModelProperty(value="댓글 내용", example="Comment!", required=true)
-    @NotBlank
     private String commentContent;
 }

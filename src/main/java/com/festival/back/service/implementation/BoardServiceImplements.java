@@ -81,15 +81,17 @@ public class BoardServiceImplements implements BoardService {
         PatchCommentResponseDto data = null;
 
         int boardNumber = dto.getBoardNumber();
+        int commentNumber = dto.getCommentNumber();
+        // int commentNumber = dto.getCommentNumber();
 
-        //? 이거 잘 모르겠습니다. 
-        //? 그런데 댓글 수정이면 CommentEntity에서 하는 게 맞는거 같아서 일단 적었습니다.
         try{
             
-            CommentEntity commentEntity = commentRepository.findByBoardNumber(boardNumber);
-            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+            CommentEntity commentEntity = commentRepository.findByCommentNumber(commentNumber);
+            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber); 
             
-            if(commentEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
+            if(boardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
+
+            // if(commentNumber == null) return ResponseDto.setFail(ResponseMessage.NOT_EXITST_COMMENT_NUMBER);
 
             boolean isEqualWriter = userId.equals(commentEntity.getWriterId());
             if(!isEqualWriter) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
@@ -100,7 +102,7 @@ public class BoardServiceImplements implements BoardService {
             List<RecommendEntity> recommendList = recommendRepository.findByBoardNumber(boardNumber);
             List<CommentEntity> commentList = commentRepository.findByBoardNumberOrderByWriteDatetimeDesc(boardNumber);
 
-            data = new PatchCommentResponseDto(commentEntity, boardEntity, recommendList, commentList); 
+            data = new PatchCommentResponseDto(boardEntity, recommendList, commentList); 
 
         } catch(Exception exception){
             exception.printStackTrace();
@@ -204,6 +206,8 @@ public class BoardServiceImplements implements BoardService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
 
     }
+
+   
     
     // ? 특정축제 전체 후기 게시글 불러오기 -김종빈
     public ResponseDto<List<GetFestivalReviewBoardListResponseDto>> getFestivalReviewBoardList(Integer festivalNumber) {
