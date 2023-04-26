@@ -340,7 +340,9 @@ public class BoardServiceImplements implements BoardService {
             if (interestedFestivalEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_INTERESTED_FESTIVAL_TYPE);
 
             List<InterestedFestivalEntity> interestedFestivalTypeList = interestedFestivalRepository.findByInterestedFestivalType(userId);
-            data = GetInterestedFestivalListResponseDto.copyList(interestedFestivalTypeList);
+            List<FestivalEntity> festivalList = festivalRepository.findByFestivalType(interestedFestivalTypeList);
+
+            data = GetInterestedFestivalListResponseDto.copyList(festivalList);
             
         } catch (Exception exception) {
             exception.printStackTrace();
