@@ -1,5 +1,6 @@
 package com.festival.back.service;
 
+
 import com.festival.back.dto.response.ResponseDto;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public interface BoardService {
 
     public ResponseDto<PostCommentResponseDto> postComment(String userId, PostCommentRequestDto dto);
     public ResponseDto<PatchCommentResponseDto> patchComment(String userId, PatchCommentRequestDto dto);
+
 
     public ResponseDto<DeleteCommentResponseDto> deleteComment(String userId, int commentNumber);
 

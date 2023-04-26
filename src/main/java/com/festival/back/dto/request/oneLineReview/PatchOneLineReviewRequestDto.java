@@ -9,10 +9,10 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@ApiModel(value = "한 줄 평 작성 Request Body")
+@ApiModel(value = "특정 축제 게시물의 한 줄 평 수정 Request Body")
 @Data
 @NoArgsConstructor
-public class PostOneLineReviewRequestDto {
+public class PatchOneLineReviewRequestDto {
     
     @ApiModelProperty(value = "한 줄 평 평점", example = "3", required = true)
     @Min(0)
