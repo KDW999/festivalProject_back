@@ -20,6 +20,7 @@ import com.festival.back.dto.response.board.DeleteCommentResponseDto;
 import com.festival.back.dto.response.board.DeleteFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.GetFestivalReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
+import com.festival.back.dto.response.board.GetInterestedFestivalListResponseDto;
 import com.festival.back.dto.response.board.GetMyFestivalReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.PostFestivalReviewBoardResponseDto;
 import com.festival.back.entity.BoardEntity;
@@ -295,6 +296,20 @@ public class BoardServiceImplements implements BoardService {
             
         } catch (Exception e) {
             e.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+        
+    }
+
+    // ? 
+    public ResponseDto<List<GetInterestedFestivalListResponseDto>> GetInterestedFestivalList(String userId) {
+        List<GetInterestedFestivalListResponseDto> data = null;
+
+        try {
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
         }
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);

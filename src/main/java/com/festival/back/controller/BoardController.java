@@ -24,6 +24,7 @@ import com.festival.back.dto.request.board.RecommendRequestDto;
 import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.board.GetFestivalReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
+import com.festival.back.dto.response.board.GetInterestedFestivalListResponseDto;
 import com.festival.back.dto.response.board.GetMyFestivalReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.DeleteCommentResponseDto;
 import com.festival.back.dto.response.board.DeleteFestivalReviewBoardResponseDto;
@@ -58,12 +59,8 @@ public class BoardController {
     private final String GET_MY_LIST = "/my-reviewboard-list";
 
     private final String GET_FESTIVAL_REVIEW_BOARD="/{festivalNumber}/{boardNumber}";
-<<<<<<< HEAD
-    private final String GET_FESTIVAL_REVIEW="/{festivalNumber}";
-    private final String GET_INTERESTED_FESTIVAL_LIST = ""
-=======
+    private final String GET_INTERESTED_FESTIVAL_LIST = "/festival/interested-list";
     private final String GET_FESTIVAL_LIST="/festival/{festivalNumber}";
->>>>>>> b5390cab837cbd1def24cdc79827ec7e763c32d4
 
     private final String PATCH_COMMENT = "/patch-comment";
 
@@ -173,11 +170,13 @@ public class BoardController {
         return response;
     }
 
-    // ? 추천 페스티벌 리스트 받아오기
-    // @GetMapping()
-    // public SomeData getMethodName(@RequestParam String param) {
-    //     return new SomeData();
-    // }
+    // ? 추천 페스티벌 리스트 받아오기 -감재현
+    @ApiOperation(value="회원가입시 선택한 추천 축제 타입 리스트 받아오기")
+    @GetMapping(GET_INTERESTED_FESTIVAL_LIST)
+    public ResponseDto<List<GetInterestedFestivalListResponseDto>> GetInterestedFestivalList(@ApiParam(hidden = true) @AuthenticationPrincipal String userId) {
+        ResponseDto<List<GetInterestedFestivalListResponseDto>> response = boardService.GetInterestedFestivalList(userId);
+        return response;
+    }
     
     
 
