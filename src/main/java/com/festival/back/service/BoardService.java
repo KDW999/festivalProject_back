@@ -42,7 +42,7 @@ public interface BoardService {
     
     public ResponseDto<List<GetMyFestivalReviewBoardListResponseDto>> getMyList(String userId);
     
-    public ResponseDto<List<GetInterestedFestivalListResponseDto>> GetInterestedFestivalList(String userId);
+    public ResponseDto<List<GetInterestedFestivalListResponseDto>> getInterestedFestivalList(String userId);
 
     public ResponseDto<DeleteFestivalReviewBoardResponseDto> deleteBoard(String userId, int boardNumber);
 }

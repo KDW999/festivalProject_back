@@ -334,7 +334,7 @@ public class BoardServiceImplements implements BoardService {
     }
 
     // ? 관심있는 축제 타입 리스트 받아오기 - 감재현
-    public ResponseDto<List<GetInterestedFestivalListResponseDto>> GetInterestedFestivalList(String userId) {
+    public ResponseDto<List<GetInterestedFestivalListResponseDto>> getInterestedFestivalList(String userId) {
         List<GetInterestedFestivalListResponseDto> data = null;
 
         try {
