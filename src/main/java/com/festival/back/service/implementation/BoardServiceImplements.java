@@ -241,12 +241,6 @@ public class BoardServiceImplements implements BoardService {
         GetFestivalReviewBoardListResponseDto data = null;
 
         try {
-<<<<<<< HEAD
-            List<BoardEntity> boardEntityList=boardRepository.findByFestivalNumberOrderByBoardWriteDatetimeDesc(festivalNumber);
-            if(boardEntityList.isEmpty()) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
-        
-            data=GetFestivalReviewBoardListResponseDto.copyList(boardEntityList);
-=======
             
             FestivalEntity festivalEntity = festivalRepository.findByFestivalNumber(festivalNumber);
             if(festivalEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_FESTIVAL_NUMBER);
@@ -256,15 +250,8 @@ public class BoardServiceImplements implements BoardService {
 
             
 
-             data = new GetFestivalReviewBoardListResponseDto(festivalEntity,boardEntity);
+            data = new GetFestivalReviewBoardListResponseDto(festivalEntity,boardEntity);
 
-     
-   
-    
-        
-       
-         
->>>>>>> 9ce4955d6112ccb4e6071d68430588fd6cea1189
             
         } catch (Exception e) {
             e.printStackTrace();
