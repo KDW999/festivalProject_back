@@ -17,7 +17,6 @@ public interface RecommendRepository extends JpaRepository<RecommendEntity, Reco
     public RecommendEntity findByUserIdAndBoardNumber(String id, int boardNumber);
 
     public List<RecommendEntity> findByBoardNumber(int boardNumber);
-    public List<RecommendEntity> findByBoardNumber(Integer boardNumber);
     @Transactional
     public void deleteByBoardNumber(int boardNumber);
 }
