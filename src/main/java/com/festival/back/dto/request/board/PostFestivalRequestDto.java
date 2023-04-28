@@ -41,4 +41,7 @@ public class PostFestivalRequestDto {
     @ApiModelProperty(value="축제 정보 이미지 URL", example="http://~", required=true)
     private String festivalInformationUrl;
 
+    @ApiModelProperty(value="축제 정보s", example="나비와 함께하는 봄날의 여행 싱그러운 봄바람과 꽃향기와 함께 나비들이 춤을 추는 4월, ", required=true)
+    private String festivalInformation;
+
 }

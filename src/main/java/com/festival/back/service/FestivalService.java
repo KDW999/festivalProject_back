@@ -3,6 +3,7 @@ package com.festival.back.service;
 
 import com.festival.back.dto.request.board.PostFestivalRequestDto;
 import com.festival.back.dto.response.ResponseDto;
+import com.festival.back.dto.response.board.GetSearchFestivalListResponseDto;
 import com.festival.back.dto.response.board.PostFestivalResponseDto;
 import com.festival.back.dto.request.oneLineReview.PatchOneLineReviewRequestDto;
 import com.festival.back.dto.request.oneLineReview.PostOneLineReviewRequestDto;
@@ -16,5 +17,7 @@ public interface FestivalService {
     public ResponseDto<PostOneLineReviewResponseDto> postOneLineReview(String userId, PostOneLineReviewRequestDto dto);
     public ResponseDto<PatchOneLineReviewResponseDto> patchOneLineReview(String userId, PatchOneLineReviewRequestDto dto);
     public ResponseDto<DeleteOneLineReviewResponseDto> deleteOneLineReview(int festivalNumber, String userId);
+    public ResponseDto<GetSearchFestivalListResponseDto> getSearchFestivalList(String searchWord);
+
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.festival.back.entity.BoardEntity;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ApiModel("내가 작성한 축제 전체 후기게시글 LIST Response.")
 public class GetMyFestivalReviewBoardListResponseDto {
 
     @ApiModelProperty(value = "게시물 번호", example = "1", required = true)
