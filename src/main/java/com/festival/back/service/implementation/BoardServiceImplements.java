@@ -251,14 +251,9 @@ public class BoardServiceImplements implements BoardService {
             List<BoardEntity> boardEntity = boardRepository.findByFestivalNumberOrderByBoardWriteDatetimeDesc(festivalNumber);
             if(boardEntity.isEmpty()) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
 
-<<<<<<< HEAD
             
 
             data = new GetFestivalReviewBoardListResponseDto(festivalEntity,boardEntity);
-=======
-            data = new GetFestivalReviewBoardListResponseDto(festivalEntity,boardEntity);
-
->>>>>>> d770aa4272186007bbe6b1fe3e208687fc96c17c
             
         } catch (Exception e) {
             e.printStackTrace();
