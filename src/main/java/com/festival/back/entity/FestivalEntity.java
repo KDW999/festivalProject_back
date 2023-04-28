@@ -50,5 +50,4 @@ public class FestivalEntity {
         this.festivalInformation = dto.getFestivalInformation();
         
     }
-    
 }
