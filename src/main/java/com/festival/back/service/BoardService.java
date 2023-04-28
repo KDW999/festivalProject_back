@@ -25,8 +25,8 @@ import com.festival.back.dto.response.board.RecommendResponseDto;
 public interface BoardService {
 
     public ResponseDto<PostCommentResponseDto> postComment(String userId, PostCommentRequestDto dto);
-    public ResponseDto<PatchCommentResponseDto> patchComment(String userId, PatchCommentRequestDto dto);
 
+    public ResponseDto<PatchCommentResponseDto> patchComment(String userId, PatchCommentRequestDto dto);
 
     public ResponseDto<DeleteCommentResponseDto> deleteComment(String userId, int commentNumber);
 
