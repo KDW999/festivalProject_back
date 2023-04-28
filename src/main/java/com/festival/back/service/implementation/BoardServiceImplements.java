@@ -19,6 +19,7 @@ import com.festival.back.dto.response.board.GetFestivalReviewBoardListResponseDt
 import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.GetInterestedFestivalListResponseDto;
 import com.festival.back.dto.response.board.GetMyFestivalReviewBoardListResponseDto;
+import com.festival.back.dto.response.board.GetSearchFestivalReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.PatchCommentResponseDto;
 import com.festival.back.dto.response.board.PatchFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.PostCommentResponseDto;
@@ -29,12 +30,14 @@ import com.festival.back.entity.CommentEntity;
 import com.festival.back.entity.FestivalEntity;
 import com.festival.back.entity.InterestedFestivalEntity;
 import com.festival.back.entity.RecommendEntity;
+import com.festival.back.entity.SearchwordLogEntity;
 import com.festival.back.entity.UserEntity;
 import com.festival.back.repository.BoardRepository;
 import com.festival.back.repository.CommentRepository;
 import com.festival.back.repository.FestivalRepository;
 import com.festival.back.repository.InterestedFestivalRepository;
 import com.festival.back.repository.RecommendRepository;
+import com.festival.back.repository.SearchWordLogRepository;
 import com.festival.back.repository.UserRepository;
 import com.festival.back.service.BoardService;
 
@@ -47,6 +50,7 @@ public class BoardServiceImplements implements BoardService {
     @Autowired private RecommendRepository recommendRepository;
     @Autowired private FestivalRepository festivalRepository;
     @Autowired private InterestedFestivalRepository interestedFestivalRepository;
+    @Autowired private SearchWordLogRepository searchWordLogRepository;
     
     //? 댓글 작성
     public ResponseDto<PostCommentResponseDto> postComment(String userId, PostCommentRequestDto dto) {
@@ -65,13 +69,13 @@ public class BoardServiceImplements implements BoardService {
             CommentEntity commentEntity = new CommentEntity(userEntity, dto);
             commentRepository.save(commentEntity);
 
-            boardEntity.increaseRecommendCount();
+            boardEntity.increaseCommentCount();
             boardRepository.save(boardEntity);
 
             List<CommentEntity> commentList = commentRepository.findByBoardNumberOrderByWriteDatetimeDesc(boardNumber);
-            List<RecommendEntity> RecommendList = recommendRepository.findByBoardNumber(boardNumber); 
+            List<RecommendEntity> recommendList = recommendRepository.findByBoardNumber(boardNumber);
 
-            data = new PostCommentResponseDto(boardEntity, commentList, RecommendList);
+            data = new PostCommentResponseDto(boardEntity, commentList, recommendList);
 
         } catch(Exception exception) {
             exception.printStackTrace();
@@ -187,7 +191,7 @@ public class BoardServiceImplements implements BoardService {
     }
 
     // ? 특정 축제 후기 게시글 불러오기-김종빈
-    public ResponseDto<GetFestivalReviewBoardResponseDto> getFestivalReviewBoard(int festivalNumber,Integer boardNumber) {
+    public ResponseDto<GetFestivalReviewBoardResponseDto> getFestivalReviewBoard(int festivalNumber, int boardNumber) {
         GetFestivalReviewBoardResponseDto data= null;
 
         try {
@@ -248,6 +252,7 @@ public class BoardServiceImplements implements BoardService {
             if(boardEntity.isEmpty()) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
 
             data = new GetFestivalReviewBoardListResponseDto(festivalEntity,boardEntity);
+
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -274,8 +279,8 @@ public class BoardServiceImplements implements BoardService {
 
             FestivalEntity festivalEntity = festivalRepository.findByFestivalNumber(festivalNumber);
             if(festivalEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_FESTIVAL_NUMBER);
-           System.out.println("dto"+dto.toString());
-           System.out.println(boardEntity.toString());
+            System.out.println("dto"+dto.toString());
+            System.out.println(boardEntity.toString());
             boardEntity.patch(dto);
             boardRepository.save(boardEntity);
 
@@ -287,7 +292,7 @@ public class BoardServiceImplements implements BoardService {
         }
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
-   
+    
     // ? 특정 게시물 삭제-김종빈
     public ResponseDto<DeleteFestivalReviewBoardResponseDto> deleteBoard(String userId, int boardNumber) {
         DeleteFestivalReviewBoardResponseDto data = null;
@@ -330,7 +335,7 @@ public class BoardServiceImplements implements BoardService {
     }
 
     // ? 관심있는 축제 타입 리스트 받아오기 - 감재현
-    public ResponseDto<List<GetInterestedFestivalListResponseDto>> GetInterestedFestivalList(String userId) {
+    public ResponseDto<List<GetInterestedFestivalListResponseDto>> getInterestedFestivalList(String userId) {
         List<GetInterestedFestivalListResponseDto> data = null;
 
         try {
@@ -355,6 +360,26 @@ public class BoardServiceImplements implements BoardService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
         
     }
+
+    //? 후기 게시판 검색
+    public ResponseDto<GetSearchFestivalReviewBoardListResponseDto> getSearchFestivalReviewBoardList(String searchWord) {
+        GetSearchFestivalReviewBoardListResponseDto data =null;
+
+        try {
+            SearchwordLogEntity searchwordLogEntity=new SearchwordLogEntity(searchWord); 
+            searchWordLogRepository.save(searchwordLogEntity);
+            List<BoardEntity> boardEntity=
+            boardRepository.findByBoardTitleContainsOrBoardContentContainsOrderByBoardWriteDatetimeDesc(searchWord,searchWord);
+            
+            data=new GetSearchFestivalReviewBoardListResponseDto(boardEntity);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+    }
+
 
 
 }

@@ -14,4 +14,8 @@ public interface FestivalRepository extends JpaRepository<FestivalEntity,Integer
 
       public List<FestivalEntity> findByFestivalTypeIn(List<String> interestedFestivalTypeList);
 
+      public List<FestivalEntity>
+       findByFestivalNameContainsOrFestivalTypeContainsOrFestivalInformationContainsOrFestivalAreaOrderByFestivalDurationStartDesc
+(String festivalName,String festivalType,String festivalInformation,String festivalArea);
+
 }

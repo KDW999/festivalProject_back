@@ -8,15 +8,17 @@ import com.festival.back.entity.CommentEntity;
 import com.festival.back.entity.FestivalEntity;
 import com.festival.back.entity.RecommendEntity;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// ? 
+// ? 축제 후기글 작성 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ApiModel(value = "축제 후기글 작성 Response")
 public class PostFestivalReviewBoardResponseDto {
     @ApiModelProperty(value = "게시물Entity",required = true)
     private BoardEntity board;

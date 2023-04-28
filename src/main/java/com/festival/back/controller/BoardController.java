@@ -131,8 +131,8 @@ public class BoardController {
         public ResponseDto<GetFestivalReviewBoardResponseDto> getFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber,@PathVariable(name="boardNumber") Integer boardNumber){
             ResponseDto<GetFestivalReviewBoardResponseDto> response=boardService.getFestivalReviewBoard(festivalNumber, boardNumber);
             return response;
-        
     }
+    
      // ? 특정축제 전체 후기 게시글 불러오기 -김종빈
      @ApiOperation(value = "트정 축제 정보의 후기 게시글 전체 반환.",
      notes = "Request Body 에 PathVariable festivalNumber 을 받으면 특정 축제를 불러오면 그에 애당하는 축제 정보와 전체 후기 게시글을 반환 한다")
@@ -179,7 +179,7 @@ public class BoardController {
     @ApiOperation(value="회원가입시 선택한 추천 축제 타입 리스트 받아오기")
     @GetMapping(GET_INTERESTED_FESTIVAL_LIST)
     public ResponseDto<List<GetInterestedFestivalListResponseDto>> GetInterestedFestivalList(@ApiParam(hidden = true) @AuthenticationPrincipal String userId) {
-        ResponseDto<List<GetInterestedFestivalListResponseDto>> response = boardService.GetInterestedFestivalList(userId);
+        ResponseDto<List<GetInterestedFestivalListResponseDto>> response = boardService.getInterestedFestivalList(userId);
         return response;
     }
     
