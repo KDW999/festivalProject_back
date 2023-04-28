@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.festival.back.common.constant.ResponseMessage;
 import com.festival.back.dto.request.board.PostFestivalRequestDto;
 import com.festival.back.dto.response.ResponseDto;
+import com.festival.back.dto.response.board.GetSearchFestivalListResponseDto;
 import com.festival.back.dto.response.board.PostFestivalResponseDto;
 import com.festival.back.entity.FestivalEntity;
 import com.festival.back.entity.UserEntity;
@@ -18,8 +19,10 @@ import com.festival.back.dto.response.oneLineReveiw.DeleteOneLineReviewResponseD
 import com.festival.back.dto.response.oneLineReveiw.PatchOneLineReviewResponseDto;
 import com.festival.back.dto.response.oneLineReveiw.PostOneLineReviewResponseDto;
 import com.festival.back.entity.OneLineReviewEntity;
+import com.festival.back.entity.SearchwordLogEntity;
 import com.festival.back.entity.primaryKey.OneLineReviewPk;
 import com.festival.back.repository.OneLineReviewRepository;
+import com.festival.back.repository.SearchWordLogRepository;
 import com.festival.back.repository.UserRepository;
 import com.festival.back.service.FestivalService;
 
@@ -28,6 +31,7 @@ public class FestivalServiceImplements implements FestivalService {
     @Autowired private UserRepository userRepository;
     @Autowired private FestivalRepository festivalRepository;
     @Autowired private OneLineReviewRepository oneLineReviewRepository;
+    @Autowired private SearchWordLogRepository searchWordLogRepository;
 
     //? 축제 작성
     public ResponseDto<PostFestivalResponseDto> postFestival(String userId, PostFestivalRequestDto dto){
@@ -64,6 +68,7 @@ public class FestivalServiceImplements implements FestivalService {
             //? 한 줄 평 작성하려면 로그인 되어있어야 한다.
             UserEntity userEntity = userRepository.findByUserId(userId);
             if(userEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
+
             
             //? 한 줄 평 작성하려면 축제 번호가 있어야 한다.
             FestivalEntity festivalEntity = festivalRepository.findByFestivalNumber(festivalNumber);
@@ -160,5 +165,25 @@ public class FestivalServiceImplements implements FestivalService {
 
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
+
+    public ResponseDto<GetSearchFestivalListResponseDto> getSearchFestivalList(String searchWord) {
+        GetSearchFestivalListResponseDto data= null;
+
+        try {
+            SearchwordLogEntity searchwordLogEntity = new SearchwordLogEntity(searchWord);
+            searchWordLogRepository.save(searchwordLogEntity);
+
+            List<FestivalEntity> festivalList=festivalRepository.
+                   findByFestivalNameContainsOrFestivalTypeContainsOrFestivalInformationContainsOrFestivalAreaOrderByFestivalDurationStartDesc
+(searchWord, searchWord, searchWord, searchWord);
+
+            data = new GetSearchFestivalListResponseDto(festivalList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+    }
+
 
 }

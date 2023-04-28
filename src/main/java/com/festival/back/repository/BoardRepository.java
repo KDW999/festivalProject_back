@@ -13,4 +13,5 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Integer> {
     public BoardEntity findByBoardNumber(int boardNumber);
     public List<BoardEntity> findByFestivalNumberOrderByBoardWriteDatetimeDesc(Integer festivalNumber);
     public List<BoardEntity> findBywriterIdOrderByBoardWriteDatetimeDesc(String userId);
+    public List<BoardEntity> findByBoardTitleContainsOrBoardContentContainsOrderByBoardWriteDatetimeDesc(String boardTitle,String boardContent);
 }

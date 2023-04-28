@@ -38,17 +38,17 @@ public class BoardEntity {
     private String writerNickname;
     private int festivalNumber;
     
-    public BoardEntity(UserEntity userEntity,PostReviewBoardRequestDto postreviewBoardRquestDto){
+    public BoardEntity(UserEntity userEntity,PostReviewBoardRequestDto postreviewBoardRequestDto){
         Date  now= new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        this.boardTitle=postreviewBoardRquestDto.getBoardTitle();
-        this.boardContent=postreviewBoardRquestDto.getBoardContent();
-        this.boardImgUrl=postreviewBoardRquestDto.getBoradImgUrl();
+        this.boardTitle=postreviewBoardRequestDto.getBoardTitle();
+        this.boardContent=postreviewBoardRequestDto.getBoardContent();
+        this.boardImgUrl=postreviewBoardRequestDto.getBoradImgUrl();
         this.boardWriteDatetime=simpleDateFormat.format(now);
         this.writerId=userEntity.getUserId();
         this.writerProfileUrl=userEntity.getProfileUrl();
         this.writerNickname=userEntity.getNickname();
-        this.festivalNumber=postreviewBoardRquestDto.getFestivalNumber();
+        this.festivalNumber=postreviewBoardRequestDto.getFestivalNumber();
         this.viewCount=0;
         this.recommendCount=0;
         this.commentCount=0;
