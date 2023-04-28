@@ -1,12 +1,18 @@
 package com.festival.back.service.implementation;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.spel.ast.NullLiteral;
 import org.springframework.stereotype.Service;
 
 import com.festival.back.common.constant.ResponseMessage;
 import com.festival.back.dto.request.board.PostFestivalRequestDto;
+import com.festival.back.dto.request.festival.GetFestivalMonthResponseDto;
 import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.board.GetSearchFestivalListResponseDto;
 import com.festival.back.dto.response.board.PostFestivalResponseDto;
@@ -189,6 +195,32 @@ public class FestivalServiceImplements implements FestivalService {
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
         }
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+    }
+
+    public ResponseDto<GetFestivalMonthResponseDto> getFestivalMonthList(int month) { 
+    
+        GetFestivalMonthResponseDto data= null;
+        
+        DecimalFormat decimalFormat = new DecimalFormat("00");
+        String monthString = decimalFormat.format(month);
+        String nextMonthString = decimalFormat.format(month + 1);
+        
+        LocalDate now = LocalDate.now();
+        String monthDate = now.getYear() + "-" + monthString + "-01";
+        String nextMonthDate = month == 12 ? now.getYear() + 1 + "-01-01" : now.getYear() + "-" + nextMonthString + "-01";
+
+        try {
+
+            List<FestivalEntity> festivalEntity =  (List<FestivalEntity>) festivalRepository.getFestivalMonth(monthDate, monthDate, monthDate, nextMonthDate);
+            data= new GetFestivalMonthResponseDto(festivalEntity);
+
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+
     }
 
 

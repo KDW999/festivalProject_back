@@ -255,12 +255,7 @@ public class BoardServiceImplements implements BoardService {
 
             
 
-<<<<<<< HEAD
-            data = new GetFestivalReviewBoardListResponseDto(festivalEntity,boardEntity);
-
-=======
              data = new GetFestivalReviewBoardListResponseDto(festivalEntity,boardEntity);
->>>>>>> 064540f2c7f2b109ad3e484353b13207cd7a8e98
             
         } catch (Exception e) {
             e.printStackTrace();

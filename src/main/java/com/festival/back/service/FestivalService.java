@@ -2,6 +2,7 @@ package com.festival.back.service;
 
 
 import com.festival.back.dto.request.board.PostFestivalRequestDto;
+import com.festival.back.dto.request.festival.GetFestivalMonthResponseDto;
 import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.board.GetSearchFestivalListResponseDto;
 import com.festival.back.dto.response.board.PostFestivalResponseDto;
@@ -18,6 +19,7 @@ public interface FestivalService {
     public ResponseDto<PatchOneLineReviewResponseDto> patchOneLineReview(String userId, PatchOneLineReviewRequestDto dto);
     public ResponseDto<DeleteOneLineReviewResponseDto> deleteOneLineReview(int festivalNumber, String userId);
     public ResponseDto<GetSearchFestivalListResponseDto> getSearchFestivalList(String searchWord);
+    public ResponseDto<GetFestivalMonthResponseDto> getFestivalMonthList(int month);
 
 
 }
