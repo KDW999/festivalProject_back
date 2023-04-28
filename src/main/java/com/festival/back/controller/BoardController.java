@@ -112,6 +112,8 @@ public class BoardController {
     }
 
     // ? 축제 후기 게시물 작성 -김종빈
+    @ApiOperation(value = " 축제 후기 게시글 작성",notes = "Request Header Authorization에 Bearer JWT를 포함하고 "+
+    "Request Bdody 에 작성할 festivalNumber 과 boardTitle boardContent boardimgurl 을 작성하면 게시물 전제 테이터 바환." )
     @PostMapping(POST_FESTIVAL_REVIEW_BOARD)
     public ResponseDto<PostFestivalReviewBoardResponseDto> 
     postFestivalReviewBoard(@AuthenticationPrincipal String userId,
@@ -123,13 +125,17 @@ public class BoardController {
     }
 
     // ? 특정 축제 특정 후기 게시글 불러오기 -김종빈
+    @ApiOperation(value = "특정 축제를 불러와 그에 관한 후기 게시글 1개를 반환한다."
+    ,notes = "특정 축제 festivalNumber 과 boardNumber 을 pathvariable 로 받아서 보내면 축제정보 와 게시물을 반환하고 실패 시 실폐 메세지 반환. ")
     @GetMapping(GET_FESTIVAL_REVIEW_BOARD)
         public ResponseDto<GetFestivalReviewBoardResponseDto> getFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber,@PathVariable(name="boardNumber") Integer boardNumber){
             ResponseDto<GetFestivalReviewBoardResponseDto> response=boardService.getFestivalReviewBoard(festivalNumber, boardNumber);
             return response;
         
     }
-     // ? 특정 축제 전체 후기 게시글 불러오기 -김종빈
+     // ? 특정축제 전체 후기 게시글 불러오기 -김종빈
+     @ApiOperation(value = "트정 축제 정보의 후기 게시글 전체 반환.",
+     notes = "Request Body 에 PathVariable festivalNumber 을 받으면 특정 축제를 불러오면 그에 애당하는 축제 정보와 전체 후기 게시글을 반환 한다")
      @GetMapping(GET_FESTIVAL_LIST)
      public ResponseDto<GetFestivalReviewBoardListResponseDto> getFestivalReviewBoardList(@PathVariable("festivalNumber")Integer festivalNumber){
         ResponseDto<GetFestivalReviewBoardListResponseDto> response =boardService.getFestivalReviewBoardList(festivalNumber);
@@ -137,6 +143,8 @@ public class BoardController {
      }
 
     //  ?특정 축제 후기 수정하기 -김종빈
+    @ApiOperation(value = "특정 축제 특정 후기 게시글 수정한다.",
+    notes = "Request Header Authorization에 Bearer JWT를 포함하고 필요정보를 받고 성공하면 게시글이 수정되고 실패하면 실패 메세지 반환")
     @PatchMapping(PATCH_FESTIVAL_REVIEW_BOARD)
     public ResponseDto<PatchFestivalReviewBoardResponseDto> patchReivewBoard(@AuthenticationPrincipal String userId,@Valid @RequestBody PatchReviewBoardRequestDto requestBody){
         ResponseDto<PatchFestivalReviewBoardResponseDto> response =boardService.patchReivewBoard(userId, requestBody);
@@ -145,7 +153,7 @@ public class BoardController {
     } 
  
     // ? 특정 게시물 삭제-김종빈
-    @ApiOperation(value = "특정 게시물 삭제"
+    @ApiOperation(value = "축제 후기 게시물 삭제"
     ,notes = "Reques Header 에 Athorization 에 Bearer JWT 를 포함하고 pathvariable 에 boardNumber 를 포함하여 반환하면"+
     "성공시 전체 게시물 데이터를 반환하고,실패시 실패 메세지를 반환")
     @DeleteMapping(DELETE_BOARD)
