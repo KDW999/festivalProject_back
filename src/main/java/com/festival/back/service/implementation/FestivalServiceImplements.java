@@ -69,6 +69,12 @@ public class FestivalServiceImplements implements FestivalService {
             UserEntity userEntity = userRepository.findByUserId(userId);
             if(userEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
 
+            //? 이미 한 줄 평 작성한 작성자가 또 작성할 경우 못쓰게 막기
+            boolean hasUserId = oneLineReviewRepository.existsByUserId(userId); //? oneLineReview에 해당 유저 아이디가 있는지 검사
+            if(hasUserId) return ResponseDto.setFail(ResponseMessage.EXIST_ID); //? 없으면 한 줄 평 작성하고 있으면 작성 불가
+            // OneLineReviewEntity oneLineReviewUserId = oneLineReviewRepository.findByUserId(userId);
+            // boolean postedUserId = userId.equals(oneLineReviewUserId.getUserId());
+            // if(oneLineReviewUserId != null) return ResponseDto.setFail(ResponseMessage.EXIST_ID);
             
             //? 한 줄 평 작성하려면 축제 번호가 있어야 한다.
             FestivalEntity festivalEntity = festivalRepository.findByFestivalNumber(festivalNumber);
@@ -109,7 +115,7 @@ public class FestivalServiceImplements implements FestivalService {
             OneLineReviewEntity oneLineReviewEntity = oneLineReviewRepository.findByUserId(userId);
             if(oneLineReviewEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
 
-            //? 동일 작성자인지 확인ㄴ
+            //? 동일 작성자인지 확인
             boolean isEqualUserId = userId.equals(oneLineReviewEntity.getUserId());
             if(!isEqualUserId) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSION);
 

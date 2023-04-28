@@ -44,7 +44,7 @@ public class FestivalController {
     private final String POST_FESTIVAL = "";
 
     //? 축제 작성
-    @ApiOperation(value="축제 작성", notes="이름, 타입, 기간 시작, 기간 끝, 축제 시간, 축제 지역, 축제 비용, 정보 이미지 URL을 전송하면 축제 작성 결과로 작성된 정보를 반환, 실패시 실패 메시지 반환")
+    @ApiOperation(value="축제 작성", notes="Request Header Authorization에 Bearer JWT를 포함하고 festivalName, festivalType, festivalDurationStart, festivalDurationEnd, festivalTime, festivalArea, festivalCost, festivalInformationUrl을 전송하면 축제 작성 결과로 작성된 정보를 반환, 실패시 실패 메시지 반환")
     @PostMapping(POST_FESTIVAL)
     public ResponseDto<PostFestivalResponseDto> postFestival(
         @ApiParam(hidden=true)
@@ -93,7 +93,7 @@ public class FestivalController {
              ResponseDto<DeleteOneLineReviewResponseDto> response = festivalService.deleteOneLineReview(festivalNumber, userId);
              return response;
          }
-
+        // ? 축제 를 검색후 포함한 전체 리스트 반환 -김종빈
          @ApiOperation(value = "축제를 검색한다. festivalNmae fetivalType festivalArea festivalInformaion PathVariable 에 검색어를 입력하고 성공하면 성공값을 반환한다.")
          @GetMapping(GET_SEARCH_FESTIVAL)
          public ResponseDto<GetSearchFestivalListResponseDto> getSearchFestivalList(@PathVariable("searchWord") String searchWord){

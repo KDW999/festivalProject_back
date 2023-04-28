@@ -27,8 +27,8 @@ import com.festival.back.dto.response.board.RecommendResponseDto;
 public interface BoardService {
 
     public ResponseDto<PostCommentResponseDto> postComment(String userId, PostCommentRequestDto dto);
-    public ResponseDto<PatchCommentResponseDto> patchComment(String userId, PatchCommentRequestDto dto);
 
+    public ResponseDto<PatchCommentResponseDto> patchComment(String userId, PatchCommentRequestDto dto);
 
     public ResponseDto<DeleteCommentResponseDto> deleteComment(String userId, int commentNumber);
 
@@ -44,7 +44,7 @@ public interface BoardService {
     
     public ResponseDto<List<GetMyFestivalReviewBoardListResponseDto>> getMyList(String userId);
     
-    public ResponseDto<List<GetInterestedFestivalListResponseDto>> GetInterestedFestivalList(String userId);
+    public ResponseDto<List<GetInterestedFestivalListResponseDto>> getInterestedFestivalList(String userId);
 
     public ResponseDto<DeleteFestivalReviewBoardResponseDto> deleteBoard(String userId, int boardNumber);
 

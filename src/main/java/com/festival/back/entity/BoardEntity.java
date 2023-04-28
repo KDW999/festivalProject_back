@@ -54,6 +54,10 @@ public class BoardEntity {
         this.commentCount=0;
 
     }
+    public void increaseCommentCount(){
+        this.commentCount++;
+    }
+    
     public void increaseViewCount(){
         this.viewCount++;
     }

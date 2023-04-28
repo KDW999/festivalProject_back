@@ -70,13 +70,13 @@ public class BoardServiceImplements implements BoardService {
             CommentEntity commentEntity = new CommentEntity(userEntity, dto);
             commentRepository.save(commentEntity);
 
-            boardEntity.increaseRecommendCount();
+            boardEntity.increaseCommentCount();
             boardRepository.save(boardEntity);
 
             List<CommentEntity> commentList = commentRepository.findByBoardNumberOrderByWriteDatetimeDesc(boardNumber);
-            List<RecommendEntity> RecommendList = recommendRepository.findByBoardNumber(boardNumber); 
+            List<RecommendEntity> recommendList = recommendRepository.findByBoardNumber(boardNumber);
 
-            data = new PostCommentResponseDto(boardEntity, commentList, RecommendList);
+            data = new PostCommentResponseDto(boardEntity, commentList, recommendList);
 
         } catch(Exception exception) {
             exception.printStackTrace();
@@ -122,21 +122,21 @@ public class BoardServiceImplements implements BoardService {
     }
     
     //? 추천 기능
-    public ResponseDto<RecommendResponseDto> recommend(String id, RecommendRequestDto dto) {
+    public ResponseDto<RecommendResponseDto> recommend(String userId, RecommendRequestDto dto) {
 
         RecommendResponseDto data = null;
         int boardNumber = dto.getBoardNumber(); //? Request에서 내가 입력한 게시물 번호
 
         try {
 
-            //? userEntity에 id값 삽입
-            UserEntity userEntity = userRepository.findByUserId(id); //? findById는 기본 메서드라 안됌
+            //? userEntity에 userId값 삽입
+            UserEntity userEntity = userRepository.findByUserId(userId); //? findById는 기본 메서드라 안됌
             if(userEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
 
             BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
             if(boardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
 
-            RecommendEntity recommendEntity = recommendRepository.findByUserIdAndBoardNumber(id, boardNumber);
+            RecommendEntity recommendEntity = recommendRepository.findByUserIdAndBoardNumber(userId, boardNumber); //? 해당 게시물의 유저 정보를 가져온다.
             if(recommendEntity == null){ //? 안누른 사람이 누르면 증가
                 recommendEntity = new RecommendEntity(userEntity, boardNumber);
                 recommendRepository.save(recommendEntity); //? 눌렀으니 누른 사람의 userId, boardNumber 저장
@@ -255,14 +255,12 @@ public class BoardServiceImplements implements BoardService {
 
             
 
-             data = new GetFestivalReviewBoardListResponseDto(festivalEntity,boardEntity);
+<<<<<<< HEAD
+            data = new GetFestivalReviewBoardListResponseDto(festivalEntity,boardEntity);
 
-     
-   
-    
-        
-       
-         
+=======
+             data = new GetFestivalReviewBoardListResponseDto(festivalEntity,boardEntity);
+>>>>>>> 064540f2c7f2b109ad3e484353b13207cd7a8e98
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -284,13 +282,13 @@ public class BoardServiceImplements implements BoardService {
             boolean isEqulWriter = userId.equals(boardEntity.getWriterId());
             if (!isEqulWriter) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSION);
 
-            List<RecommendEntity> recommdList=recommendRepository.findByBoardNumber(boardNumber);
-            List<CommentEntity> commentList=commentRepository.findByBoardNumberOrderByWriteDatetimeDesc(boardNumber);
+            List<RecommendEntity> recommdList= recommendRepository.findByBoardNumber(boardNumber);
+            List<CommentEntity> commentList= commentRepository.findByBoardNumberOrderByWriteDatetimeDesc(boardNumber);
 
-            FestivalEntity festivalEntity =festivalRepository.findByFestivalNumber(festivalNumber);
+            FestivalEntity festivalEntity = festivalRepository.findByFestivalNumber(festivalNumber);
             if(festivalEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_FESTIVAL_NUMBER);
-           System.out.println("dto"+dto.toString());
-           System.out.println(boardEntity.toString());
+            System.out.println("dto"+dto.toString());
+            System.out.println(boardEntity.toString());
             boardEntity.patch(dto);
             boardRepository.save(boardEntity);
 
@@ -302,7 +300,7 @@ public class BoardServiceImplements implements BoardService {
         }
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
-   
+    
     // ? 특정 게시물 삭제-김종빈
     public ResponseDto<DeleteFestivalReviewBoardResponseDto> deleteBoard(String userId, int boardNumber) {
         DeleteFestivalReviewBoardResponseDto data = null;
@@ -345,7 +343,7 @@ public class BoardServiceImplements implements BoardService {
     }
 
     // ? 관심있는 축제 타입 리스트 받아오기 - 감재현
-    public ResponseDto<List<GetInterestedFestivalListResponseDto>> GetInterestedFestivalList(String userId) {
+    public ResponseDto<List<GetInterestedFestivalListResponseDto>> getInterestedFestivalList(String userId) {
         List<GetInterestedFestivalListResponseDto> data = null;
 
         try {
