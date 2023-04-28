@@ -176,10 +176,10 @@ public class BoardController {
     }
 
     // ? 추천 페스티벌 리스트 받아오기 -감재현
-    @ApiOperation(value="회원가입시 선택한 추천 축제 타입 리스트 받아오기")
+    @ApiOperation(value="회원가입시 선택한 관심 축제 타입 리스트 받아오기", notes="Request Header에 Athorization 에 Bearer JWT 를 포함하여 요청하고, 성공시 회원가입시 선택한 관심 축제 타입 리스트를 반환하고, 실패시 실패 메세지를 반환")
     @GetMapping(GET_INTERESTED_FESTIVAL_LIST)
-    public ResponseDto<List<GetInterestedFestivalListResponseDto>> GetInterestedFestivalList(@ApiParam(hidden = true) @AuthenticationPrincipal String userId) {
-        ResponseDto<List<GetInterestedFestivalListResponseDto>> response = boardService.GetInterestedFestivalList(userId);
+    public ResponseDto<List<GetInterestedFestivalListResponseDto>> getInterestedFestivalList(@ApiParam(hidden = true) @AuthenticationPrincipal String userId) {
+        ResponseDto<List<GetInterestedFestivalListResponseDto>> response = boardService.getInterestedFestivalList(userId);
         return response;
     }
     

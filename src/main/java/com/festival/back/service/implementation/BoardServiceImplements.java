@@ -65,13 +65,13 @@ public class BoardServiceImplements implements BoardService {
             CommentEntity commentEntity = new CommentEntity(userEntity, dto);
             commentRepository.save(commentEntity);
 
-            boardEntity.increaseRecommendCount();
+            boardEntity.increaseCommentCount();
             boardRepository.save(boardEntity);
 
             List<CommentEntity> commentList = commentRepository.findByBoardNumberOrderByWriteDatetimeDesc(boardNumber);
-            List<RecommendEntity> RecommendList = recommendRepository.findByBoardNumber(boardNumber); 
+            List<RecommendEntity> recommendList = recommendRepository.findByBoardNumber(boardNumber);
 
-            data = new PostCommentResponseDto(boardEntity, commentList, RecommendList);
+            data = new PostCommentResponseDto(boardEntity, commentList, recommendList);
 
         } catch(Exception exception) {
             exception.printStackTrace();
@@ -250,7 +250,12 @@ public class BoardServiceImplements implements BoardService {
 
             
 
+<<<<<<< HEAD
+            data = new GetFestivalReviewBoardListResponseDto(festivalEntity,boardEntity);
+
+=======
              data = new GetFestivalReviewBoardListResponseDto(festivalEntity,boardEntity);
+>>>>>>> 064540f2c7f2b109ad3e484353b13207cd7a8e98
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -277,8 +282,8 @@ public class BoardServiceImplements implements BoardService {
 
             FestivalEntity festivalEntity = festivalRepository.findByFestivalNumber(festivalNumber);
             if(festivalEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_FESTIVAL_NUMBER);
-           System.out.println("dto"+dto.toString());
-           System.out.println(boardEntity.toString());
+            System.out.println("dto"+dto.toString());
+            System.out.println(boardEntity.toString());
             boardEntity.patch(dto);
             boardRepository.save(boardEntity);
 
@@ -290,7 +295,7 @@ public class BoardServiceImplements implements BoardService {
         }
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
-   
+    
     // ? 특정 게시물 삭제-김종빈
     public ResponseDto<DeleteFestivalReviewBoardResponseDto> deleteBoard(String userId, int boardNumber) {
         DeleteFestivalReviewBoardResponseDto data = null;
@@ -333,7 +338,7 @@ public class BoardServiceImplements implements BoardService {
     }
 
     // ? 관심있는 축제 타입 리스트 받아오기 - 감재현
-    public ResponseDto<List<GetInterestedFestivalListResponseDto>> GetInterestedFestivalList(String userId) {
+    public ResponseDto<List<GetInterestedFestivalListResponseDto>> getInterestedFestivalList(String userId) {
         List<GetInterestedFestivalListResponseDto> data = null;
 
         try {
