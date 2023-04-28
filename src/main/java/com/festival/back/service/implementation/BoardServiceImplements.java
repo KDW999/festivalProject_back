@@ -19,7 +19,6 @@ import com.festival.back.dto.response.board.GetFestivalReviewBoardListResponseDt
 import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.GetInterestedFestivalListResponseDto;
 import com.festival.back.dto.response.board.GetMyFestivalReviewBoardListResponseDto;
-import com.festival.back.dto.response.board.GetSearchFestivalListResponseDto;
 import com.festival.back.dto.response.board.GetSearchFestivalReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.PatchCommentResponseDto;
 import com.festival.back.dto.response.board.PatchFestivalReviewBoardResponseDto;
@@ -101,6 +100,7 @@ public class BoardServiceImplements implements BoardService {
             
             if(boardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
 
+            if(boardEntity.getBoardNumber() != commentEntity.getBoardNumber()) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD_NUMBER);
 
             boolean isEqualWriter = userId.equals(commentEntity.getWriterId());
             if(!isEqualWriter) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
@@ -193,8 +193,6 @@ public class BoardServiceImplements implements BoardService {
     // ? 특정 축제 후기 게시글 불러오기-김종빈
     public ResponseDto<GetFestivalReviewBoardResponseDto> getFestivalReviewBoard(int festivalNumber, int boardNumber) {
         GetFestivalReviewBoardResponseDto data= null;
-        // int boardNumber=dto.getBoardNumber();
-        // int festivalNumber=dto.getFestivalNumber();  
 
         try {
             BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
@@ -253,14 +251,8 @@ public class BoardServiceImplements implements BoardService {
             List<BoardEntity> boardEntity = boardRepository.findByFestivalNumberOrderByBoardWriteDatetimeDesc(festivalNumber);
             if(boardEntity.isEmpty()) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
 
-            
-
-<<<<<<< HEAD
             data = new GetFestivalReviewBoardListResponseDto(festivalEntity,boardEntity);
 
-=======
-             data = new GetFestivalReviewBoardListResponseDto(festivalEntity,boardEntity);
->>>>>>> 064540f2c7f2b109ad3e484353b13207cd7a8e98
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -369,6 +361,7 @@ public class BoardServiceImplements implements BoardService {
         
     }
 
+    //? 후기 게시판 검색
     public ResponseDto<GetSearchFestivalReviewBoardListResponseDto> getSearchFestivalReviewBoardList(String searchWord) {
         GetSearchFestivalReviewBoardListResponseDto data =null;
 
