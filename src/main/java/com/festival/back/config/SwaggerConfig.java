@@ -25,7 +25,7 @@ public class SwaggerConfig {
     }
     private ApiInfo apiInfo(){
         return new ApiInfoBuilder()
-        .title("karurana test api")
+        .title("Team Project test api")
         .description("spring boot 작성한 reset api")
         .version("1.0.0")
         .build();
