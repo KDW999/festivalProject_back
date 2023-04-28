@@ -17,6 +17,8 @@ public interface OneLineReviewRepository extends JpaRepository<OneLineReviewEnti
 
     public OneLineReviewEntity findByUserId(String userId);
 
+    public boolean existsByUserId(String userId);
+
     // public OneLineReviewEntity deleteByFestivalNumberAndUserId(int fetivalNumber, String userId);
     
 }
