@@ -24,8 +24,5 @@ public class PostReviewBoardRequestDto {
     
     @ApiModelProperty(value = "첨부할 이미지",example = "업로드할 img url",required = true)
     private String boradImgUrl;
-    
-
-
-    
+        
 }
