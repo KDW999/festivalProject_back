@@ -32,7 +32,8 @@ public class FestivalEntity {
     private String festivalArea;
     private String festivalCost;
     private int onelineReviewAverage;
-   // private String festivalInformationUrl;
+    private String festivalInformationUrl;
+    private String festivalInformation;
     
     public FestivalEntity(UserEntity userEntity, PostFestivalRequestDto dto){
         Date now = new Date();
@@ -45,7 +46,8 @@ public class FestivalEntity {
         this.festivalTime = simpleDateFormat.format(now);
         this.festivalArea = dto.getFestivalArea();
         this.festivalCost = dto.getFestivalCost();
-       // this.festivalInformationUrl = dto.getFestivalInformationUrl();
+        this.festivalInformationUrl = dto.getFestivalInformationUrl();
+        this.festivalInformation = dto.getFestivalInformation();
         
     }
     

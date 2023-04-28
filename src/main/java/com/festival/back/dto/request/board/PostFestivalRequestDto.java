@@ -41,4 +41,7 @@ public class PostFestivalRequestDto {
     @ApiModelProperty(value="축제 정보 이미지 URL", example="http://~", required=true)
     private String festivalInformationUrl;
 
+    @NotBlank
+    private String festivalInformation;
+
 }
