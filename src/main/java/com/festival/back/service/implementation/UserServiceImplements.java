@@ -35,14 +35,37 @@ public class UserServiceImplements implements UserService {
             UserEntity userEntity = userRepository.findByUserId(userId);
             if (userEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
 
+            String existUser = userEntity.getNickname();
+            System.out.println(nickname);
+            System.out.println(existUser);
             boolean hasNickname = userRepository.existsByNickname(nickname);
-            if (hasNickname) return ResponseDto.setFail(ResponseMessage.EXIST_NICKNAME);
             
-            userEntity.setNickname(nickname);
-            userEntity.setProfileUrl(profileUrl);
-            userRepository.save(userEntity);
+            // todo: 닉네임이 같지 않을때
 
+            // todo: profile 사진이 dto 존재할때
+
+            // todo: save
+
+            if (hasNickname) {
+                if(nickname.equals(existUser)){
+                    userEntity.setProfileUrl(profileUrl);
+                }else {
+                    return ResponseDto.setFail(ResponseMessage.EXIST_NICKNAME);
+                }
+            }
+
+            if(!nickname.equals(existUser)) {
+                userEntity.setNickname(nickname);
+            }
+
+            if(profileUrl != null){
+                userEntity.setProfileUrl(profileUrl);
+            }
+            
+            userRepository.save(userEntity);
             data = new PatchProfileResponseDto(userEntity);
+            
+            
             
         } catch (Exception exception) {
             exception.printStackTrace();

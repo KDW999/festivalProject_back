@@ -26,7 +26,6 @@ import com.festival.back.dto.response.board.GetFestivalReviewBoardListResponseDt
 import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.GetInterestedFestivalListResponseDto;
 import com.festival.back.dto.response.board.GetMyFestivalReviewBoardListResponseDto;
-import com.festival.back.dto.response.board.GetSearchFestivalReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.DeleteCommentResponseDto;
 import com.festival.back.dto.response.board.DeleteFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.PatchCommentResponseDto;
@@ -55,7 +54,6 @@ public class BoardController {
     private final String PATCH_FESTIVAL_REVIEW_BOARD = "";
     private final String DELETE_BOARD = "/{boardNumber}";
     private final String GET_MY_LIST = "/my-reviewboard-list";
-    private final String GET_SEARCH_LIST = "/search-list/{searchWord}";
 
     private final String GET_FESTIVAL_REVIEW_BOARD="/{festivalNumber}/{boardNumber}";
     private final String GET_INTERESTED_FESTIVAL_LIST = "/festival/interested-list";
@@ -130,11 +128,11 @@ public class BoardController {
     @ApiOperation(value = "특정 축제를 불러와 그에 관한 후기 게시글 1개를 반환한다."
     ,notes = "특정 축제 festivalNumber 과 boardNumber 을 pathvariable 로 받아서 보내면 축제정보 와 게시물을 반환하고 실패 시 실폐 메세지 반환. ")
     @GetMapping(GET_FESTIVAL_REVIEW_BOARD)
-        public ResponseDto<GetFestivalReviewBoardResponseDto> getFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber,@PathVariable(name="boardNumber") int boardNumber){
+        public ResponseDto<GetFestivalReviewBoardResponseDto> getFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber,@PathVariable(name="boardNumber") Integer boardNumber){
             ResponseDto<GetFestivalReviewBoardResponseDto> response=boardService.getFestivalReviewBoard(festivalNumber, boardNumber);
             return response;
-        
     }
+    
      // ? 특정축제 전체 후기 게시글 불러오기 -김종빈
      @ApiOperation(value = "트정 축제 정보의 후기 게시글 전체 반환.",
      notes = "Request Body 에 PathVariable festivalNumber 을 받으면 특정 축제를 불러오면 그에 애당하는 축제 정보와 전체 후기 게시글을 반환 한다")
@@ -148,7 +146,7 @@ public class BoardController {
     @ApiOperation(value = "특정 축제 특정 후기 게시글 수정한다.",
     notes = "Request Header Authorization에 Bearer JWT를 포함하고 필요정보를 받고 성공하면 게시글이 수정되고 실패하면 실패 메세지 반환")
     @PatchMapping(PATCH_FESTIVAL_REVIEW_BOARD)
-    public ResponseDto<PatchFestivalReviewBoardResponseDto> patchReivewBoard(@ApiParam(hidden = true) @AuthenticationPrincipal String userId,@Valid @RequestBody PatchReviewBoardRequestDto requestBody){
+    public ResponseDto<PatchFestivalReviewBoardResponseDto> patchReivewBoard(@AuthenticationPrincipal String userId,@Valid @RequestBody PatchReviewBoardRequestDto requestBody){
         ResponseDto<PatchFestivalReviewBoardResponseDto> response =boardService.patchReivewBoard(userId, requestBody);
         return response;
 
@@ -178,18 +176,11 @@ public class BoardController {
     }
 
     // ? 추천 페스티벌 리스트 받아오기 -감재현
-    @ApiOperation(value="회원가입시 선택한 관심 축제 타입 리스트 받아오기", notes="Request Header에 Athorization 에 Bearer JWT 를 포함하여 요청하고, 성공시 회원가입시 선택한 관심 축제 타입 리스트를 반환하고, 실패시 실패 메세지를 반환")
+    @ApiOperation(value="회원가입시 선택한 추천 축제 타입 리스트 받아오기")
     @GetMapping(GET_INTERESTED_FESTIVAL_LIST)
-    public ResponseDto<List<GetInterestedFestivalListResponseDto>> getInterestedFestivalList(@ApiParam(hidden = true) @AuthenticationPrincipal String userId) {
+    public ResponseDto<List<GetInterestedFestivalListResponseDto>> GetInterestedFestivalList(@ApiParam(hidden = true) @AuthenticationPrincipal String userId) {
         ResponseDto<List<GetInterestedFestivalListResponseDto>> response = boardService.getInterestedFestivalList(userId);
         return response;
-    }
-    // ? 후기 게시글 검색 후 전체 리스트 반환 -김종빈
-    @ApiOperation(value = "후기 게시글 검색후 boardTitle boardContent 내용 검색후 리스트를 반환한다.")
-    @GetMapping(GET_SEARCH_LIST)
-    public ResponseDto<GetSearchFestivalReviewBoardListResponseDto> getSearchFestivalReviewBoardList(@PathVariable("searchWord")String searchWord){
-        ResponseDto<GetSearchFestivalReviewBoardListResponseDto> response = boardService.getSearchFestivalReviewBoardList(searchWord);
-         return response;
     }
     
     
