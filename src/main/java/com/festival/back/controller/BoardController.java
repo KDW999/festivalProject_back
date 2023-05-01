@@ -20,18 +20,19 @@ import com.festival.back.common.constant.ApiPattern;
 import com.festival.back.dto.request.board.PatchCommentRequestDto;
 import com.festival.back.dto.request.board.PatchReviewBoardRequestDto;
 import com.festival.back.dto.request.board.PostCommentRequestDto;
-import com.festival.back.dto.request.board.RecommendRequestDto;
+import com.festival.back.dto.request.board.RecommendReviewBoardRequestDto;
 import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.board.GetFestivalReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.GetInterestedFestivalListResponseDto;
 import com.festival.back.dto.response.board.GetMyFestivalReviewBoardListResponseDto;
+import com.festival.back.dto.response.board.GetSearchFestivalReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.DeleteCommentResponseDto;
 import com.festival.back.dto.response.board.DeleteFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.PatchCommentResponseDto;
 import com.festival.back.dto.response.board.PatchFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.PostCommentResponseDto;
-import com.festival.back.dto.response.board.RecommendResponseDto;
+import com.festival.back.dto.response.board.RecommendReviewBoardResponseDto;
 import com.festival.back.service.BoardService;
 
 import io.swagger.annotations.Api;
@@ -54,6 +55,7 @@ public class BoardController {
     private final String PATCH_FESTIVAL_REVIEW_BOARD = "";
     private final String DELETE_BOARD = "/{boardNumber}";
     private final String GET_MY_LIST = "/my-reviewboard-list";
+    private final String GET_SEARCH_LIST = "/search-list/{searchWord}";
 
     private final String GET_FESTIVAL_REVIEW_BOARD="/{festivalNumber}/{boardNumber}";
     private final String GET_INTERESTED_FESTIVAL_LIST = "/festival/interested-list";
@@ -104,10 +106,10 @@ public class BoardController {
     @ApiOperation(value = "추천 기능", notes = "Request Header Authorization에 Bearer JWT를 포함하고 " +
     "Request Body에 boardNumber를 포함하여 요청을 하면, 성공 시 게시물 전체 데이터를 반환")
     @PostMapping(RECOMMEND)
-    public ResponseDto<RecommendResponseDto> 
+    public ResponseDto<RecommendReviewBoardResponseDto> 
     recommend(@ApiParam(hidden = true) 
-    @AuthenticationPrincipal String userId, @Valid @RequestBody RecommendRequestDto requestBody){
-        ResponseDto<RecommendResponseDto> response = boardService.recommend(userId, requestBody);
+    @AuthenticationPrincipal String userId, @Valid @RequestBody RecommendReviewBoardRequestDto requestBody){
+        ResponseDto<RecommendReviewBoardResponseDto> response = boardService.recommend(userId, requestBody);
         return response;       
     }
 
@@ -128,7 +130,7 @@ public class BoardController {
     @ApiOperation(value = "특정 축제를 불러와 그에 관한 후기 게시글 1개를 반환한다."
     ,notes = "특정 축제 festivalNumber 과 boardNumber 을 pathvariable 로 받아서 보내면 축제정보 와 게시물을 반환하고 실패 시 실폐 메세지 반환. ")
     @GetMapping(GET_FESTIVAL_REVIEW_BOARD)
-        public ResponseDto<GetFestivalReviewBoardResponseDto> getFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber,@PathVariable(name="boardNumber") Integer boardNumber){
+        public ResponseDto<GetFestivalReviewBoardResponseDto> getFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber,@PathVariable(name="boardNumber") int boardNumber){
             ResponseDto<GetFestivalReviewBoardResponseDto> response=boardService.getFestivalReviewBoard(festivalNumber, boardNumber);
             return response;
         
@@ -146,7 +148,7 @@ public class BoardController {
     @ApiOperation(value = "특정 축제 특정 후기 게시글 수정한다.",
     notes = "Request Header Authorization에 Bearer JWT를 포함하고 필요정보를 받고 성공하면 게시글이 수정되고 실패하면 실패 메세지 반환")
     @PatchMapping(PATCH_FESTIVAL_REVIEW_BOARD)
-    public ResponseDto<PatchFestivalReviewBoardResponseDto> patchReivewBoard(@AuthenticationPrincipal String userId,@Valid @RequestBody PatchReviewBoardRequestDto requestBody){
+    public ResponseDto<PatchFestivalReviewBoardResponseDto> patchReivewBoard(@ApiParam(hidden = true) @AuthenticationPrincipal String userId,@Valid @RequestBody PatchReviewBoardRequestDto requestBody){
         ResponseDto<PatchFestivalReviewBoardResponseDto> response =boardService.patchReivewBoard(userId, requestBody);
         return response;
 
@@ -181,6 +183,13 @@ public class BoardController {
     public ResponseDto<List<GetInterestedFestivalListResponseDto>> getInterestedFestivalList(@ApiParam(hidden = true) @AuthenticationPrincipal String userId) {
         ResponseDto<List<GetInterestedFestivalListResponseDto>> response = boardService.getInterestedFestivalList(userId);
         return response;
+    }
+    // ? 후기 게시글 검색 후 전체 리스트 반환 -김종빈
+    @ApiOperation(value = "후기 게시글 검색후 boardTitle boardContent 내용 검색후 리스트를 반환한다.")
+    @GetMapping(GET_SEARCH_LIST)
+    public ResponseDto<GetSearchFestivalReviewBoardListResponseDto> getSearchFestivalReviewBoardList(@PathVariable("searchWord")String searchWord){
+        ResponseDto<GetSearchFestivalReviewBoardListResponseDto> response = boardService.getSearchFestivalReviewBoardList(searchWord);
+         return response;
     }
     
     
