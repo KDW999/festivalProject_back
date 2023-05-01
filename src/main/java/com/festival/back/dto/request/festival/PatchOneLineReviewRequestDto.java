@@ -1,4 +1,4 @@
-package com.festival.back.dto.request.oneLineReview;
+package com.festival.back.dto.request.festival;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
