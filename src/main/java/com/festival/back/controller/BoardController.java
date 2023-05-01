@@ -20,7 +20,7 @@ import com.festival.back.common.constant.ApiPattern;
 import com.festival.back.dto.request.board.PatchCommentRequestDto;
 import com.festival.back.dto.request.board.PatchReviewBoardRequestDto;
 import com.festival.back.dto.request.board.PostCommentRequestDto;
-import com.festival.back.dto.request.board.RecommendRequestDto;
+import com.festival.back.dto.request.board.RecommendReviewBoardRequestDto;
 import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.board.GetFestivalReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
@@ -31,7 +31,7 @@ import com.festival.back.dto.response.board.DeleteFestivalReviewBoardResponseDto
 import com.festival.back.dto.response.board.PatchCommentResponseDto;
 import com.festival.back.dto.response.board.PatchFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.PostCommentResponseDto;
-import com.festival.back.dto.response.board.RecommendResponseDto;
+import com.festival.back.dto.response.board.RecommendReviewBoardResponseDto;
 import com.festival.back.service.BoardService;
 
 import io.swagger.annotations.Api;
@@ -104,10 +104,10 @@ public class BoardController {
     @ApiOperation(value = "추천 기능", notes = "Request Header Authorization에 Bearer JWT를 포함하고 " +
     "Request Body에 boardNumber를 포함하여 요청을 하면, 성공 시 게시물 전체 데이터를 반환")
     @PostMapping(RECOMMEND)
-    public ResponseDto<RecommendResponseDto> 
+    public ResponseDto<RecommendReviewBoardResponseDto> 
     recommend(@ApiParam(hidden = true) 
-    @AuthenticationPrincipal String userId, @Valid @RequestBody RecommendRequestDto requestBody){
-        ResponseDto<RecommendResponseDto> response = boardService.recommend(userId, requestBody);
+    @AuthenticationPrincipal String userId, @Valid @RequestBody RecommendReviewBoardRequestDto requestBody){
+        ResponseDto<RecommendReviewBoardResponseDto> response = boardService.recommend(userId, requestBody);
         return response;       
     }
 
@@ -134,7 +134,7 @@ public class BoardController {
     }
     
      // ? 특정축제 전체 후기 게시글 불러오기 -김종빈
-     @ApiOperation(value = "트정 축제 정보의 후기 게시글 전체 반환.",
+     @ApiOperation(value = "특정 축제 정보의 후기 게시글 전체 반환.",
      notes = "Request Body 에 PathVariable festivalNumber 을 받으면 특정 축제를 불러오면 그에 애당하는 축제 정보와 전체 후기 게시글을 반환 한다")
      @GetMapping(GET_FESTIVAL_LIST)
      public ResponseDto<GetFestivalReviewBoardListResponseDto> getFestivalReviewBoardList(@PathVariable("festivalNumber")Integer festivalNumber){

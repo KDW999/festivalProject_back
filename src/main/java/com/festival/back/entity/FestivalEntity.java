@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.festival.back.dto.request.board.PostFestivalRequestDto;
+import com.festival.back.dto.request.festival.PostFestivalRequestDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -47,8 +47,7 @@ public class FestivalEntity {
         this.festivalArea = dto.getFestivalArea();
         this.festivalCost = dto.getFestivalCost();
         this.festivalInformationUrl = dto.getFestivalInformationUrl();
-        this.festivalInformation=dto.getFestivalInformation();
+        this.festivalInformation = dto.getFestivalInformation();
         
     }
-    
 }

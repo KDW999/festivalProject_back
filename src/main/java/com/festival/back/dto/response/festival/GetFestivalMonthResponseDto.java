@@ -1,4 +1,4 @@
-package com.festival.back.dto.request.festival;
+package com.festival.back.dto.response.festival;
 
 import java.util.List;
 

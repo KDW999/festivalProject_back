@@ -11,7 +11,7 @@ import com.festival.back.dto.request.board.PatchCommentRequestDto;
 import com.festival.back.dto.request.board.PatchReviewBoardRequestDto;
 import com.festival.back.dto.request.board.PostCommentRequestDto;
 import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
-import com.festival.back.dto.request.board.RecommendRequestDto;
+import com.festival.back.dto.request.board.RecommendReviewBoardRequestDto;
 import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.board.DeleteCommentResponseDto;
 import com.festival.back.dto.response.board.DeleteFestivalReviewBoardResponseDto;
@@ -23,7 +23,7 @@ import com.festival.back.dto.response.board.GetSearchFestivalReviewBoardListResp
 import com.festival.back.dto.response.board.PatchCommentResponseDto;
 import com.festival.back.dto.response.board.PatchFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.PostCommentResponseDto;
-import com.festival.back.dto.response.board.RecommendResponseDto;
+import com.festival.back.dto.response.board.RecommendReviewBoardResponseDto;
 import com.festival.back.dto.response.board.PostFestivalReviewBoardResponseDto;
 import com.festival.back.entity.BoardEntity;
 import com.festival.back.entity.CommentEntity;
@@ -122,9 +122,9 @@ public class BoardServiceImplements implements BoardService {
     }
     
     //? 추천 기능
-    public ResponseDto<RecommendResponseDto> recommend(String userId, RecommendRequestDto dto) {
+    public ResponseDto<RecommendReviewBoardResponseDto> recommend(String userId, RecommendReviewBoardRequestDto dto) {
 
-        RecommendResponseDto data = null;
+        RecommendReviewBoardResponseDto data = null;
         int boardNumber = dto.getBoardNumber(); //? Request에서 내가 입력한 게시물 번호
 
         try {
@@ -154,7 +154,7 @@ public class BoardServiceImplements implements BoardService {
             List<CommentEntity> commentList = commentRepository.findByBoardNumberOrderByWriteDatetimeDesc(boardNumber);
             List<RecommendEntity> recommendList = recommendRepository.findByBoardNumber(boardNumber);
 
-            data = new RecommendResponseDto(boardEntity, recommendList, commentList);
+            data = new RecommendReviewBoardResponseDto(boardEntity, recommendList, commentList);
             
 
         } catch (Exception exception) {
@@ -250,8 +250,6 @@ public class BoardServiceImplements implements BoardService {
 
             List<BoardEntity> boardEntity = boardRepository.findByFestivalNumberOrderByBoardWriteDatetimeDesc(festivalNumber);
             if(boardEntity.isEmpty()) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
-
-            
 
             data = new GetFestivalReviewBoardListResponseDto(festivalEntity,boardEntity);
             
