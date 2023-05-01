@@ -161,7 +161,7 @@ public class BoardServiceImplements implements BoardService {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
         }
-
+        
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
