@@ -1,4 +1,4 @@
-package com.festival.back.dto.request.board;
+package com.festival.back.dto.request.festival;
 
 import javax.validation.constraints.NotBlank;
 

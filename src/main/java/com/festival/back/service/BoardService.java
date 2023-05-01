@@ -16,13 +16,13 @@ import com.festival.back.dto.response.board.GetFestivalReviewBoardListResponseDt
 import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.GetInterestedFestivalListResponseDto;
 import com.festival.back.dto.response.board.GetMyFestivalReviewBoardListResponseDto;
-import com.festival.back.dto.response.board.GetSearchFestivalListResponseDto;
 import com.festival.back.dto.response.board.GetSearchFestivalReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.PatchCommentResponseDto;
 import com.festival.back.dto.response.board.PatchFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.PostCommentResponseDto;
 import com.festival.back.dto.response.board.PostFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.RecommendReviewBoardResponseDto;
+import com.festival.back.dto.response.festival.GetSearchFestivalListResponseDto;
 
 public interface BoardService {
 

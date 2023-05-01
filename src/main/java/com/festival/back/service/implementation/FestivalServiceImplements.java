@@ -1,24 +1,30 @@
 package com.festival.back.service.implementation;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.spel.ast.NullLiteral;
 import org.springframework.stereotype.Service;
 
 import com.festival.back.common.constant.ResponseMessage;
-import com.festival.back.dto.request.board.PostFestivalRequestDto;
 import com.festival.back.dto.response.ResponseDto;
-import com.festival.back.dto.response.board.GetFestivalAreaListResponseDto;
-import com.festival.back.dto.response.board.GetSearchFestivalListResponseDto;
-import com.festival.back.dto.response.board.PostFestivalResponseDto;
+import com.festival.back.dto.response.festival.DeleteOneLineReviewResponseDto;
+import com.festival.back.dto.response.festival.GetFestivalAreaListResponseDto;
+import com.festival.back.dto.response.festival.GetFestivalMonthResponseDto;
+import com.festival.back.dto.response.festival.GetSearchFestivalListResponseDto;
+import com.festival.back.dto.response.festival.PatchOneLineReviewResponseDto;
+import com.festival.back.dto.response.festival.PostFestivalResponseDto;
+import com.festival.back.dto.response.festival.PostOneLineReviewResponseDto;
 import com.festival.back.entity.FestivalEntity;
 import com.festival.back.entity.UserEntity;
 import com.festival.back.repository.FestivalRepository;
-import com.festival.back.dto.request.oneLineReview.PatchOneLineReviewRequestDto;
-import com.festival.back.dto.request.oneLineReview.PostOneLineReviewRequestDto;
-import com.festival.back.dto.response.oneLineReveiw.DeleteOneLineReviewResponseDto;
-import com.festival.back.dto.response.oneLineReveiw.PatchOneLineReviewResponseDto;
-import com.festival.back.dto.response.oneLineReveiw.PostOneLineReviewResponseDto;
+import com.festival.back.dto.request.festival.PatchOneLineReviewRequestDto;
+import com.festival.back.dto.request.festival.PostFestivalRequestDto;
+import com.festival.back.dto.request.festival.PostOneLineReviewRequestDto;
 import com.festival.back.entity.OneLineReviewEntity;
 import com.festival.back.entity.SearchwordLogEntity;
 import com.festival.back.entity.primaryKey.OneLineReviewPk;
@@ -73,9 +79,6 @@ public class FestivalServiceImplements implements FestivalService {
             //? 이미 한 줄 평 작성한 작성자가 또 작성할 경우 못쓰게 막기
             boolean hasUserId = oneLineReviewRepository.existsByUserId(userId); //? oneLineReview에 해당 유저 아이디가 있는지 검사
             if(hasUserId) return ResponseDto.setFail(ResponseMessage.EXIST_ID); //? 없으면 한 줄 평 작성하고 있으면 작성 불가
-            // OneLineReviewEntity oneLineReviewUserId = oneLineReviewRepository.findByUserId(userId);
-            // boolean postedUserId = userId.equals(oneLineReviewUserId.getUserId());
-            // if(oneLineReviewUserId != null) return ResponseDto.setFail(ResponseMessage.EXIST_ID);
             
             //? 한 줄 평 작성하려면 축제 번호가 있어야 한다.
             FestivalEntity festivalEntity = festivalRepository.findByFestivalNumber(festivalNumber);
@@ -194,13 +197,14 @@ public class FestivalServiceImplements implements FestivalService {
     }
 
     //? 지역별 축제 리스트
+    //^ 프론트에 붙인다면 Axios로 이 url을 그냥 연결하기?
     public ResponseDto<List<GetFestivalAreaListResponseDto>> getFestivalAreaList(String festivalArea) {
         
         List<GetFestivalAreaListResponseDto> data = null;
 
         try {
 
-            List<FestivalEntity> areaList = festivalRepository.findByFestivalArea(festivalArea);
+            List<FestivalEntity> areaList = festivalRepository.findByFestivalAreaOrderByFestivalDurationStart(festivalArea);
             data = GetFestivalAreaListResponseDto.copyList(areaList);
             
         } catch (Exception exception) {
@@ -211,5 +215,31 @@ public class FestivalServiceImplements implements FestivalService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
+    //? 월별 축제 리스트
+    public ResponseDto<GetFestivalMonthResponseDto> getFestivalMonthList(int month) { 
+    
+        GetFestivalMonthResponseDto data= null;
+        
+        DecimalFormat decimalFormat = new DecimalFormat("00");
+        String monthString = decimalFormat.format(month);
+        String nextMonthString = decimalFormat.format(month + 1);
+        
+        LocalDate now = LocalDate.now();
+        String monthDate = now.getYear() + "-" + monthString + "-01";
+        String nextMonthDate = month == 12 ? now.getYear() + 1 + "-01-01" : now.getYear() + "-" + nextMonthString + "-01";
+
+        try {
+
+            List<FestivalEntity> festivalEntity =  (List<FestivalEntity>) festivalRepository.getFestivalMonth(monthDate, monthDate, monthDate, nextMonthDate);
+            data= new GetFestivalMonthResponseDto(festivalEntity);
+
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+
+    }
 
 }

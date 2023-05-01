@@ -8,8 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
 
-import com.festival.back.dto.request.oneLineReview.PatchOneLineReviewRequestDto;
-import com.festival.back.dto.request.oneLineReview.PostOneLineReviewRequestDto;
+import com.festival.back.dto.request.festival.PatchOneLineReviewRequestDto;
+import com.festival.back.dto.request.festival.PostOneLineReviewRequestDto;
 import com.festival.back.entity.primaryKey.OneLineReviewPk;
 
 import lombok.AllArgsConstructor;

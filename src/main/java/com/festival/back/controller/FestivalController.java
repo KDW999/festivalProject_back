@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,17 +17,18 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.festival.back.common.constant.ApiPattern;
-import com.festival.back.dto.request.board.PostFestivalRequestDto;
 import com.festival.back.dto.response.ResponseDto;
-import com.festival.back.dto.response.board.GetFestivalAreaListResponseDto;
-import com.festival.back.dto.response.board.GetSearchFestivalListResponseDto;
-import com.festival.back.dto.response.board.PostFestivalResponseDto;
+import com.festival.back.dto.response.festival.DeleteOneLineReviewResponseDto;
+import com.festival.back.dto.response.festival.GetFestivalAreaListResponseDto;
+import com.festival.back.dto.response.festival.GetFestivalMonthResponseDto;
+import com.festival.back.dto.response.festival.GetSearchFestivalListResponseDto;
+import com.festival.back.dto.response.festival.PatchOneLineReviewResponseDto;
+import com.festival.back.dto.response.festival.PostFestivalResponseDto;
+import com.festival.back.dto.response.festival.PostOneLineReviewResponseDto;
 import com.festival.back.service.FestivalService;
-import com.festival.back.dto.request.oneLineReview.PatchOneLineReviewRequestDto;
-import com.festival.back.dto.request.oneLineReview.PostOneLineReviewRequestDto;
-import com.festival.back.dto.response.oneLineReveiw.DeleteOneLineReviewResponseDto;
-import com.festival.back.dto.response.oneLineReveiw.PatchOneLineReviewResponseDto;
-import com.festival.back.dto.response.oneLineReveiw.PostOneLineReviewResponseDto;
+import com.festival.back.dto.request.festival.PatchOneLineReviewRequestDto;
+import com.festival.back.dto.request.festival.PostFestivalRequestDto;
+import com.festival.back.dto.request.festival.PostOneLineReviewRequestDto;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -45,6 +47,8 @@ public class FestivalController {
     private final String DELETE_ONE_LINE_REVIEW = "/{festivalNumber}";
     private final String GET_SEARCH_FESTIVAL = "/festivalsearch/{searchWord}";
     private final String GET_FESTIVAL_AREA_LIST = "/{festivalArea}";
+    private final String GET_FESTIVAL_MONTH="/festivalmonth/{month}";
+
     private final String POST_FESTIVAL = "";
 
     // ? 축제 작성
@@ -94,16 +98,6 @@ public class FestivalController {
         return response;
     }
 
-    // ? 축제 를 검색후 포함한 전체 리스트 반환 -김종빈
-    @ApiOperation(value = "축제를 검색한다. festivalNmae fetivalType festivalArea festivalInformaion PathVariable 에 검색어를 입력하고 성공하면 성공값을 반환한다.")
-    @GetMapping(GET_SEARCH_FESTIVAL)
-    public ResponseDto<GetSearchFestivalListResponseDto> getSearchFestivalList(
-            @PathVariable("searchWord") String searchWord) {
-        ResponseDto<GetSearchFestivalListResponseDto> response = festivalService.getSearchFestivalList(searchWord);
-        return response;
-
-    }
-
     //? 지역별 축제 리스트 가져오기
     @ApiOperation(value = "축제 지역별 리스트 가져오기", notes = "잠시 보류")
     @GetMapping(GET_FESTIVAL_AREA_LIST)
@@ -115,4 +109,19 @@ public class FestivalController {
         return response;
     }
 
+     //? 축제를 검색후 포함한 전체 리스트 반환 -김종빈
+        @ApiOperation(value = "축제를 검색한다. festivalNmae fetivalType festivalArea festivalInformaion PathVariable 에 검색어를 입력하고 성공하면 성공값을 반환한다.")
+        @GetMapping(GET_SEARCH_FESTIVAL)
+        public ResponseDto<GetSearchFestivalListResponseDto> getSearchFestivalList(@PathVariable("searchWord") String searchWord){
+            ResponseDto<GetSearchFestivalListResponseDto> response =festivalService.getSearchFestivalList(searchWord);
+            return response;
+
+        }
+
+     //? 월별 축제 리스트   
+        @GetMapping(GET_FESTIVAL_MONTH)
+        public ResponseDto<GetFestivalMonthResponseDto> getFestivalMonthList(@PathVariable("month") int month) {
+            ResponseDto<GetFestivalMonthResponseDto> response = festivalService.getFestivalMonthList(month);
+            return response;
+        }
 }
