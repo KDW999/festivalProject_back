@@ -72,6 +72,7 @@ public class UserServiceImplements implements UserService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
+    //? 중복 아이디 검증
     public ResponseDto<CheckUserIdResponseDto> checkUserId(CheckUserIdRequestDto dto) {
         CheckUserIdResponseDto data = null;
         String userId=dto.getUserId();
@@ -86,6 +87,7 @@ public class UserServiceImplements implements UserService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
+    //? 중복 닉네임 검증
     public ResponseDto<CheckUserNicknameResponseDto> checkUserNickname(CheckUserNicknameRequestDto dto) {
         CheckUserNicknameResponseDto data= null;
         String nickname=dto.getNickname();
@@ -101,6 +103,7 @@ public class UserServiceImplements implements UserService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
+    //? 중복 전화번호 검증
     public ResponseDto<CheckUserTelNumberResponseDto> checkUserTelNumber(CheckUserTelNumberRequestDto dto) {
         CheckUserTelNumberResponseDto data= null;
         String telNumber=dto.getTelNumber();
