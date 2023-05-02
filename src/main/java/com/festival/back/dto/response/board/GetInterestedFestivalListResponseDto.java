@@ -59,7 +59,6 @@ public class GetInterestedFestivalListResponseDto {
             GetInterestedFestivalListResponseDto dto = new GetInterestedFestivalListResponseDto(festivalEntity);
             list.add(dto);
         }
-
         return list;
     }
 }

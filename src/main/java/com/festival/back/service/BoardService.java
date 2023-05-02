@@ -49,7 +49,4 @@ public interface BoardService {
 
     public ResponseDto<GetSearchFestivalReviewBoardListResponseDto> getSearchFestivalReviewBoardList(String searchWord);
 
-
-
-
 }

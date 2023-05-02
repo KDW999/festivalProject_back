@@ -17,11 +17,8 @@ import lombok.NoArgsConstructor;
 @ApiModel(value = "특정 축제에 전체 후기 게시글 LIST 반환 Response ")
 public class GetFestivalReviewBoardListResponseDto {
 
-  
     @ApiModelProperty(value = "축제 Entity",required = true)
     private FestivalEntity festival;
     @ApiModelProperty(value = "boardEntity List 형태",required = true)
     private List<BoardEntity> board;
-   
-    
 }

@@ -156,12 +156,10 @@ public class BoardServiceImplements implements BoardService {
 
             data = new RecommendReviewBoardResponseDto(boardEntity, recommendList, commentList);
             
-
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
         }
-
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
@@ -181,11 +179,9 @@ public class BoardServiceImplements implements BoardService {
             boardRepository.save(boardEntity);
             data = new PostFestivalReviewBoardResponseDto(boardEntity,festivalEntity);
 
-            
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
-
         }
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
@@ -211,7 +207,6 @@ public class BoardServiceImplements implements BoardService {
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
         }
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
-
     }
     
     //? 댓글 삭제
@@ -303,8 +298,8 @@ public class BoardServiceImplements implements BoardService {
             boolean isEqulWriter = userId.equals(boardEntity.getWriterId());
             if (!isEqulWriter) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSION);
 
-                commentRepository.deleteByBoardNumber(boardNumber);
-                recommendRepository.deleteByBoardNumber(boardNumber);
+            commentRepository.deleteByBoardNumber(boardNumber);
+            recommendRepository.deleteByBoardNumber(boardNumber);
 
             boardRepository.delete(boardEntity);
             data = new DeleteFestivalReviewBoardResponseDto(true);
@@ -329,8 +324,7 @@ public class BoardServiceImplements implements BoardService {
             e.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
         }
-        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
-        
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);  
     }
 
     // ? 관심있는 축제 타입 리스트 받아오기 - 감재현
@@ -357,7 +351,6 @@ public class BoardServiceImplements implements BoardService {
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
         }
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
-        
     }
 
     //? 후기 게시판 검색
@@ -378,8 +371,4 @@ public class BoardServiceImplements implements BoardService {
         }
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
-
-
-
 }
-

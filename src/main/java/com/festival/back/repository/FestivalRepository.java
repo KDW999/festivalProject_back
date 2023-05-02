@@ -32,5 +32,4 @@ public interface FestivalRepository extends JpaRepository<FestivalEntity,Integer
       "OR festival_duration_start >= ? AND festival_duration_start < ? " +
       "ORDER BY festival_duration_start", nativeQuery=true)
       public List<FestivalEntity> getFestivalMonth(String monthDate1, String monthDate2, String monthDate3, String monthDate4);
-
 }

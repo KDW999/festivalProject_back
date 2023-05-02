@@ -21,9 +21,15 @@ public class SearchwordLogEntity {
     private int sequence;
     private String searchWord;
 
+<<<<<<< HEAD
     public SearchwordLogEntity(String searchWord) {
         this.searchWord = searchWord;
 
     }
 
+=======
+    public SearchwordLogEntity(String searchWord){
+        this.searchWord=searchWord;
+    }
+>>>>>>> fe4a25ae5034b47276f943f374ece81905dc6c77
 }

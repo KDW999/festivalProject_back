@@ -29,6 +29,5 @@ public class PatchFestivalReviewBoardResponseDto {
     private List<CommentEntity> commentList;
 
     @ApiModelProperty(value="좋아요 Entity List", required=true)
-    private List<RecommendEntity> recommendList;
-    
+    private List<RecommendEntity> recommendList;   
 }

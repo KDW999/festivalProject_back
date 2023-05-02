@@ -57,7 +57,6 @@ public class FestivalServiceImplements implements FestivalService {
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
         }
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
-        
     }
 
     //! 수정을 만들긴 했지만 그냥 로그인한 상태로 한 줄 평 달면 이전에 적었던 게 알아서 덮어씌어짐 
@@ -94,7 +93,6 @@ public class FestivalServiceImplements implements FestivalService {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
         }
-
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
@@ -131,7 +129,6 @@ public class FestivalServiceImplements implements FestivalService {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
         }
-
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
@@ -169,7 +166,6 @@ public class FestivalServiceImplements implements FestivalService {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
         }
-
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
@@ -183,7 +179,11 @@ public class FestivalServiceImplements implements FestivalService {
 
             List<FestivalEntity> festivalList=festivalRepository.
                 findByFestivalNameContainsOrFestivalTypeContainsOrFestivalInformationContainsOrFestivalAreaOrderByFestivalDurationStartDesc
+<<<<<<< HEAD
 (searchWord, searchWord, searchWord, searchWord);
+=======
+                (searchWord, searchWord, searchWord, searchWord);
+>>>>>>> fe4a25ae5034b47276f943f374ece81905dc6c77
 
             data = new GetSearchFestivalListResponseDto(festivalList);
         } catch (Exception e) {
@@ -208,7 +208,6 @@ public class FestivalServiceImplements implements FestivalService {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
         }
-
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
@@ -236,7 +235,5 @@ public class FestivalServiceImplements implements FestivalService {
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
         }
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
-
     }
-
 }
