@@ -3,6 +3,7 @@ package com.festival.back.dto.request.user;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.URL;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -20,5 +21,6 @@ public class PatchProfileRequestDto {
     private String nickname;
 
     @ApiModelProperty(value = "변경할 프로필 사진 URL", example = "http://~", required = true)
+    @URL
     private String profileUrl;
 }

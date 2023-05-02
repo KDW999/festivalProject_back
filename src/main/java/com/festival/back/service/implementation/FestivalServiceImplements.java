@@ -179,11 +179,7 @@ public class FestivalServiceImplements implements FestivalService {
 
             List<FestivalEntity> festivalList=festivalRepository.
                 findByFestivalNameContainsOrFestivalTypeContainsOrFestivalInformationContainsOrFestivalAreaOrderByFestivalDurationStartDesc
-<<<<<<< HEAD
-(searchWord, searchWord, searchWord, searchWord);
-=======
                 (searchWord, searchWord, searchWord, searchWord);
->>>>>>> fe4a25ae5034b47276f943f374ece81905dc6c77
 
             data = new GetSearchFestivalListResponseDto(festivalList);
         } catch (Exception e) {
