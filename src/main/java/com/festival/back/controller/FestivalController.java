@@ -82,7 +82,7 @@ public class FestivalController {
         return response;
     }
 
-    // ? 한 줄 평 삭제
+    //? 한 줄 평 삭제
     @ApiOperation(value = "특정 게시물 삭제", notes = "Request Header에 Authorization에 Bearer JWT를 포함하고 Path Variable에 userId를 "
             +
             "포함하여 요청하면 성공 시 true 반환, 실패 시 실패 메세지 반환")
@@ -99,7 +99,8 @@ public class FestivalController {
     }
 
     //? 지역별 축제 리스트 가져오기
-    @ApiOperation(value = "축제 지역별 리스트 가져오기", notes = "잠시 보류")
+    @ApiOperation(value = "축제 지역별 리스트 가져오기", notes = "Request Header에 Authorization에 Bearer JWT를 포함하고 PathVariable에 지역명을 "+ 
+    "포함하여 요청하면 성공 시 true 반환, 실패 시 실패 메세지 반환")
     @GetMapping(GET_FESTIVAL_AREA_LIST)
     public ResponseDto<List<GetFestivalAreaListResponseDto>> getFestivalAreaList(
         @ApiParam(value = "축제 지역명", example = "부산", required = true)
