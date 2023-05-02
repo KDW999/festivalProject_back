@@ -1,4 +1,4 @@
-package com.festival.back.dto.response.oneLineReveiw;
+package com.festival.back.dto.response.festival;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

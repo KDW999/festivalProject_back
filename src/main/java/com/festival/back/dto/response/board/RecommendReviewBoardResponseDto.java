@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RecommendResponseDto {
+public class RecommendReviewBoardResponseDto {
     
     @ApiModelProperty(value = "게시물 Entity", required = true)
     private BoardEntity board;

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @ApiModel(value = "추천 기능 Request Body")
 @Data
 @NoArgsConstructor
-public class RecommendRequestDto {
+public class RecommendReviewBoardRequestDto {
     
     //? 추천하기 위해선 게시물 번호만 입력
     @ApiModelProperty(value = "게시물 번호", example = "1", required = true)

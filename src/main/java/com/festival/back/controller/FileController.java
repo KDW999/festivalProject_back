@@ -33,7 +33,7 @@ public class FileController {
         return response;
 
     }
-    @ApiOperation(value = "파일 다운로드",notes = "PathVariable 에 fileName 을 포함하여 요청하면"+
+    @ApiOperation(value = "파일 다운로드", notes = "PathVariable 에 fileName 을 포함하여 요청하면"+
     "성공시 해당하는 파일의 Resource 에 해당하는 ")
     @GetMapping(value=GET_FILE, produces={MediaType.IMAGE_PNG_VALUE,MediaType.IMAGE_JPEG_VALUE})
     public Resource getFile(@ApiParam(value = "파일명",example = "example.png",required = true)@PathVariable("fileName")String fileName){
