@@ -16,6 +16,7 @@ import com.festival.back.dto.request.festival.PostFestivalRequestDto;
 import com.festival.back.dto.request.festival.PostOneLineReviewRequestDto;
 
 public interface FestivalService {
+
     public ResponseDto<PostFestivalResponseDto> postFestival(String festivalName, PostFestivalRequestDto dto);
     public ResponseDto<PostOneLineReviewResponseDto> postOneLineReview(String userId, PostOneLineReviewRequestDto dto);
     public ResponseDto<PatchOneLineReviewResponseDto> patchOneLineReview(String userId, PatchOneLineReviewRequestDto dto);
@@ -23,6 +24,4 @@ public interface FestivalService {
     public ResponseDto<GetSearchFestivalListResponseDto> getSearchFestivalList(String searchWord);
     public ResponseDto<List<GetFestivalAreaListResponseDto>> getFestivalAreaList(String festivalArea);
     public ResponseDto<GetFestivalMonthResponseDto> getFestivalMonthList(int month);
-
-
 }

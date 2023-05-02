@@ -45,13 +45,10 @@ public class OneLineReviewEntity {
         this.userProfileUrl = userEntity.getProfileUrl();
         this.userNickname = userEntity.getNickname();
         this.writeDatetime = simpleDateFormat.format(now);
-         
     }
 
     public void patch(PatchOneLineReviewRequestDto dto){
         this.average = dto.getAverage();
         this.oneLineReviewContent = dto.getOneLineReviewContent();
     }
-
-    
 }

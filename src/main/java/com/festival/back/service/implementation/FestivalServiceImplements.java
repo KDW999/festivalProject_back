@@ -1,13 +1,10 @@
 package com.festival.back.service.implementation;
 
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.spel.ast.NullLiteral;
 import org.springframework.stereotype.Service;
 
 import com.festival.back.common.constant.ResponseMessage;
@@ -60,7 +57,6 @@ public class FestivalServiceImplements implements FestivalService {
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
         }
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
-        
     }
 
     //? 한 줄 평 작성
@@ -96,7 +92,6 @@ public class FestivalServiceImplements implements FestivalService {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
         }
-
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
@@ -133,7 +128,6 @@ public class FestivalServiceImplements implements FestivalService {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
         }
-
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
@@ -163,7 +157,7 @@ public class FestivalServiceImplements implements FestivalService {
             //? 생성자 실행 후 oneLineReview 테이블의 해당 PK로 저장된 레코드를 날린다.
             //? → DB에서 oneLineReview 테이블에 pk가 2개니까 같이 날려야됨? → 해당 게시물의 해당 유저임을 인지하기 위해 pk 2개를 날림
             //? sql 상에서 userId만 딸랑 지우려하면 다른 게시물에 작성한 댓글도 같이날라간다. 
-             
+            
             oneLineReviewRepository.deleteById(new OneLineReviewPk(userId, festivalNumber));
             
             data = new DeleteOneLineReviewResponseDto(true);
@@ -172,7 +166,6 @@ public class FestivalServiceImplements implements FestivalService {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
         }
-
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
@@ -185,8 +178,8 @@ public class FestivalServiceImplements implements FestivalService {
             searchWordLogRepository.save(searchwordLogEntity);
 
             List<FestivalEntity> festivalList=festivalRepository.
-                   findByFestivalNameContainsOrFestivalTypeContainsOrFestivalInformationContainsOrFestivalAreaOrderByFestivalDurationStartDesc
-(searchWord, searchWord, searchWord, searchWord);
+                findByFestivalNameContainsOrFestivalTypeContainsOrFestivalInformationContainsOrFestivalAreaOrderByFestivalDurationStartDesc
+                (searchWord, searchWord, searchWord, searchWord);
 
             data = new GetSearchFestivalListResponseDto(festivalList);
         } catch (Exception e) {
@@ -211,7 +204,6 @@ public class FestivalServiceImplements implements FestivalService {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
         }
-
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
@@ -239,7 +231,5 @@ public class FestivalServiceImplements implements FestivalService {
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
         }
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
-
     }
-
 }

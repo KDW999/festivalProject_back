@@ -16,6 +16,4 @@ public class OneLineReviewPk implements Serializable {
     private String userId;
     @Column(name = "festival_number")
     private int festivalNumber;
-
-    
 }

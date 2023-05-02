@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.festival.back.common.constant.ApiPattern;
-
 import com.festival.back.dto.request.board.PatchCommentRequestDto;
 import com.festival.back.dto.request.board.PatchReviewBoardRequestDto;
 import com.festival.back.dto.request.board.PostCommentRequestDto;
@@ -48,7 +47,8 @@ public class BoardController {
 
     @Autowired private BoardService boardService;
 
-    private final String RECOMMEND = "/recommend";
+    //? 이거 수정했습니다. RECOMMEND -> POST_RECOMMEND
+    private final String POST_RECOMMEND = "/recommend";
     private final String POST_COMMENT = "/post-comment";
     private final String POST_FESTIVAL_REVIEW_BOARD = "";
     private final String PATCH_FESTIVAL_REVIEW_BOARD = "";
@@ -103,7 +103,7 @@ public class BoardController {
     //? 후기 게시물 추천하기
     @ApiOperation(value = "추천 기능", notes = "Request Header Authorization에 Bearer JWT를 포함하고 " +
     "Request Body에 boardNumber를 포함하여 요청을 하면, 성공 시 게시물 전체 데이터를 반환")
-    @PostMapping(RECOMMEND)
+    @PostMapping(POST_RECOMMEND)
     public ResponseDto<RecommendReviewBoardResponseDto> 
     recommend(@ApiParam(hidden = true) 
     @AuthenticationPrincipal String userId, @Valid @RequestBody RecommendReviewBoardRequestDto requestBody){
@@ -120,8 +120,7 @@ public class BoardController {
     @Valid @RequestBody PostReviewBoardRequestDto requestbody){
         ResponseDto<PostFestivalReviewBoardResponseDto> 
         response=boardService.postFestivalReviewBoard(userId,requestbody);
-        return response;
-        
+        return response; 
     }
 
     // ? 특정 축제 특정 후기 게시글 불러오기 -김종빈
@@ -149,7 +148,6 @@ public class BoardController {
     public ResponseDto<PatchFestivalReviewBoardResponseDto> patchReivewBoard(@AuthenticationPrincipal String userId,@Valid @RequestBody PatchReviewBoardRequestDto requestBody){
         ResponseDto<PatchFestivalReviewBoardResponseDto> response =boardService.patchReivewBoard(userId, requestBody);
         return response;
-
     } 
  
     // ? 특정 게시물 삭제-김종빈
@@ -183,6 +181,4 @@ public class BoardController {
         return response;
     }
     
-    
-
 }

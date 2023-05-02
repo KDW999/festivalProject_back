@@ -56,7 +56,6 @@ public class UserController {
     public ResponseDto<CheckUserNicknameResponseDto> checkUserNickname(@Valid @RequestBody CheckUserNicknameRequestDto requestBody){
         ResponseDto<CheckUserNicknameResponseDto> response=userService.checkUserNickname(requestBody);
         return response;
-
     }
 
     @PostMapping(CHECK_TELNUMBER)
@@ -64,5 +63,4 @@ public class UserController {
         ResponseDto<CheckUserTelNumberResponseDto> response=userService.checkUserTelNumber(requestBody);
         return response;
     }
-
 }
