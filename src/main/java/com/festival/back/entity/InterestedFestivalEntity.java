@@ -41,7 +41,6 @@ public class InterestedFestivalEntity {
             InterestedFestivalEntity entity = new InterestedFestivalEntity(userId, interestedFestival);
             result.add(entity);
         }
-
         return result;
     }
 }

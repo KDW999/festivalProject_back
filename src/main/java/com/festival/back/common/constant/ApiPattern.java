@@ -1,6 +1,5 @@
 package com.festival.back.common.constant;
 
-
 public interface ApiPattern {
 
     public static final String AUTH = "/auth";

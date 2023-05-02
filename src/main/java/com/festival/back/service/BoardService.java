@@ -22,7 +22,6 @@ import com.festival.back.dto.response.board.PatchFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.PostCommentResponseDto;
 import com.festival.back.dto.response.board.PostFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.RecommendReviewBoardResponseDto;
-import com.festival.back.dto.response.festival.GetSearchFestivalListResponseDto;
 
 public interface BoardService {
 
@@ -49,8 +48,5 @@ public interface BoardService {
     public ResponseDto<DeleteFestivalReviewBoardResponseDto> deleteBoard(String userId, int boardNumber);
 
     public ResponseDto<GetSearchFestivalReviewBoardListResponseDto> getSearchFestivalReviewBoardList(String searchWord);
-
-
-
 
 }
