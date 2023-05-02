@@ -22,7 +22,6 @@ import com.festival.back.dto.response.board.PatchFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.PostCommentResponseDto;
 import com.festival.back.dto.response.board.PostFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.RecommendReviewBoardResponseDto;
-import com.festival.back.dto.response.festival.GetSearchFestivalListResponseDto;
 
 public interface BoardService {
 

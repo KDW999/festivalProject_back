@@ -1,6 +1,5 @@
 package com.festival.back.dto.response.board;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.festival.back.entity.BoardEntity;
