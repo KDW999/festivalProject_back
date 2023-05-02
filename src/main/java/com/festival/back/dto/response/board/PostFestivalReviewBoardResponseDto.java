@@ -35,5 +35,4 @@ public class PostFestivalReviewBoardResponseDto {
         this.recommendList=new ArrayList<>();
         this.commentList=new ArrayList<>();
     }
-    
 }
