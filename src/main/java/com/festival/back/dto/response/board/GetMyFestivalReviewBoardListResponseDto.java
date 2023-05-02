@@ -63,9 +63,6 @@ public class GetMyFestivalReviewBoardListResponseDto {
             GetMyFestivalReviewBoardListResponseDto dto = new GetMyFestivalReviewBoardListResponseDto(boardEntity);
             list.add(dto);
         }
-
         return list;
-
     }
-
 }

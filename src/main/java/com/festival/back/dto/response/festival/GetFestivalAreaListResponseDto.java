@@ -49,7 +49,6 @@ public class GetFestivalAreaListResponseDto {
             GetFestivalAreaListResponseDto dto = new GetFestivalAreaListResponseDto(festivalEntity);
             list.add(dto);
         }
-
         return list;
     }
 }
