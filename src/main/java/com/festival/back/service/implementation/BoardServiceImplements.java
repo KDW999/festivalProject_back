@@ -100,7 +100,7 @@ public class BoardServiceImplements implements BoardService {
             
             if(boardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
 
-            if(boardEntity.getBoardNumber() != commentEntity.getBoardNumber()) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD_NUMBER);
+            if(boardEntity.getBoardNumber() != commentEntity.getBoardNumber()) return ResponseDto.setFail(ResponseMessage.NOT_EXITST_FESTIVAL_NAME);
 
             boolean isEqualWriter = userId.equals(commentEntity.getWriterId());
             if(!isEqualWriter) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
