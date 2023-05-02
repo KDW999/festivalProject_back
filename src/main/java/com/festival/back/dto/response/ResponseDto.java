@@ -31,7 +31,6 @@ public class ResponseDto<D> {
     }
     
     // # 실패시에 대한 인스턴스를 생성해주는 static 생성자
-
     public static <D> ResponseDto<D> setFail(String massage){
         return ResponseDto.set(false, massage, null);
     }
