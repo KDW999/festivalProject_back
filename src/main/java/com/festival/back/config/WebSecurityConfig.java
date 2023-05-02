@@ -15,7 +15,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.festival.back.filter.JwtAuthenticationFilter;
 
-
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
@@ -47,6 +46,5 @@ public class WebSecurityConfig {
         return (web) -> web.ignoring()
                 .antMatchers("/swagger-ui.html", "/swagger-resources/**", "/swagger/**", "/v2/api-docs", "/webjars/**");
     }
-
 
 }

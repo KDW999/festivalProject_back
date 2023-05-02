@@ -25,9 +25,7 @@ public class TokenProvider {
                         .signWith(SignatureAlgorithm.HS256, SECURITY_KEY)
                         .setSubject(email).setIssuedAt(new Date()).setExpiration(expiredDate)
                         .compact();
-
         return jwt;
-
     }
 
     public String validate (String jwt) {
@@ -36,9 +34,5 @@ public class TokenProvider {
                             .parseClaimsJws(jwt).getBody();
 
         return claims.getSubject();
-
     }
-
 }
-
- 

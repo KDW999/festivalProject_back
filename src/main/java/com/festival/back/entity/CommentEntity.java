@@ -49,5 +49,4 @@ public class CommentEntity {
     public void patch(PatchCommentRequestDto dto){
         this.commentContent = dto.getCommentContent();
     }
-    
 }

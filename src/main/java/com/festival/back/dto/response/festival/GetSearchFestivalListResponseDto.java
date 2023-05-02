@@ -11,6 +11,4 @@ import lombok.Data;
 @AllArgsConstructor
 public class GetSearchFestivalListResponseDto {
     private List<FestivalEntity> festivalList;
-
-    
 }

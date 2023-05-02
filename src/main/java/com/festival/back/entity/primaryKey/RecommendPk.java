@@ -12,5 +12,4 @@ public class RecommendPk implements Serializable{
     private String userId;
     @Column(name = "board_number")
     private int boardNumber;
-    
 }

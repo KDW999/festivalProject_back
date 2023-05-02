@@ -44,5 +44,4 @@ public class AuthController {
         ResponseDto<SignInResponseDto> response = authService.signIn(requestBody);
         return response;
     }
-
 }

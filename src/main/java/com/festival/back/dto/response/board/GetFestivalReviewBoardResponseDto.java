@@ -26,6 +26,4 @@ public class GetFestivalReviewBoardResponseDto {
     private List<CommentEntity> commentList;
     @ApiModelProperty(value = "후기 축제 정보",required = true)
     private FestivalEntity festivalBoard;
-
-    
 }

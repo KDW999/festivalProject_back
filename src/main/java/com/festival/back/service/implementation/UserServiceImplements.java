@@ -66,8 +66,6 @@ public class UserServiceImplements implements UserService {
             userRepository.save(userEntity);
             data = new PatchProfileResponseDto(userEntity);
             
-            
-            
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
@@ -81,7 +79,6 @@ public class UserServiceImplements implements UserService {
         try {
             boolean hasuserId=userRepository.existsById(userId);
             data = new CheckUserIdResponseDto(hasuserId);
-
             
         } catch (Exception e) {
             e.printStackTrace();;
@@ -118,7 +115,5 @@ public class UserServiceImplements implements UserService {
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
         }
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
-
     }
-
 }

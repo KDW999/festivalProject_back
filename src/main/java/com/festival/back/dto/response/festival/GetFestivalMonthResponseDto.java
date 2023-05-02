@@ -12,6 +12,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetFestivalMonthResponseDto {
-  private List<FestivalEntity> festivalList;
-    
+  private List<FestivalEntity> festivalList;   
 }

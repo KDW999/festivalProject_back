@@ -48,6 +48,5 @@ public class FestivalEntity {
         this.festivalCost = dto.getFestivalCost();
         this.festivalInformationUrl = dto.getFestivalInformationUrl();
         this.festivalInformation = dto.getFestivalInformation();
-        
     }
 }

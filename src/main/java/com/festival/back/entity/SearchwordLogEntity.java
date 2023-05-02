@@ -22,8 +22,6 @@ public class SearchwordLogEntity {
     private String searchWord;
 
     public SearchwordLogEntity(String searchWord){
-       this.searchWord=searchWord;
-
+        this.searchWord=searchWord;
     }
-    
 }
