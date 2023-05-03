@@ -51,7 +51,8 @@ public class FestivalController {
     private final String POST_FESTIVAL = "";
 
     // ? 축제 작성
-    @ApiOperation(value = "축제 작성", notes = "Request Header Authorization에 Bearer JWT를 포함하고 festivalName, festivalType, festivalDurationStart, festivalDurationEnd, festivalTime, festivalArea, festivalCost, festivalInformationUrl을 전송하면 축제 작성 결과로 작성된 정보를 반환, 실패시 실패 메시지 반환")
+    @ApiOperation(value = "축제 작성", notes =
+     "Request Header Authorization에 Bearer JWT를 포함하고 festivalName, festivalType, festivalDurationStart, festivalDurationEnd, festivalTime, festivalArea, festivalCost, festivalInformationUrl을 전송하면 축제 작성 결과로 작성된 정보를 반환, 실패시 실패 메시지 반환")
     @PostMapping(POST_FESTIVAL)
     public ResponseDto<PostFestivalResponseDto> postFestival(
             @ApiParam(hidden = true) @AuthenticationPrincipal String festivalName,
@@ -92,8 +93,7 @@ public class FestivalController {
 
             // ? 로그인하면 유저 정보 갖고있으니 축제 게시물 번호만 url에 넣으면됨
             @AuthenticationPrincipal String userId) {
-        ResponseDto<DeleteOneLineReviewResponseDto> response = festivalService.deleteOneLineReview(festivalNumber,
-                userId);
+        ResponseDto<DeleteOneLineReviewResponseDto> response = festivalService.deleteOneLineReview(festivalNumber,userId);
         return response;
     }
 

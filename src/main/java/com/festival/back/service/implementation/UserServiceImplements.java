@@ -47,6 +47,7 @@ public class UserServiceImplements implements UserService {
             // todo: save
 
             if (hasNickname) {
+                //? DB에 저장되어있는 데이터의 닉네임과 Dto로 빋은 닉네임 일치
                 if(nickname.equals(existUser)){
                     userEntity.setProfileUrl(profileUrl);
                 }else {
