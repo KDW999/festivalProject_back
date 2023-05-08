@@ -59,7 +59,6 @@ public class FestivalServiceImplements implements FestivalService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
-    //! 수정을 만들긴 했지만 그냥 로그인한 상태로 한 줄 평 달면 이전에 적었던 게 알아서 덮어씌어짐 
     //? 한 줄 평 작성
     public ResponseDto<PostOneLineReviewResponseDto> postOneLineReview(String userId, PostOneLineReviewRequestDto dto) {
 
@@ -139,6 +138,7 @@ public class FestivalServiceImplements implements FestivalService {
 
         try {
 
+            //^ 삭제한 한 줄 평의 페스티벌 게시물 정보도 보여주기
             //? 삭제할 한 줄 평의 축제 게시물 번호
             FestivalEntity festivalEntity = festivalRepository.findByFestivalNumber(festivalNumber);
             if(festivalEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_FESTIVAL_NUMBER);
