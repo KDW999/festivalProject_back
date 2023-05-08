@@ -1,5 +1,9 @@
 package com.festival.back.dto.response.auth;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.festival.back.entity.InterestedFestivalEntity;
 import com.festival.back.entity.UserEntity;
 
 import io.swagger.annotations.ApiModel;
@@ -33,13 +37,23 @@ public class SignInResponseDto {
 
     @ApiModelProperty(value="토큰 만료 기간", example="3600000", required=true)
     private int expiredTime;
+    
+    private List<String> interestedFestival;
 
-    public SignInResponseDto(UserEntity userEntity, String token) {
+    public SignInResponseDto(UserEntity userEntity, List<InterestedFestivalEntity> interestedFestivalEntity , String token) {
+
+        List<String> list = new ArrayList<>();
+        for (InterestedFestivalEntity interestedFestivalEntityList : interestedFestivalEntity) {
+            String dto = interestedFestivalEntityList.getInterestedFestivalType();
+            list.add(dto);
+        }
+        
         this.userId = userEntity.getUserId();
         this.nickname = userEntity.getNickname();
         this.profileUrl = userEntity.getProfileUrl();
         this.telNumber = userEntity.getTelNumber();
         this.token = token;
         this.expiredTime = 14400000;
+        this.interestedFestival = list;
     }
 }
