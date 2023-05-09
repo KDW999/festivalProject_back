@@ -59,7 +59,6 @@ public class FestivalServiceImplements implements FestivalService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
-    //! 수정을 만들긴 했지만 그냥 로그인한 상태로 한 줄 평 달면 이전에 적었던 게 알아서 덮어씌어짐 
     //? 한 줄 평 작성
     public ResponseDto<PostOneLineReviewResponseDto> postOneLineReview(String userId, PostOneLineReviewRequestDto dto) {
 
@@ -139,6 +138,7 @@ public class FestivalServiceImplements implements FestivalService {
 
         try {
 
+            //^ 삭제한 한 줄 평의 페스티벌 게시물 정보도 보여주기
             //? 삭제할 한 줄 평의 축제 게시물 번호
             FestivalEntity festivalEntity = festivalRepository.findByFestivalNumber(festivalNumber);
             if(festivalEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_FESTIVAL_NUMBER);
@@ -211,18 +211,23 @@ public class FestivalServiceImplements implements FestivalService {
     public ResponseDto<GetFestivalMonthResponseDto> getFestivalMonthList(int month) { 
     
         GetFestivalMonthResponseDto data= null;
-        
+        // ? DecimalFormat 사용해서 입력 받은(month) 값을 1 로 받는다면 01 로 포멧을 변경 시킴.
         DecimalFormat decimalFormat = new DecimalFormat("00");
+        // ? monthString =변수명으로 월(month) 를 입력받음.
         String monthString = decimalFormat.format(month);
+        // ? nextMonthString =변수명으로 다음월(month)를 받아서 +1 증가 시킴 (다음달)
         String nextMonthString = decimalFormat.format(month + 1);
-        
+        // ? now 에 현제 시간을 받음.
         LocalDate now = LocalDate.now();
+        // ? monthDate 는 현제 년도- 위에서 받은 monthString 값+ 01" 1월달을 입력받으면2023-01-01 monthDate 가 생성됨.
         String monthDate = now.getYear() + "-" + monthString + "-01";
+        // ? 다음달을 출력 하는 데이터임. 
+        // ? 12월달 이라면 year 에 1년을 증가시키고 1월1일 값을 받고 아니랄면 현재 년도 증가시킨 달 01 일 을 입력받음.
         String nextMonthDate = month == 12 ? now.getYear() + 1 + "-01-01" : now.getYear() + "-" + nextMonthString + "-01";
 
         try {
 
-            List<FestivalEntity> festivalEntity =  (List<FestivalEntity>) festivalRepository.getFestivalMonth(monthDate, monthDate, monthDate, nextMonthDate);
+            List<FestivalEntity> festivalEntity =  festivalRepository.getFestivalMonth(monthDate, monthDate, monthDate, nextMonthDate);
             data= new GetFestivalMonthResponseDto(festivalEntity);
 
             

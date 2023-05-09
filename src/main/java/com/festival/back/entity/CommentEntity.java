@@ -42,6 +42,7 @@ public class CommentEntity {
         this.writerId = userEntity.getUserId();
         this.writerProfileUrl = userEntity.getProfileUrl();
         this.writerNickname = userEntity.getNickname();
+        
          
     }
 

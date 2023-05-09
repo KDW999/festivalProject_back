@@ -79,23 +79,27 @@ public class AuthServiceImplements implements AuthService {
         String password = dto.getPassword();
 
         UserEntity userEntity = null;
-
         try {
-
+            
             userEntity = userRepository.findByUserId(userId);
             if(userEntity == null) return ResponseDto.setFail(ResponseMessage.FAIL_SIGN_IN);
-
+            
+            
             boolean isEqualPassword = passwordEncoder.matches(password, userEntity.getPassword());
             if(!isEqualPassword) return ResponseDto.setFail(ResponseMessage.FAIL_SIGN_IN);
+
+            
+            
             
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
         }
-
+        
         try {
+            List<InterestedFestivalEntity> interestedFestivalEntity = interestedFestivalRepository.findByUserId(userId);
             String token = tokenProvider.create(userId);
-            data = new SignInResponseDto(userEntity, token);
+            data = new SignInResponseDto(userEntity, interestedFestivalEntity, token);
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.FAIL_SIGN_IN);
