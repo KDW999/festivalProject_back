@@ -89,10 +89,10 @@ public class FestivalController {
     @DeleteMapping(DELETE_ONE_LINE_REVIEW)
     public ResponseDto<DeleteOneLineReviewResponseDto> deleteOneLineReview(
 
-            @ApiParam(value = "축제 게시물 번호", example = "1", required = true) @PathVariable("festivalNumber") int festivalNumber,
+        @ApiParam(value = "축제 게시물 번호", example = "1", required = true) @PathVariable("festivalNumber") int festivalNumber,
 
-            // ? 로그인하면 유저 정보 갖고있으니 축제 게시물 번호만 url에 넣으면됨
-            @AuthenticationPrincipal String userId) {
+        // ? 로그인하면 유저 정보 갖고있으니 축제 게시물 번호만 url에 넣으면됨
+        @AuthenticationPrincipal String userId) {
         ResponseDto<DeleteOneLineReviewResponseDto> response = festivalService.deleteOneLineReview(festivalNumber,userId);
         return response;
     }
