@@ -42,10 +42,10 @@ public class SignInResponseDto {
 
     public SignInResponseDto(UserEntity userEntity, List<InterestedFestivalEntity> interestedFestivalEntity , String token) {
 
-        List<String> list = new ArrayList<>();
+        List<String> interestedFestivalList = new ArrayList<>();
         for (InterestedFestivalEntity interestedFestivalEntityList : interestedFestivalEntity) {
             String dto = interestedFestivalEntityList.getInterestedFestivalType();
-            list.add(dto);
+            interestedFestivalList.add(dto);
         }
         
         this.userId = userEntity.getUserId();
@@ -54,6 +54,6 @@ public class SignInResponseDto {
         this.telNumber = userEntity.getTelNumber();
         this.token = token;
         this.expiredTime = 14400000;
-        this.interestedFestival = list;
+        this.interestedFestival = interestedFestivalList;
     }
 }
