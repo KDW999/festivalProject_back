@@ -41,6 +41,15 @@ public class GetInterestedFestivalListResponseDto {
     @ApiModelProperty(value = "축제 비용",example = "10000원",required = true)
     private String festivalCost;
 
+    @ApiModelProperty(value = "축제 전체 정보" ,example="울산옹기축제는 옹기의 집산지인 울산 울주군 외고산 옹기마을에서 매년 개최하는 문화관광축제로" ,required = true)
+    private String festivalInformation;
+
+    @ApiModelProperty(value = "축제 타이틀 이미지",example = "http url",required = true)
+    private String festivalInformationUrl;
+
+    @ApiModelProperty(value = "관관객 평점 평균",example = "7",required = true)
+
+    private int onelineReviewAverage;
     public GetInterestedFestivalListResponseDto (FestivalEntity festivalEntity) {
         this.festivalNumber = festivalEntity.getFestivalNumber();
         this.festivalName = festivalEntity.getFestivalName();
@@ -50,6 +59,10 @@ public class GetInterestedFestivalListResponseDto {
         this.festivalTime = festivalEntity.getFestivalTime();
         this.festivalArea = festivalEntity.getFestivalArea();
         this.festivalCost = festivalEntity.getFestivalCost();
+        this.festivalInformation=festivalEntity.getFestivalInformation();
+        this.festivalInformationUrl=festivalEntity.getFestivalInformationUrl();
+        this.onelineReviewAverage=festivalEntity.getOnelineReviewAverage();
+       
     }
 
     public static List<GetInterestedFestivalListResponseDto> copyList(List<FestivalEntity> festivaleEntityList) {
