@@ -19,6 +19,7 @@ import com.festival.back.dto.response.board.GetFestivalReviewBoardListResponseDt
 import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.GetInterestedFestivalListResponseDto;
 import com.festival.back.dto.response.board.GetMyFestivalReviewBoardListResponseDto;
+import com.festival.back.dto.response.board.GetOneFestivalReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.GetSearchFestivalReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.PatchCommentResponseDto;
 import com.festival.back.dto.response.board.PatchFestivalReviewBoardResponseDto;
@@ -29,6 +30,7 @@ import com.festival.back.entity.BoardEntity;
 import com.festival.back.entity.CommentEntity;
 import com.festival.back.entity.FestivalEntity;
 import com.festival.back.entity.InterestedFestivalEntity;
+import com.festival.back.entity.OneLineReviewEntity;
 import com.festival.back.entity.RecommendEntity;
 import com.festival.back.entity.SearchwordLogEntity;
 import com.festival.back.entity.UserEntity;
@@ -36,6 +38,7 @@ import com.festival.back.repository.BoardRepository;
 import com.festival.back.repository.CommentRepository;
 import com.festival.back.repository.FestivalRepository;
 import com.festival.back.repository.InterestedFestivalRepository;
+import com.festival.back.repository.OneLineReviewRepository;
 import com.festival.back.repository.RecommendRepository;
 import com.festival.back.repository.SearchWordLogRepository;
 import com.festival.back.repository.UserRepository;
@@ -51,6 +54,7 @@ public class BoardServiceImplements implements BoardService {
     @Autowired private FestivalRepository festivalRepository;
     @Autowired private InterestedFestivalRepository interestedFestivalRepository;
     @Autowired private SearchWordLogRepository searchWordLogRepository;
+    @Autowired private OneLineReviewRepository oneLineReviewRepository;
     
     //? 댓글 작성
     public ResponseDto<PostCommentResponseDto> postComment(String userId, PostCommentRequestDto dto) {
@@ -201,7 +205,7 @@ public class BoardServiceImplements implements BoardService {
 
             boardEntity.increaseViewCount();
             boardRepository.save(boardEntity);
-            data=new GetFestivalReviewBoardResponseDto(boardEntity, recommdList, commentList, festivalEntity);
+            data=new GetFestivalReviewBoardResponseDto(boardEntity, recommdList, commentList);
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -247,7 +251,10 @@ public class BoardServiceImplements implements BoardService {
             List<BoardEntity> boardEntity = boardRepository.findByFestivalNumberOrderByBoardWriteDatetimeDesc(festivalNumber);
             if(boardEntity.isEmpty()) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
 
-            data = new GetFestivalReviewBoardListResponseDto(festivalEntity,boardEntity);
+            List<OneLineReviewEntity> oneLineReviewList=oneLineReviewRepository.findByFestivalNumberOrderByWriteDatetimeDesc(festivalNumber);
+             
+            
+            data = new GetFestivalReviewBoardListResponseDto(festivalEntity,oneLineReviewList,boardEntity);
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -344,6 +351,7 @@ public class BoardServiceImplements implements BoardService {
             for (InterestedFestivalEntity interestedFestival: interestedFestivalList)
                 interestedFestivalTypeList.add(interestedFestival.getInterestedFestivalType());
             List<FestivalEntity> festivalList = festivalRepository.findByFestivalTypeIn(interestedFestivalTypeList);
+            if(festivalList.isEmpty()) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_INTERESTED_FESTIVAL_TYPE);
 
             data = GetInterestedFestivalListResponseDto.copyList(festivalList);
             
@@ -371,5 +379,22 @@ public class BoardServiceImplements implements BoardService {
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
         }
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+    }
+
+    //  ? 특정 축제 전체 후기 리스트 만 반환
+    public ResponseDto<GetOneFestivalReviewBoardListResponseDto> getOneFestivalReviewBoard(int festivalNumber) {
+     GetOneFestivalReviewBoardListResponseDto data = null;
+     
+     try {
+        List<BoardEntity> boardEntity=boardRepository.findByFestivalNumberOrderByBoardWriteDatetimeDesc(festivalNumber);
+
+        data = new GetOneFestivalReviewBoardListResponseDto(boardEntity);
+        
+     } catch (Exception e) {
+        e.printStackTrace();    
+        return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+     }
+     return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+
     }
 }
