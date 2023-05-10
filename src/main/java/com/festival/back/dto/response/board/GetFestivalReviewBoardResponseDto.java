@@ -24,6 +24,5 @@ public class GetFestivalReviewBoardResponseDto {
     private List<RecommendEntity> recommendList ;
     @ApiModelProperty(value = "댓글 List",required = true)
     private List<CommentEntity> commentList;
-    @ApiModelProperty(value = "후기 축제 정보",required = true)
-    private FestivalEntity festivalBoard;
+
 }

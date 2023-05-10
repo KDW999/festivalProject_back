@@ -25,6 +25,7 @@ import com.festival.back.dto.response.board.GetFestivalReviewBoardListResponseDt
 import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.GetInterestedFestivalListResponseDto;
 import com.festival.back.dto.response.board.GetMyFestivalReviewBoardListResponseDto;
+import com.festival.back.dto.response.board.GetOneFestivalReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.DeleteCommentResponseDto;
 import com.festival.back.dto.response.board.DeleteFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.PatchCommentResponseDto;
@@ -58,6 +59,7 @@ public class BoardController {
     private final String GET_FESTIVAL_REVIEW_BOARD="/{festivalNumber}/{boardNumber}";
     private final String GET_INTERESTED_FESTIVAL_LIST = "/festival/interested-list";
     private final String GET_FESTIVAL_LIST="/festival/{festivalNumber}";
+    private final String GET_ONLY_FESTIVAL_LIST="/onlyfestival/{festivalNumber}";
 
     private final String PATCH_COMMENT = "/patch-comment";
 
@@ -179,6 +181,13 @@ public class BoardController {
     public ResponseDto<List<GetInterestedFestivalListResponseDto>> GetInterestedFestivalList(@ApiParam(hidden = true) @AuthenticationPrincipal String userId) {
         ResponseDto<List<GetInterestedFestivalListResponseDto>> response = boardService.getInterestedFestivalList(userId);
         return response;
+    }
+    // ? 특정 후기 만 전체 반환.
+    @ApiOperation(value = "특정 축제 후기 만 전체 반환 한다.")
+    @GetMapping(GET_ONLY_FESTIVAL_LIST)
+    public ResponseDto<GetOneFestivalReviewBoardListResponseDto> getOneFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber){
+        ResponseDto<GetOneFestivalReviewBoardListResponseDto> response = boardService.getOneFestivalReviewBoard(festivalNumber);
+       return response;
     }
     
 }
