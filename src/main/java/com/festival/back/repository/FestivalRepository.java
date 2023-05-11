@@ -23,7 +23,7 @@ public interface FestivalRepository extends JpaRepository<FestivalEntity, Intege
                   String festivalName, String festivalType, String festivalInformation, String festivalArea);
 
       // ? 지역별 개최날짜 빠른 순
-      public List<FestivalEntity> findByFestivalAreaOrderByFestivalDurationStart(String festivalArea);
+      public List<FestivalEntity> findByFestivalAreaContainingOrderByFestivalDurationStart(String festivalArea);
       
       @Modifying
       @Transactional
