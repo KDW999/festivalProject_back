@@ -210,7 +210,9 @@ public class FestivalServiceImplements implements FestivalService {
 
         try {
 
-            List<FestivalEntity> areaList = festivalRepository.findByFestivalAreaOrderByFestivalDurationStart(festivalArea);
+            //? findByFestivalAreaOrderBy -> findByFestivalAreaContainingOrderBy로 바꿨음
+            //? Containing이 SQL에서 LIKE와 같은 기능
+            List<FestivalEntity> areaList = festivalRepository.findByFestivalAreaContainingOrderByFestivalDurationStart(festivalArea);
             data = GetFestivalAreaListResponseDto.copyList(areaList);
             
         } catch (Exception exception) {

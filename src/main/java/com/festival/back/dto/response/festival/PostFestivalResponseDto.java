@@ -42,8 +42,12 @@ public class PostFestivalResponseDto {
     @ApiModelProperty(value="축제 정보 이미지 URL", example="http://~", required=true)
     private String festivalInformationUrl;
 
+    @ApiModelProperty(value="축제 홈페이지", example="http://~", required=true)
+    private String festivalHomepage;
+
     @ApiModelProperty(value="축제 한줄 평가 내용 리스트", example="5.0", required=true)
     private List<OneLineReviewEntity> oneLineReviewContentList;
+
 
     public PostFestivalResponseDto(FestivalEntity festivalEntity) {
         this.festivalName = festivalEntity.getFestivalName();
@@ -54,6 +58,7 @@ public class PostFestivalResponseDto {
         this.festivalArea = festivalEntity.getFestivalArea();
         this.festivalCost = festivalEntity.getFestivalCost();
         this.festivalInformationUrl = festivalEntity.getFestivalInformationUrl();
+        this.festivalHomepage = festivalEntity.getFestivalHomepage();
         this.oneLineReviewContentList = new ArrayList<>();
     }
 }
