@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel("내가 작성한 축제 전체 후기게시글 LIST Response.")
+@ApiModel(value = "내가 작성한 축제 전체 후기게시글 LIST Response.")
 public class GetMyFestivalReviewBoardListResponseDto {
 
     @ApiModelProperty(value = "게시물 번호", example = "1", required = true)

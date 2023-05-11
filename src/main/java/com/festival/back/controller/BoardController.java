@@ -185,8 +185,8 @@ public class BoardController {
     // ? 특정 후기 만 전체 반환.
     @ApiOperation(value = "특정 축제 후기 만 전체 반환 한다.")
     @GetMapping(GET_ONLY_FESTIVAL_LIST)
-    public ResponseDto<GetOneFestivalReviewBoardListResponseDto> getOneFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber){
-        ResponseDto<GetOneFestivalReviewBoardListResponseDto> response = boardService.getOneFestivalReviewBoard(festivalNumber);
+    public ResponseDto<List<GetOneFestivalReviewBoardListResponseDto>> getOneFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber){
+        ResponseDto<List<GetOneFestivalReviewBoardListResponseDto>> response = boardService.getOneFestivalReviewBoard(festivalNumber);
        return response;
     }
     

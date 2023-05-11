@@ -125,6 +125,7 @@ public class FestivalServiceImplements implements FestivalService {
 
             oneLineReviewEntity.patch(dto);
             oneLineReviewRepository.save(oneLineReviewEntity);
+            
 
             List<OneLineReviewEntity> oneLineReviewList = oneLineReviewRepository.findByFestivalNumberOrderByWriteDatetimeDesc(festivalNumber);
 
@@ -165,6 +166,8 @@ public class FestivalServiceImplements implements FestivalService {
             //? sql 상에서 userId만 딸랑 지우려하면 다른 게시물에 작성한 댓글도 같이날라간다. 
             
             oneLineReviewRepository.deleteById(new OneLineReviewPk(userId, festivalNumber));
+
+            int festivalAvg = festivalRepository.setAverger(festivalNumber,festivalNumber);
             
             data = new DeleteOneLineReviewResponseDto(true);
             
@@ -249,14 +252,14 @@ public class FestivalServiceImplements implements FestivalService {
     }
 
     //  ? 특정 한줄평가 후기만  불러옴
-    public ResponseDto<GetOneLineReviewResponseDto> getOneLineReview(int festivalNumber) {
-        GetOneLineReviewResponseDto data = null;
+    public ResponseDto<List<GetOneLineReviewResponseDto>> getOneLineReview(int festivalNumber) {
+        List<GetOneLineReviewResponseDto> data = null;
 
         try {
 
             List<OneLineReviewEntity> oneLineReviewEntity = oneLineReviewRepository.findByFestivalNumberOrderByWriteDatetimeDesc(festivalNumber);
 
-            data = new GetOneLineReviewResponseDto(oneLineReviewEntity);
+            data = GetOneLineReviewResponseDto.copyList(oneLineReviewEntity);
 
             
         } catch (Exception e) {

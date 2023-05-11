@@ -130,8 +130,8 @@ public class FestivalController {
     }
     @ApiOperation(value = "특정 축제 한줄평가만 반환한다.")
     @GetMapping(GET_ONELINE_REVIEW)
-    public ResponseDto<GetOneLineReviewResponseDto> getOneLineReview(@PathVariable("festivalNumber") int festivalNumber){
-        ResponseDto<GetOneLineReviewResponseDto> response = festivalService.getOneLineReview(festivalNumber);
+    public ResponseDto<List<GetOneLineReviewResponseDto>> getOneLineReview(@PathVariable("festivalNumber") int festivalNumber){
+        ResponseDto<List<GetOneLineReviewResponseDto>> response = festivalService.getOneLineReview(festivalNumber);
         return response;
     }
 

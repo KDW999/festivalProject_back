@@ -382,13 +382,13 @@ public class BoardServiceImplements implements BoardService {
     }
 
     //  ? 특정 축제 전체 후기 리스트 만 반환
-    public ResponseDto<GetOneFestivalReviewBoardListResponseDto> getOneFestivalReviewBoard(int festivalNumber) {
-     GetOneFestivalReviewBoardListResponseDto data = null;
+    public ResponseDto<List<GetOneFestivalReviewBoardListResponseDto>> getOneFestivalReviewBoard(int festivalNumber) {
+     List<GetOneFestivalReviewBoardListResponseDto> data = null;
      
      try {
         List<BoardEntity> boardEntity=boardRepository.findByFestivalNumberOrderByBoardWriteDatetimeDesc(festivalNumber);
 
-        data = new GetOneFestivalReviewBoardListResponseDto(boardEntity);
+        data = GetOneFestivalReviewBoardListResponseDto.copyList(boardEntity);
         
      } catch (Exception e) {
         e.printStackTrace();    
