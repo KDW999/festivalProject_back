@@ -20,6 +20,8 @@ import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.festival.DeleteOneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalAreaListResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalMonthResponseDto;
+import com.festival.back.dto.response.festival.GetFestivalResponseDto;
+import com.festival.back.dto.response.festival.GetOneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.GetSearchFestivalListResponseDto;
 import com.festival.back.dto.response.festival.PatchOneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.PostFestivalResponseDto;
@@ -45,8 +47,10 @@ public class FestivalController {
     private final String PATCH_ONE_LINE_REVIEW = "";
     private final String DELETE_ONE_LINE_REVIEW = "/{festivalNumber}";
     private final String GET_SEARCH_FESTIVAL = "/festivalsearch/{searchWord}";
-    private final String GET_FESTIVAL_AREA_LIST = "/{festivalArea}";
+    private final String GET_FESTIVAL_AREA_LIST = "/area/{festivalArea}";
     private final String GET_FESTIVAL_MONTH="/festivalmonth/{month}";
+    private final String GET_ONELINE_REVIEW="/oneLineReview/{festivalNumber}";
+    private final String GET_FESTIVAL="/festival/{festivalNumber}";
 
     private final String POST_FESTIVAL = "";
 
@@ -104,15 +108,16 @@ public class FestivalController {
     public ResponseDto<List<GetFestivalAreaListResponseDto>> getFestivalAreaList(
         @ApiParam(value = "축제 지역명", example = "부산", required = true)
         @PathVariable(name = "festivalArea", required = true) String festivalArea){
-
+    
         ResponseDto<List<GetFestivalAreaListResponseDto>> response = festivalService.getFestivalAreaList(festivalArea);
         return response;
     }
 
-    //? 축제를 검색후 포함한 전체 리스트 반환 -김종빈
+    //? 축제를 검색후 검색한 단어를 포함한 전체 리스트 반환 -김종빈
     @ApiOperation(value = "축제를 검색한다. festivalNmae fetivalType festivalArea festivalInformaion PathVariable 에 검색어를 입력하고 성공하면 성공값을 반환한다.")
     @GetMapping(GET_SEARCH_FESTIVAL)
     public ResponseDto<GetSearchFestivalListResponseDto> getSearchFestivalList(@PathVariable("searchWord") String searchWord){
+     
         ResponseDto<GetSearchFestivalListResponseDto> response =festivalService.getSearchFestivalList(searchWord);
         return response;
     }
@@ -122,5 +127,19 @@ public class FestivalController {
     public ResponseDto<GetFestivalMonthResponseDto> getFestivalMonthList(@PathVariable("month") int month) {
         ResponseDto<GetFestivalMonthResponseDto> response = festivalService.getFestivalMonthList(month);
         return response;
+    }
+    @ApiOperation(value = "특정 축제 한줄평가만 반환한다.")
+    @GetMapping(GET_ONELINE_REVIEW)
+    public ResponseDto<GetOneLineReviewResponseDto> getOneLineReview(@PathVariable("festivalNumber") int festivalNumber){
+        ResponseDto<GetOneLineReviewResponseDto> response = festivalService.getOneLineReview(festivalNumber);
+        return response;
+    }
+
+    @ApiOperation(value = "특정 축제 만 반환한다.")
+    @GetMapping(GET_FESTIVAL)
+    public ResponseDto<GetFestivalResponseDto> getFestival(@PathVariable("festivalNumber")int festivalNumber){
+        ResponseDto<GetFestivalResponseDto> response = festivalService.getFestival(festivalNumber);
+        return response;
+
     }
 }

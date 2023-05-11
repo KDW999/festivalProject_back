@@ -7,6 +7,8 @@ import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.festival.DeleteOneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalAreaListResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalMonthResponseDto;
+import com.festival.back.dto.response.festival.GetFestivalResponseDto;
+import com.festival.back.dto.response.festival.GetOneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.GetSearchFestivalListResponseDto;
 import com.festival.back.dto.response.festival.PatchOneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.PostFestivalResponseDto;
@@ -24,4 +26,7 @@ public interface FestivalService {
     public ResponseDto<GetSearchFestivalListResponseDto> getSearchFestivalList(String searchWord);
     public ResponseDto<List<GetFestivalAreaListResponseDto>> getFestivalAreaList(String festivalArea);
     public ResponseDto<GetFestivalMonthResponseDto> getFestivalMonthList(int month);
+    public ResponseDto<GetOneLineReviewResponseDto> getOneLineReview(int festivalNumber);
+    public ResponseDto<GetFestivalResponseDto> getFestival(int festivalNumber);
+    
 }

@@ -26,7 +26,7 @@ public class FileController {
     private final String GET_FILE = "/{fileName}";
     
     @ApiOperation(value = "파일 업로드"
-    ,notes = "Request Body 에 filer 포함하여 요청하면 성공시 다운로드 URl 을 반환,실패시 NULL 반환")
+    ,notes = "Request Body 에 FILE 을 포함하여 요청하면 성공시 다운로드 URl 을 반환,실패시 NULL 반환")
     @PostMapping(UPLOAD)
     public String upload(@ApiParam(value = "파일",example = "파일 이름",required = true)@RequestParam("file") MultipartFile file){
         String response = fileService.upload(file);

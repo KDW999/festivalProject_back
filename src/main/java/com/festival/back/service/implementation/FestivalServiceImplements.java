@@ -12,6 +12,8 @@ import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.festival.DeleteOneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalAreaListResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalMonthResponseDto;
+import com.festival.back.dto.response.festival.GetFestivalResponseDto;
+import com.festival.back.dto.response.festival.GetOneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.GetSearchFestivalListResponseDto;
 import com.festival.back.dto.response.festival.PatchOneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.PostFestivalResponseDto;
@@ -73,15 +75,19 @@ public class FestivalServiceImplements implements FestivalService {
 
             //? 이미 한 줄 평 작성한 작성자가 또 작성할 경우 못쓰게 막기
             boolean hasUserId = oneLineReviewRepository.existsByUserId(userId); //? oneLineReview에 해당 유저 아이디가 있는지 검사
-            if(hasUserId) return ResponseDto.setFail(ResponseMessage.EXIST_ID); //? 없으면 한 줄 평 작성하고 있으면 작성 불가
-            
-            //? 한 줄 평 작성하려면 축제 번호가 있어야 한다.
-            FestivalEntity festivalEntity = festivalRepository.findByFestivalNumber(festivalNumber);
-            if(festivalEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_FESTIVAL_NUMBER);
+            boolean hasFestivalNumber = oneLineReviewRepository.existsByFestivalNumber(festivalNumber); //? 다른 축제 한줄 평 작성을 위한 조건 추가
+            if(hasUserId && hasFestivalNumber) return ResponseDto.setFail(ResponseMessage.EXIST_ID); //? 없으면 한 줄 평 작성하고 있으면 작성 불가
             
             //? 한 줄 평 Entity에 평을 작성한 유저 정보와 한 줄 평 내용들 저장
             OneLineReviewEntity oneLineReviewEntity = new OneLineReviewEntity(userEntity, dto);
             oneLineReviewRepository.save(oneLineReviewEntity); //? 작성한 유저, 축제 번호 pk에 작성 내용들 들어감
+            
+            int festivalAvg = festivalRepository.setAverger(festivalNumber,festivalNumber);
+              
+           
+            //? 한 줄 평 작성하려면 축제 번호가 있어야 한다.
+            FestivalEntity festivalEntity = festivalRepository.findByFestivalNumber(festivalNumber);
+            if(festivalEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_FESTIVAL_NUMBER);
 
             //? 축제 정보에서 한 줄 평 여러 개 보여줘야 되니까 List 형태
             List<OneLineReviewEntity> oneLineReviewList = oneLineReviewRepository.findByFestivalNumberOrderByWriteDatetimeDesc(festivalNumber);
@@ -173,13 +179,17 @@ public class FestivalServiceImplements implements FestivalService {
     public ResponseDto<GetSearchFestivalListResponseDto> getSearchFestivalList(String searchWord) {
         GetSearchFestivalListResponseDto data= null;
 
+       
+
         try {
             SearchwordLogEntity searchwordLogEntity = new SearchwordLogEntity(searchWord);
             searchWordLogRepository.save(searchwordLogEntity);
-
+      
             List<FestivalEntity> festivalList=festivalRepository.
                 findByFestivalNameContainsOrFestivalTypeContainsOrFestivalInformationContainsOrFestivalAreaOrderByFestivalDurationStartDesc
                 (searchWord, searchWord, searchWord, searchWord);
+                if(festivalList.isEmpty()) return ResponseDto.setFail(ResponseMessage.NO_SEARCH_RESULTS);
+                
 
             data = new GetSearchFestivalListResponseDto(festivalList);
         } catch (Exception e) {
@@ -236,5 +246,40 @@ public class FestivalServiceImplements implements FestivalService {
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
         }
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+    }
+
+    //  ? 특정 한줄평가 후기만  불러옴
+    public ResponseDto<GetOneLineReviewResponseDto> getOneLineReview(int festivalNumber) {
+        GetOneLineReviewResponseDto data = null;
+
+        try {
+
+            List<OneLineReviewEntity> oneLineReviewEntity = oneLineReviewRepository.findByFestivalNumberOrderByWriteDatetimeDesc(festivalNumber);
+
+            data = new GetOneLineReviewResponseDto(oneLineReviewEntity);
+
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+        
+    }
+    //  ? 특정 축제만 불러옴.
+    public ResponseDto<GetFestivalResponseDto> getFestival(int festivalNumber) {
+     GetFestivalResponseDto data= null;
+
+     try {
+        FestivalEntity festivalEntity=festivalRepository.findByFestivalNumber(festivalNumber);
+
+        data=new GetFestivalResponseDto(festivalEntity);
+        
+     } catch (Exception e) {
+        e.printStackTrace();
+        return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+     }
+     return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+        
     }
 }

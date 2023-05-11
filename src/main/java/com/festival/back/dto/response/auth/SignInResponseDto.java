@@ -41,8 +41,9 @@ public class SignInResponseDto {
     private List<String> interestedFestival;
 
     public SignInResponseDto(UserEntity userEntity, List<InterestedFestivalEntity> interestedFestivalEntity , String token) {
-
+    //   ? 새로운 리스트 생성
         List<String> list = new ArrayList<>();
+        // ? foreach 반복문을 돌면서  dto 에interestedFestivalEntityList 에 있는 getInterestedFestivalType 를 가져와서 생성된 list 에 저장
         for (InterestedFestivalEntity interestedFestivalEntityList : interestedFestivalEntity) {
             String dto = interestedFestivalEntityList.getInterestedFestivalType();
             list.add(dto);
