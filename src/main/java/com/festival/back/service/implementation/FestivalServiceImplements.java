@@ -13,6 +13,7 @@ import com.festival.back.dto.response.festival.DeleteOneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalAreaListResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalMonthResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalResponseDto;
+import com.festival.back.dto.response.festival.GetFestivalTypeListResponseDto;
 import com.festival.back.dto.response.festival.GetOneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.GetSearchFestivalListResponseDto;
 import com.festival.back.dto.response.festival.PatchOneLineReviewResponseDto;
@@ -179,12 +180,12 @@ public class FestivalServiceImplements implements FestivalService {
     public ResponseDto<GetSearchFestivalListResponseDto> getSearchFestivalList(String searchWord) {
         GetSearchFestivalListResponseDto data= null;
 
-       
+    
 
         try {
             SearchwordLogEntity searchwordLogEntity = new SearchwordLogEntity(searchWord);
             searchWordLogRepository.save(searchwordLogEntity);
-      
+    
             List<FestivalEntity> festivalList=festivalRepository.
                 findByFestivalNameContainsOrFestivalTypeContainsOrFestivalInformationContainsOrFestivalAreaOrderByFestivalDurationStartDesc
                 (searchWord, searchWord, searchWord, searchWord);
@@ -268,18 +269,32 @@ public class FestivalServiceImplements implements FestivalService {
     }
     //  ? 특정 축제만 불러옴.
     public ResponseDto<GetFestivalResponseDto> getFestival(int festivalNumber) {
-     GetFestivalResponseDto data= null;
+    GetFestivalResponseDto data= null;
 
-     try {
+    try {
         FestivalEntity festivalEntity=festivalRepository.findByFestivalNumber(festivalNumber);
 
         data=new GetFestivalResponseDto(festivalEntity);
         
-     } catch (Exception e) {
+    } catch (Exception e) {
         e.printStackTrace();
         return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
-     }
-     return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+    }
+    return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
         
+    }
+
+    public ResponseDto<List<GetFestivalTypeListResponseDto>> getFestivalTypeList() {
+        List<GetFestivalTypeListResponseDto> data = null;
+
+        try {
+            List<FestivalEntity> festivalEntity = festivalRepository.findByOrderByFestivalTypeDesc();
+            data = GetFestivalTypeListResponseDto.copyList(festivalEntity);
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 }
