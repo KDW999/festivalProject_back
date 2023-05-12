@@ -21,6 +21,7 @@ import com.festival.back.dto.response.festival.DeleteOneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalAreaListResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalMonthResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalResponseDto;
+import com.festival.back.dto.response.festival.GetFestivalTypeListResponseDto;
 import com.festival.back.dto.response.festival.GetOneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.GetSearchFestivalListResponseDto;
 import com.festival.back.dto.response.festival.PatchOneLineReviewResponseDto;
@@ -51,6 +52,7 @@ public class FestivalController {
     private final String GET_FESTIVAL_MONTH="/festivalmonth/{month}";
     private final String GET_ONELINE_REVIEW="/oneLineReview/{festivalNumber}";
     private final String GET_FESTIVAL="/festival/{festivalNumber}";
+    private final String GET_FESTIVAL_TYPE_LIST="/type-list";
 
     private final String POST_FESTIVAL = "";
 
@@ -141,5 +143,12 @@ public class FestivalController {
         ResponseDto<GetFestivalResponseDto> response = festivalService.getFestival(festivalNumber);
         return response;
 
+    }
+    
+    @ApiOperation(value = "전체죽제의 타입을 반환한다.")
+    @GetMapping(GET_FESTIVAL_TYPE_LIST)
+    public ResponseDto<List<GetFestivalTypeListResponseDto>> getFestivalTypeList() {
+        ResponseDto<List<GetFestivalTypeListResponseDto>> response = festivalService.getFestivalTypeList();
+        return response;
     }
 }

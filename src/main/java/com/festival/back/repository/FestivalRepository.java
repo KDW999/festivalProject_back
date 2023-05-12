@@ -64,4 +64,7 @@ public interface FestivalRepository extends JpaRepository<FestivalEntity, Intege
                   "ORDER BY festival_duration_start", nativeQuery = true)
       // area = "%" + data + "%";
       public List<FestivalEntity> getFestivalMonth2(String monthDate1, String monthDate2, String monthDate3,String monthDate4, String area);
+      
+      // @Query(value=" SELECT DISTINCT festival_type FROM festival ORDER BY festival_type DESC ", nativeQuery=true)
+      public List<FestivalEntity> findByOrderByFestivalTypeDesc();
 }
