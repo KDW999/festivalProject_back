@@ -59,8 +59,7 @@ public class BoardController {
     private final String GET_ALL_REVIEWBOARD_LIST="/all-review-board";
     private final String GET_FESTIVAL_REVIEW_LIST="/festival/{festivalNumber}";
     
-    private final String GET_INTERESTED_FESTIVAL_LIST = "/festival/interested-list";
-    private final String GET_ONLY_FESTIVAL_LIST="/onlyfestival/{festivalNumber}";
+
 
     private final String GET_FESTIVAL_REVIEW_BOARD="/{boardNumber}";
  
@@ -179,20 +178,7 @@ public class BoardController {
         return response;
     }
 
-    // ? 추천 페스티벌 리스트 받아오기 -감재현
-    @ApiOperation(value="회원가입시 선택한 추천 축제 타입 리스트 받아오기")
-    @GetMapping(GET_INTERESTED_FESTIVAL_LIST)
-    public ResponseDto<List<GetInterestedFestivalListResponseDto>> GetInterestedFestivalList(@ApiParam(hidden = true) @AuthenticationPrincipal String userId) {
-        ResponseDto<List<GetInterestedFestivalListResponseDto>> response = boardService.getInterestedFestivalList(userId);
-        return response;
-    }
-    // ? 특정 후기 만 전체 반환.
-    @ApiOperation(value = "특정 축제 후기 만 전체 반환 한다.")
-    @GetMapping(GET_ONLY_FESTIVAL_LIST)
-    public ResponseDto<List<GetOneFestivalReviewBoardListResponseDto>> getOneFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber){
-        ResponseDto<List<GetOneFestivalReviewBoardListResponseDto>> response = boardService.getOneFestivalReviewBoard(festivalNumber);
-       return response;
-    }
+
     @ApiOperation(value = "전체 후기 게시글 리스트 반환")
     @GetMapping(GET_ALL_REVIEWBOARD_LIST)
     public ResponseDto<List<GetReviewBoardListResponseDto>> getAllReviewBoardList(){
