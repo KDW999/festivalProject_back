@@ -53,13 +53,13 @@ public class AuthServiceImplements implements AuthService {
             String encodedPassword = passwordEncoder.encode(password);
             dto.setPassword(encodedPassword);
             
+            UserEntity userEntity = new UserEntity(dto);
+            userRepository.save(userEntity);
+            
             if (interestedFestivalType != null) {
                 List<InterestedFestivalEntity> interestedFestivalEntity = InterestedFestivalEntity.createList(dto);
                 interestedFestivalRepository.saveAll(interestedFestivalEntity);
             }
-            
-            UserEntity userEntity = new UserEntity(dto);
-            userRepository.save(userEntity);
             
             data = new SignUpResponseDto(true);
 
