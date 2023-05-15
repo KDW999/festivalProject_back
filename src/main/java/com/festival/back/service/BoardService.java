@@ -52,9 +52,8 @@ public interface BoardService {
     public ResponseDto<GetSearchFestivalReviewBoardListResponseDto> getSearchFestivalReviewBoardList(String searchWord);
 
     public ResponseDto<List<GetOneFestivalReviewBoardListResponseDto>> getOneFestivalReviewBoard(int festivalNumber);
-
+    
     public ResponseDto<List<GetReviewBoardListResponseDto>> getAllReviewBoardList();
 
-    
 
 }

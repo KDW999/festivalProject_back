@@ -82,7 +82,7 @@ public class UserServiceImplements implements UserService {
             data = new CheckUserIdResponseDto(hasuserId);
             
         } catch (Exception e) {
-            e.printStackTrace();;
+            e.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
         }
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);

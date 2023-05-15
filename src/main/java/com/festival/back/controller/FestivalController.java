@@ -20,6 +20,7 @@ import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.board.GetInterestedFestivalListResponseDto;
 import com.festival.back.dto.response.board.GetOneFestivalReviewBoardListResponseDto;
 import com.festival.back.dto.response.festival.DeleteOneLineReviewResponseDto;
+import com.festival.back.dto.response.festival.GetAllFestivalResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalAreaListResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalMonthResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalResponseDto;
@@ -58,12 +59,11 @@ public class FestivalController {
     private final String GET_FESTIVAL_MONTH="/festivalmonth/{month}";
     private final String GET_ONELINE_REVIEW="/oneLineReview/{festivalNumber}";
     private final String GET_FESTIVAL="/festival/{festivalNumber}";
+    private final String GET_ALL_FESTIVAL="";
     private final String GET_FESTIVAL_TYPE_LIST="/type-list";
 
     private final String GET_INTERESTED_FESTIVAL_LIST = "/festival/interested-list";
     private final String GET_ONLY_FESTIVAL_LIST="/onlyfestival/{festivalNumber}";
-
- 
 
     private final String POST_FESTIVAL = "";
 
@@ -155,6 +155,14 @@ public class FestivalController {
         return response;
 
     }
+
+    //? 전체 축제 리스트
+    @ApiOperation(value = "전체 축제 리스트 반환")
+    @GetMapping(GET_ALL_FESTIVAL)
+    public ResponseDto<List<GetAllFestivalResponseDto>> getAllFestival() {
+        ResponseDto<List<GetAllFestivalResponseDto>> response = festivalService.getAllFestival();
+        return response;
+    }
     
     @ApiOperation(value = "전체죽제의 타입을 반환한다.")
     @GetMapping(GET_FESTIVAL_TYPE_LIST)
@@ -175,8 +183,7 @@ public class FestivalController {
         @GetMapping(GET_ONLY_FESTIVAL_LIST)
         public ResponseDto<List<GetOneFestivalReviewBoardListResponseDto>> getOneFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber){
             ResponseDto<List<GetOneFestivalReviewBoardListResponseDto>> response = boardService.getOneFestivalReviewBoard(festivalNumber);
-           return response;
+            return response;
         }
 
-      
 }

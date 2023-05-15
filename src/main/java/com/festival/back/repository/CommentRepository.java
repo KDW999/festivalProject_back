@@ -13,10 +13,11 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Integer>
 
     public List<CommentEntity> findByBoardNumberOrderByWriteDatetimeDesc(int boardNumber);
     public CommentEntity findByBoardNumber(int boardNumber);
-    @Transactional
-    public void deleteByBoardNumber(int boardNumber);
     public CommentEntity findByCommentNumber(int commentNumber);
 
     @Transactional
     public void deleteByCommentNumber(int commentNumber);
+
+    @Transactional
+    public void deleteByBoardNumber(int boardNumber);
 }

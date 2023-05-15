@@ -68,8 +68,4 @@ public class GetOneFestivalReviewBoardListResponseDto {
         return list;
     }
 
-
-    
 }
-
-
