@@ -20,6 +20,7 @@ import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.GetInterestedFestivalListResponseDto;
 import com.festival.back.dto.response.board.GetMyFestivalReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.GetOneFestivalReviewBoardListResponseDto;
+import com.festival.back.dto.response.board.GetReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.GetSearchFestivalReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.PatchCommentResponseDto;
 import com.festival.back.dto.response.board.PatchFestivalReviewBoardResponseDto;
@@ -399,4 +400,29 @@ public class BoardServiceImplements implements BoardService {
     return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
 
     }
+
+    public ResponseDto<List<GetReviewBoardListResponseDto>> getAllReviewBoardList() {
+        List<GetReviewBoardListResponseDto> data = null;
+
+        try {
+
+            List<BoardEntity> boardList = boardRepository.findByOrderByBoardWriteDatetimeDesc();
+            data= GetReviewBoardListResponseDto.copyList(boardList);
+            
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+
+    }
+
+    @Override
+    public ResponseDto<GetFestivalReviewBoardResponseDto> getFestivalReviewBoard(int boardNumber) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getFestivalReviewBoard'");
+    }
+
+
 }

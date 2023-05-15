@@ -14,6 +14,7 @@ import com.festival.back.dto.response.festival.GetAllFestivalResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalAreaListResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalMonthResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalResponseDto;
+import com.festival.back.dto.response.festival.GetFestivalTypeListResponseDto;
 import com.festival.back.dto.response.festival.GetOneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.GetSearchFestivalListResponseDto;
 import com.festival.back.dto.response.festival.PatchOneLineReviewResponseDto;
@@ -236,14 +237,15 @@ public class FestivalServiceImplements implements FestivalService {
     }
 
     //  ? 특정 한줄평가 후기만  불러옴
-    public ResponseDto<GetOneLineReviewResponseDto> getOneLineReview(int festivalNumber) {
-        GetOneLineReviewResponseDto data = null;
+    public ResponseDto<List<GetOneLineReviewResponseDto>> getOneLineReview(int festivalNumber) {
+        List<GetOneLineReviewResponseDto> data = null;
 
         try {
 
             List<OneLineReviewEntity> oneLineReviewEntity = oneLineReviewRepository.findByFestivalNumberOrderByWriteDatetimeDesc(festivalNumber);
 
-            data = new GetOneLineReviewResponseDto(oneLineReviewEntity);
+            data = GetOneLineReviewResponseDto.copyList(oneLineReviewEntity);
+
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -252,6 +254,7 @@ public class FestivalServiceImplements implements FestivalService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
         
     }
+    
     //  ? 특정 축제만 불러옴.
     public ResponseDto<GetFestivalResponseDto> getFestival(int festivalNumber) {
     GetFestivalResponseDto data= null;
@@ -285,4 +288,11 @@ public class FestivalServiceImplements implements FestivalService {
         } 
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
+
+    @Override
+    public ResponseDto<List<GetFestivalTypeListResponseDto>> getFestivalTypeList() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getFestivalTypeList'");
+    }
+
 }
