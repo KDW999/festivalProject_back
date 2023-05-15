@@ -84,13 +84,9 @@ public class AuthServiceImplements implements AuthService {
             userEntity = userRepository.findByUserId(userId);
             if(userEntity == null) return ResponseDto.setFail(ResponseMessage.FAIL_SIGN_IN);
             
-            
             boolean isEqualPassword = passwordEncoder.matches(password, userEntity.getPassword());
             if(!isEqualPassword) return ResponseDto.setFail(ResponseMessage.FAIL_SIGN_IN);
 
-            
-            
-            
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);

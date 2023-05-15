@@ -49,7 +49,6 @@ public class BoardController {
 
     @Autowired private BoardService boardService;
 
-    //? 이거 수정했습니다. RECOMMEND -> POST_RECOMMEND
     private final String POST_RECOMMEND = "/recommend";
     private final String POST_COMMENT = "/post-comment";
     private final String POST_FESTIVAL_REVIEW_BOARD = "";

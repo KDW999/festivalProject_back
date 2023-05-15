@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.festival.DeleteOneLineReviewResponseDto;
+import com.festival.back.dto.response.festival.GetAllFestivalResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalAreaListResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalMonthResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalResponseDto;
@@ -30,4 +31,5 @@ public interface FestivalService {
     public ResponseDto<List<GetOneLineReviewResponseDto>> getOneLineReview(int festivalNumber);
     public ResponseDto<GetFestivalResponseDto> getFestival(int festivalNumber);
     public ResponseDto<List<GetFestivalTypeListResponseDto>> getFestivalTypeList();
+    public ResponseDto<List<GetAllFestivalResponseDto>> getAllFestival();
 }
