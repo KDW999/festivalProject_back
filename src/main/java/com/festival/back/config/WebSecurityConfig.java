@@ -29,7 +29,6 @@ public class WebSecurityConfig {
             .httpBasic().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
             .authorizeRequests()
-            .antMatchers().authenticated()
             .antMatchers("/auth/**").permitAll()
             .antMatchers(HttpMethod.GET).permitAll()
             .antMatchers(HttpMethod.POST).permitAll()

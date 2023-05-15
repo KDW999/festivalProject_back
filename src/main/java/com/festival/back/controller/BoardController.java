@@ -26,6 +26,7 @@ import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.GetInterestedFestivalListResponseDto;
 import com.festival.back.dto.response.board.GetMyFestivalReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.GetOneFestivalReviewBoardListResponseDto;
+import com.festival.back.dto.response.board.GetReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.DeleteCommentResponseDto;
 import com.festival.back.dto.response.board.DeleteFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.PatchCommentResponseDto;
@@ -48,18 +49,20 @@ public class BoardController {
 
     @Autowired private BoardService boardService;
 
-    //? 이거 수정했습니다. RECOMMEND -> POST_RECOMMEND
     private final String POST_RECOMMEND = "/recommend";
     private final String POST_COMMENT = "/post-comment";
     private final String POST_FESTIVAL_REVIEW_BOARD = "";
     private final String PATCH_FESTIVAL_REVIEW_BOARD = "";
     private final String DELETE_BOARD = "/{boardNumber}";
     private final String GET_MY_LIST = "/my-reviewboard-list";
-
-    private final String GET_FESTIVAL_REVIEW_BOARD="/{festivalNumber}/{boardNumber}";
+    private final String GET_ALL_REVIEWBOARD_LIST="/all-review-board";
+    private final String GET_FESTIVAL_REVIEW_LIST="/festival/{festivalNumber}";
+    
     private final String GET_INTERESTED_FESTIVAL_LIST = "/festival/interested-list";
-    private final String GET_FESTIVAL_LIST="/festival/{festivalNumber}";
     private final String GET_ONLY_FESTIVAL_LIST="/onlyfestival/{festivalNumber}";
+
+    private final String GET_FESTIVAL_REVIEW_BOARD="/{boardNumber}";
+ 
 
     private final String PATCH_COMMENT = "/patch-comment";
 
@@ -129,16 +132,16 @@ public class BoardController {
     @ApiOperation(value = "특정 축제를 불러와 그에 관한 후기 게시글 1개를 반환한다."
     ,notes = "특정 축제 festivalNumber 과 boardNumber 을 pathvariable 로 받아서 보내면 축제정보 와 게시물을 반환하고 실패 시 실폐 메세지 반환. ")
     @GetMapping(GET_FESTIVAL_REVIEW_BOARD)
-        public ResponseDto<GetFestivalReviewBoardResponseDto> getFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber,@PathVariable(name="boardNumber") Integer boardNumber){
-            ResponseDto<GetFestivalReviewBoardResponseDto> response=boardService.getFestivalReviewBoard(festivalNumber, boardNumber);
+        public ResponseDto<GetFestivalReviewBoardResponseDto> getFestivalReviewBoard(@PathVariable(name="boardNumber") Integer boardNumber){
+            ResponseDto<GetFestivalReviewBoardResponseDto> response=boardService.getFestivalReviewBoard(boardNumber);
             return response;
     }
     
      // ? 특정축제 전체 후기 게시글 불러오기 -김종빈
      @ApiOperation(value = "특정 축제 정보의 후기 게시글 전체 반환.",
      notes = "Request Body 에 PathVariable festivalNumber 을 받으면 특정 축제를 불러오면 그에 애당하는 축제 정보와 전체 후기 게시글을 반환 한다")
-     @GetMapping(GET_FESTIVAL_LIST)
-     public ResponseDto<GetFestivalReviewBoardListResponseDto> getFestivalReviewBoardList(@PathVariable("festivalNumber")Integer festivalNumber){
+     @GetMapping(GET_FESTIVAL_REVIEW_LIST)
+     public ResponseDto<GetFestivalReviewBoardListResponseDto> getFestivalReviewBoardList(@PathVariable("festivalNumber")int festivalNumber){
         ResponseDto<GetFestivalReviewBoardListResponseDto> response =boardService.getFestivalReviewBoardList(festivalNumber);
         return response;
      }
@@ -185,9 +188,16 @@ public class BoardController {
     // ? 특정 후기 만 전체 반환.
     @ApiOperation(value = "특정 축제 후기 만 전체 반환 한다.")
     @GetMapping(GET_ONLY_FESTIVAL_LIST)
-    public ResponseDto<GetOneFestivalReviewBoardListResponseDto> getOneFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber){
-        ResponseDto<GetOneFestivalReviewBoardListResponseDto> response = boardService.getOneFestivalReviewBoard(festivalNumber);
+    public ResponseDto<List<GetOneFestivalReviewBoardListResponseDto>> getOneFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber){
+        ResponseDto<List<GetOneFestivalReviewBoardListResponseDto>> response = boardService.getOneFestivalReviewBoard(festivalNumber);
        return response;
+    }
+    @ApiOperation(value = "전체 후기 게시글 리스트 반환")
+    @GetMapping(GET_ALL_REVIEWBOARD_LIST)
+    public ResponseDto<List<GetReviewBoardListResponseDto>> getAllReviewBoardList(){
+        ResponseDto<List<GetReviewBoardListResponseDto>> response = boardService.getAllReviewBoardList();
+        return response;
+
     }
     
 }
