@@ -278,8 +278,9 @@ public class FestivalServiceImplements implements FestivalService {
 
     try {
         FestivalEntity festivalEntity=festivalRepository.findByFestivalNumber(festivalNumber);
+       
 
-        data=new GetFestivalResponseDto(festivalEntity);
+        data= new GetFestivalResponseDto(festivalEntity);
         
     } catch (Exception e) {
         e.printStackTrace();
