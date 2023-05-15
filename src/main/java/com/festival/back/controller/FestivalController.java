@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.festival.back.common.constant.ApiPattern;
 import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.festival.DeleteOneLineReviewResponseDto;
+import com.festival.back.dto.response.festival.GetAllFestivalResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalAreaListResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalMonthResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalResponseDto;
@@ -51,6 +52,7 @@ public class FestivalController {
     private final String GET_FESTIVAL_MONTH="/festivalmonth/{month}";
     private final String GET_ONELINE_REVIEW="/oneLineReview/{festivalNumber}";
     private final String GET_FESTIVAL="/festival/{festivalNumber}";
+    private final String GET_ALL_FESTIVAL="";
 
     private final String POST_FESTIVAL = "";
 
@@ -141,5 +143,13 @@ public class FestivalController {
         ResponseDto<GetFestivalResponseDto> response = festivalService.getFestival(festivalNumber);
         return response;
 
+    }
+
+    //? 전체 축제 리스트
+    @ApiOperation(value = "전체 축제 리스트 반환")
+    @GetMapping(GET_ALL_FESTIVAL)
+    public ResponseDto<List<GetAllFestivalResponseDto>> getAllFestival() {
+        ResponseDto<List<GetAllFestivalResponseDto>> response = festivalService.getAllFestival();
+        return response;
     }
 }
