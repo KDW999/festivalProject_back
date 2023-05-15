@@ -20,6 +20,7 @@ import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
 import com.festival.back.dto.response.board.GetInterestedFestivalListResponseDto;
 import com.festival.back.dto.response.board.GetMyFestivalReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.GetOneFestivalReviewBoardListResponseDto;
+import com.festival.back.dto.response.board.GetReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.GetSearchFestivalReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.PatchCommentResponseDto;
 import com.festival.back.dto.response.board.PatchFestivalReviewBoardResponseDto;
@@ -192,7 +193,7 @@ public class BoardServiceImplements implements BoardService {
     }
 
     // ? 특정 축제 후기 게시글 불러오기-김종빈
-    public ResponseDto<GetFestivalReviewBoardResponseDto> getFestivalReviewBoard(int festivalNumber, int boardNumber) {
+    public ResponseDto<GetFestivalReviewBoardResponseDto> getFestivalReviewBoard(int boardNumber) {
         GetFestivalReviewBoardResponseDto data= null;
 
         try {
@@ -200,8 +201,6 @@ public class BoardServiceImplements implements BoardService {
             if(boardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
             List<RecommendEntity> recommdList=recommendRepository.findByBoardNumber(boardNumber);
             List<CommentEntity> commentList=commentRepository.findByBoardNumberOrderByWriteDatetimeDesc(boardNumber);
-            FestivalEntity festivalEntity =festivalRepository.findByFestivalNumber(festivalNumber);
-            if(festivalEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_FESTIVAL_NUMBER);
 
             boardEntity.increaseViewCount();
             boardRepository.save(boardEntity);
@@ -382,19 +381,36 @@ public class BoardServiceImplements implements BoardService {
     }
 
     //  ? 특정 축제 전체 후기 리스트 만 반환
-    public ResponseDto<GetOneFestivalReviewBoardListResponseDto> getOneFestivalReviewBoard(int festivalNumber) {
-     GetOneFestivalReviewBoardListResponseDto data = null;
+    public ResponseDto<List<GetOneFestivalReviewBoardListResponseDto>> getOneFestivalReviewBoard(int festivalNumber) {
+     List<GetOneFestivalReviewBoardListResponseDto> data = null;
      
      try {
         List<BoardEntity> boardEntity=boardRepository.findByFestivalNumberOrderByBoardWriteDatetimeDesc(festivalNumber);
 
-        data = new GetOneFestivalReviewBoardListResponseDto(boardEntity);
+        data = GetOneFestivalReviewBoardListResponseDto.copyList(boardEntity);
         
      } catch (Exception e) {
         e.printStackTrace();    
         return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
      }
      return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+
+    }
+
+    public ResponseDto<List<GetReviewBoardListResponseDto>> getAllReviewBoardList() {
+        List<GetReviewBoardListResponseDto> data = null;
+
+        try {
+
+            List<BoardEntity> boardList = boardRepository.findByOrderByBoardWriteDatetimeDesc();
+            data= GetReviewBoardListResponseDto.copyList(boardList);
+            
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
 
     }
 }

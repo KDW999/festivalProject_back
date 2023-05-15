@@ -27,6 +27,7 @@ public class GetFestivalAreaListResponseDto {
     private int onelineReviewAverage;
     private String festivalInformationUrl;
     private String festivalInformation;
+    private String festivalHomepage;
 
     public GetFestivalAreaListResponseDto(FestivalEntity festivalEntity){
         this.festivalNumber = festivalEntity.getFestivalNumber();
@@ -39,6 +40,7 @@ public class GetFestivalAreaListResponseDto {
         this.festivalCost = festivalEntity.getFestivalCost();
         this.festivalInformationUrl = festivalEntity.getFestivalInformationUrl();
         this.festivalInformation = festivalEntity.getFestivalInformation();
+        this.festivalHomepage=festivalEntity.getFestivalHomepage();
     }
 
     public static List<GetFestivalAreaListResponseDto> copyList(List<FestivalEntity> festivalEntityList){

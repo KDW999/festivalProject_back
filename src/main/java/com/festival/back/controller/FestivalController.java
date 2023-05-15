@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.festival.back.common.constant.ApiPattern;
 import com.festival.back.dto.response.ResponseDto;
+import com.festival.back.dto.response.board.GetInterestedFestivalListResponseDto;
+import com.festival.back.dto.response.board.GetOneFestivalReviewBoardListResponseDto;
 import com.festival.back.dto.response.festival.DeleteOneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalAreaListResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalMonthResponseDto;
@@ -27,6 +29,7 @@ import com.festival.back.dto.response.festival.GetSearchFestivalListResponseDto;
 import com.festival.back.dto.response.festival.PatchOneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.PostFestivalResponseDto;
 import com.festival.back.dto.response.festival.PostOneLineReviewResponseDto;
+import com.festival.back.service.BoardService;
 import com.festival.back.service.FestivalService;
 import com.festival.back.dto.request.festival.PatchOneLineReviewRequestDto;
 import com.festival.back.dto.request.festival.PostFestivalRequestDto;
@@ -44,6 +47,9 @@ public class FestivalController {
     @Autowired
     private FestivalService festivalService;
 
+    @Autowired BoardService boardService;
+    
+
     private final String POST_ONE_LINE_REVIEW = "/one-line-review";
     private final String PATCH_ONE_LINE_REVIEW = "";
     private final String DELETE_ONE_LINE_REVIEW = "/{festivalNumber}";
@@ -53,6 +59,11 @@ public class FestivalController {
     private final String GET_ONELINE_REVIEW="/oneLineReview/{festivalNumber}";
     private final String GET_FESTIVAL="/festival/{festivalNumber}";
     private final String GET_FESTIVAL_TYPE_LIST="/type-list";
+
+    private final String GET_INTERESTED_FESTIVAL_LIST = "/festival/interested-list";
+    private final String GET_ONLY_FESTIVAL_LIST="/onlyfestival/{festivalNumber}";
+
+ 
 
     private final String POST_FESTIVAL = "";
 
@@ -132,8 +143,8 @@ public class FestivalController {
     }
     @ApiOperation(value = "특정 축제 한줄평가만 반환한다.")
     @GetMapping(GET_ONELINE_REVIEW)
-    public ResponseDto<GetOneLineReviewResponseDto> getOneLineReview(@PathVariable("festivalNumber") int festivalNumber){
-        ResponseDto<GetOneLineReviewResponseDto> response = festivalService.getOneLineReview(festivalNumber);
+    public ResponseDto<List<GetOneLineReviewResponseDto>> getOneLineReview(@PathVariable("festivalNumber") int festivalNumber){
+        ResponseDto<List<GetOneLineReviewResponseDto>> response = festivalService.getOneLineReview(festivalNumber);
         return response;
     }
 
@@ -151,4 +162,21 @@ public class FestivalController {
         ResponseDto<List<GetFestivalTypeListResponseDto>> response = festivalService.getFestivalTypeList();
         return response;
     }
+
+        // ? 추천 페스티벌 리스트 받아오기 -감재현
+        @ApiOperation(value="회원가입시 선택한 추천 축제 타입 리스트 받아오기")
+        @GetMapping(GET_INTERESTED_FESTIVAL_LIST)
+        public ResponseDto<List<GetInterestedFestivalListResponseDto>> GetInterestedFestivalList(@ApiParam(hidden = true) @AuthenticationPrincipal String userId) {
+            ResponseDto<List<GetInterestedFestivalListResponseDto>> response = boardService.getInterestedFestivalList(userId);
+            return response;
+        }
+        // ? 특정 후기 만 전체 반환.
+        @ApiOperation(value = "특정 축제 후기 만 전체 반환 한다.")
+        @GetMapping(GET_ONLY_FESTIVAL_LIST)
+        public ResponseDto<List<GetOneFestivalReviewBoardListResponseDto>> getOneFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber){
+            ResponseDto<List<GetOneFestivalReviewBoardListResponseDto>> response = boardService.getOneFestivalReviewBoard(festivalNumber);
+           return response;
+        }
+
+      
 }

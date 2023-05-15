@@ -27,9 +27,9 @@ public interface FestivalRepository extends JpaRepository<FestivalEntity, Intege
       
       @Modifying
       @Transactional
-      @Query(value = "UPDATE festival " +
-                  "SET oneline_review_average = (SELECT AVG(average) FROM onelinereview WHERE festival_number = ?) " +
-                  "WHERE festival_number = ?",nativeQuery = true)
+      @Query(value = " UPDATE festival " +
+                  " SET oneline_review_average = (SELECT AVG(average) FROM onelinereview WHERE festival_number = ?) " +
+                   " WHERE festival_number = ? ",nativeQuery = true)
       public int setAverger(int festivalNumber,int festivalNumber2);
 
       // WHERE festival_duration_start < '2023-02-01' AND festival_duration_end >=
