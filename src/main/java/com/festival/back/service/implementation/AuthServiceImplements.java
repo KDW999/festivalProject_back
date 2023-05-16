@@ -53,13 +53,13 @@ public class AuthServiceImplements implements AuthService {
             String encodedPassword = passwordEncoder.encode(password);
             dto.setPassword(encodedPassword);
             
+            UserEntity userEntity = new UserEntity(dto);
+            userRepository.save(userEntity);
+            
             if (interestedFestivalType != null) {
                 List<InterestedFestivalEntity> interestedFestivalEntity = InterestedFestivalEntity.createList(dto);
                 interestedFestivalRepository.saveAll(interestedFestivalEntity);
             }
-            
-            UserEntity userEntity = new UserEntity(dto);
-            userRepository.save(userEntity);
             
             data = new SignUpResponseDto(true);
 
@@ -84,13 +84,9 @@ public class AuthServiceImplements implements AuthService {
             userEntity = userRepository.findByUserId(userId);
             if(userEntity == null) return ResponseDto.setFail(ResponseMessage.FAIL_SIGN_IN);
             
-            
             boolean isEqualPassword = passwordEncoder.matches(password, userEntity.getPassword());
             if(!isEqualPassword) return ResponseDto.setFail(ResponseMessage.FAIL_SIGN_IN);
 
-            
-            
-            
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);

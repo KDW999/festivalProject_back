@@ -14,6 +14,7 @@ import com.festival.back.entity.FestivalEntity;
 @Repository
 public interface FestivalRepository extends JpaRepository<FestivalEntity, Integer> {
       public FestivalEntity findByFestivalNumber(int festivalNumber);
+      public List<FestivalEntity> findByOrderByFestivalDurationStartAsc();
 
       public FestivalEntity findByFestivalName(String festivalName);
 
@@ -28,9 +29,9 @@ public interface FestivalRepository extends JpaRepository<FestivalEntity, Intege
       @Modifying
       @Transactional
       @Query(value = "UPDATE festival " +
-                  "SET oneline_review_average = (SELECT AVG(average) FROM onelinereview WHERE festival_number = ?) " +
-                  "WHERE festival_number = ?",nativeQuery = true)
-      public int setAverger(int festivalNumber,int festivalNumber2);
+                  "SET oneline_review_average = (SELECT AVG(average) FROM onelinereview WHERE festival_number = ?)" +
+                  "WHERE festival_number = ?", nativeQuery = true)
+      public int setAverger(int festivalNumber, int festivalNumber2);
 
       // WHERE festival_duration_start < '2023-02-01' AND festival_duration_end >=
       // '2023-02-01'
@@ -51,7 +52,7 @@ public interface FestivalRepository extends JpaRepository<FestivalEntity, Intege
                   "FROM Festival " +
                   "WHERE (festival_duration_start < ? AND festival_duration_end >= ? " +
                   "OR festival_duration_start >= ? AND festival_duration_start < ?) " +
-                  "AND  festival_area = ?" +
+                  "AND  festival_area = ? " +
                   "ORDER BY festival_duration_start", nativeQuery = true)
       public List<FestivalEntity> getFestivalMonth1(String monthDate1, String monthDate2, String monthDate3,String monthDate4, String area);
 
@@ -60,11 +61,11 @@ public interface FestivalRepository extends JpaRepository<FestivalEntity, Intege
                   "FROM Festival " +
                   "WHERE (festival_duration_start < ? AND festival_duration_end >= ? " +
                   "OR festival_duration_start >= ? AND festival_duration_start < ?) " +
-                  "AND  festival_area LIKE ?" +
+                  "AND  festival_area LIKE ? " +
                   "ORDER BY festival_duration_start", nativeQuery = true)
       // area = "%" + data + "%";
       public List<FestivalEntity> getFestivalMonth2(String monthDate1, String monthDate2, String monthDate3,String monthDate4, String area);
-      
-      // @Query(value=" SELECT DISTINCT festival_type FROM festival ORDER BY festival_type DESC ", nativeQuery=true)
-      public List<FestivalEntity> findByOrderByFestivalTypeDesc();
+
+      @Query(value=" SELECT DISTINCT festival_type FROM festival ORDER BY festival_type DESC ", nativeQuery=true)
+      public List<String> getFestivalTypeList();
 }

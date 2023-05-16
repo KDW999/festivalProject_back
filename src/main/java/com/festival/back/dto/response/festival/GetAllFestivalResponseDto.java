@@ -1,21 +1,19 @@
-package com.festival.back.dto.response.board;
+package com.festival.back.dto.response.festival;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.festival.back.entity.FestivalEntity;
 
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-@ApiModel(value = "회원가입시 선택한 관심 축제 타입 리스트 받아오기 Response Body - data")
-public class GetInterestedFestivalListResponseDto {
+public class GetAllFestivalResponseDto {
 
     @ApiModelProperty(value = "축제 번호",example = "1",required = true)
     private int festivalNumber;
@@ -37,41 +35,47 @@ public class GetInterestedFestivalListResponseDto {
 
     @ApiModelProperty(value = "축제 지역",example = "부산광역시 OO구",required = true)
     private String festivalArea;
-    
+
     @ApiModelProperty(value = "축제 비용",example = "10000원",required = true)
     private String festivalCost;
 
-    @ApiModelProperty(value = "축제 전체 정보" ,example="울산옹기축제는 옹기의 집산지인 울산 울주군 외고산 옹기마을에서 매년 개최하는 문화관광축제로" ,required = true)
-    private String festivalInformation;
+    @ApiModelProperty(value = "관광객 평점 평균",example = "7",required = true)
+    private int onelineReviewAverage;
 
     @ApiModelProperty(value = "축제 타이틀 이미지",example = "http url",required = true)
     private String festivalInformationUrl;
 
-    @ApiModelProperty(value = "관광객 평점 평균",example = "7",required = true)
-    private int onelineReviewAverage;
-    
-    public GetInterestedFestivalListResponseDto (FestivalEntity festivalEntity) {
+    @ApiModelProperty(value = "축제 전체 정보" ,example="울산옹기축제는 옹기의 집산지인 울산 울주군 외고산 옹기마을에서 매년 개최하는 문화관광축제로" ,required = true)
+    private String festivalInformation;
+
+    @ApiModelProperty(value = "축제 홈페이지", example="http://~")
+    private String festivalHomepage;
+
+    public GetAllFestivalResponseDto(FestivalEntity festivalEntity){
+        Date now = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         this.festivalNumber = festivalEntity.getFestivalNumber();
         this.festivalName = festivalEntity.getFestivalName();
         this.festivalType = festivalEntity.getFestivalType();
         this.festivalDurationStart = festivalEntity.getFestivalDurationStart();
         this.festivalDurationEnd = festivalEntity.getFestivalDurationEnd();
-        this.festivalTime = festivalEntity.getFestivalTime();
+        this.festivalTime = simpleDateFormat.format(now);
         this.festivalArea = festivalEntity.getFestivalArea();
         this.festivalCost = festivalEntity.getFestivalCost();
-        this.festivalInformation=festivalEntity.getFestivalInformation();
-        this.festivalInformationUrl=festivalEntity.getFestivalInformationUrl();
-        this.onelineReviewAverage=festivalEntity.getOnelineReviewAverage();
-       
+        this.festivalInformationUrl = festivalEntity.getFestivalInformationUrl();
+        this.festivalInformation = festivalEntity.getFestivalInformation();
+        this.festivalHomepage = festivalEntity.getFestivalHomepage();
     }
 
-    public static List<GetInterestedFestivalListResponseDto> copyList(List<FestivalEntity> festivaleEntityList) {
-        List<GetInterestedFestivalListResponseDto> list = new ArrayList<>();
+    public static List<GetAllFestivalResponseDto> copyList(List<FestivalEntity> festivalEntityList) {
 
-        for (FestivalEntity festivalEntity : festivaleEntityList) {
-            GetInterestedFestivalListResponseDto dto = new GetInterestedFestivalListResponseDto(festivalEntity);
+        List<GetAllFestivalResponseDto> list = new ArrayList<>();
+
+        for(FestivalEntity festivalEntity : festivalEntityList){
+            GetAllFestivalResponseDto dto = new GetAllFestivalResponseDto(festivalEntity);
             list.add(dto);
         }
+
         return list;
     }
 }
