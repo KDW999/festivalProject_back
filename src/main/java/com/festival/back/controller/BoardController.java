@@ -25,7 +25,7 @@ import com.festival.back.dto.response.board.GetReviewBoardResponseDto;
 import com.festival.back.dto.response.board.GetInterestedFestivalListResponseDto;
 import com.festival.back.dto.response.board.GetMyReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.GetOneReviewBoardListResponseDto;
-import com.festival.back.dto.response.board.GetReviewBoardListResponseDto;
+import com.festival.back.dto.response.board.GetAllReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.DeleteCommentResponseDto;
 import com.festival.back.dto.response.board.DeleteReviewBoardResponseDto;
 import com.festival.back.dto.response.board.PatchCommentResponseDto;
@@ -171,8 +171,8 @@ public class BoardController {
     //? 전체 후기 게시물 리스트 
     @ApiOperation(value = "전체 후기 게시글 리스트 반환")
     @GetMapping(GET_ALL_REVIEWBOARD_LIST)
-    public ResponseDto<List<GetReviewBoardListResponseDto>> getAllReviewBoardList(){
-        ResponseDto<List<GetReviewBoardListResponseDto>> response = boardService.getAllReviewBoardList();
+    public ResponseDto<List<GetAllReviewBoardListResponseDto>> getAllReviewBoardList(){
+        ResponseDto<List<GetAllReviewBoardListResponseDto>> response = boardService.getAllReviewBoardList();
         return response;
 
     }
