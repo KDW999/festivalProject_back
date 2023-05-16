@@ -33,5 +33,5 @@ public interface FestivalService {
     public ResponseDto<GetFestivalResponseDto> getFestival(int festivalNumber);
     public ResponseDto<List<GetFestivalTypeListResponseDto>> getFestivalTypeList();
     public ResponseDto<List<GetAllFestivalResponseDto>> getAllFestival();
-    public ResponseDto<List<GetTop1OneLineReviewResponseDto>> getTop1OneLineReview();
+    public ResponseDto<List<GetTop1OneLineReviewResponseDto>> getTop1OneLineReview(int festivalNumber);
 }
