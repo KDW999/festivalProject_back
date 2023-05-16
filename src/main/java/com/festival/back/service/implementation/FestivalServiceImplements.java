@@ -1,7 +1,9 @@
 package com.festival.back.service.implementation;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -279,6 +281,8 @@ public class FestivalServiceImplements implements FestivalService {
         
         try{
 
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String nowDate = simpleDateFormat.format(new Date());
             List<FestivalEntity> festivalEntityList = festivalRepository.findByOrderByFestivalDurationStartAsc();
             data = GetAllFestivalResponseDto.copyList(festivalEntityList);
 
