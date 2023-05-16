@@ -19,7 +19,7 @@ import com.festival.back.dto.response.board.GetReviewBoardResponseDto;
 import com.festival.back.dto.response.board.GetInterestedFestivalListResponseDto;
 import com.festival.back.dto.response.board.GetMyReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.GetOneReviewBoardListResponseDto;
-import com.festival.back.dto.response.board.GetReviewBoardListResponseDto;
+import com.festival.back.dto.response.board.GetAllReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.GetSearchReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.PatchCommentResponseDto;
 import com.festival.back.dto.response.board.PatchReviewBoardResponseDto;
@@ -378,13 +378,13 @@ public class BoardServiceImplements implements BoardService {
     }
 
     //? 전체 축제 반환
-    public ResponseDto<List<GetReviewBoardListResponseDto>> getAllReviewBoardList() {
-        List<GetReviewBoardListResponseDto> data = null;
+    public ResponseDto<List<GetAllReviewBoardListResponseDto>> getAllReviewBoardList() {
+        List<GetAllReviewBoardListResponseDto> data = null;
 
         try {
 
             List<BoardEntity> boardList = boardRepository.findByOrderByBoardWriteDatetimeDesc();
-            data= GetReviewBoardListResponseDto.copyList(boardList);
+            data= GetAllReviewBoardListResponseDto.copyList(boardList);
             
             
         } catch (Exception exception) {
