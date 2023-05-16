@@ -11,18 +11,17 @@ import com.festival.back.dto.request.board.PostCommentRequestDto;
 import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
 import com.festival.back.dto.request.board.RecommendReviewBoardRequestDto;
 import com.festival.back.dto.response.board.DeleteCommentResponseDto;
-import com.festival.back.dto.response.board.DeleteFestivalReviewBoardResponseDto;
-import com.festival.back.dto.response.board.GetFestivalReviewBoardListResponseDto;
-import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
+import com.festival.back.dto.response.board.DeleteReviewBoardResponseDto;
+import com.festival.back.dto.response.board.GetReviewBoardResponseDto;
 import com.festival.back.dto.response.board.GetInterestedFestivalListResponseDto;
-import com.festival.back.dto.response.board.GetMyFestivalReviewBoardListResponseDto;
-import com.festival.back.dto.response.board.GetOneFestivalReviewBoardListResponseDto;
+import com.festival.back.dto.response.board.GetMyReviewBoardListResponseDto;
+import com.festival.back.dto.response.board.GetOneReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.GetReviewBoardListResponseDto;
-import com.festival.back.dto.response.board.GetSearchFestivalReviewBoardListResponseDto;
+import com.festival.back.dto.response.board.GetSearchReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.PatchCommentResponseDto;
-import com.festival.back.dto.response.board.PatchFestivalReviewBoardResponseDto;
+import com.festival.back.dto.response.board.PatchReviewBoardResponseDto;
 import com.festival.back.dto.response.board.PostCommentResponseDto;
-import com.festival.back.dto.response.board.PostFestivalReviewBoardResponseDto;
+import com.festival.back.dto.response.board.PostReviewBoardResponseDto;
 import com.festival.back.dto.response.board.RecommendReviewBoardResponseDto;
 
 public interface BoardService {
@@ -35,23 +34,21 @@ public interface BoardService {
 
     public ResponseDto<RecommendReviewBoardResponseDto> recommend(String id, RecommendReviewBoardRequestDto dto);
 
-    public ResponseDto<PostFestivalReviewBoardResponseDto> postFestivalReviewBoard(String userId,PostReviewBoardRequestDto dto);
+    public ResponseDto<PostReviewBoardResponseDto> postReviewBoard(String userId,PostReviewBoardRequestDto dto);
 
-    public ResponseDto<GetFestivalReviewBoardResponseDto> getFestivalReviewBoard(int boardNumber);
+    public ResponseDto<GetReviewBoardResponseDto> getReviewBoard(int boardNumber);
 
-    public ResponseDto<GetFestivalReviewBoardListResponseDto> getFestivalReviewBoardList(Integer festivalNumber);
-
-    public ResponseDto<PatchFestivalReviewBoardResponseDto> patchReivewBoard(String userId,PatchReviewBoardRequestDto dto);
+    public ResponseDto<PatchReviewBoardResponseDto> patchReivewBoard(String userId,PatchReviewBoardRequestDto dto);
     
-    public ResponseDto<List<GetMyFestivalReviewBoardListResponseDto>> getMyList(String userId);
+    public ResponseDto<List<GetMyReviewBoardListResponseDto>> getMyList(String userId);
     
     public ResponseDto<List<GetInterestedFestivalListResponseDto>> getInterestedFestivalList(String userId);
 
-    public ResponseDto<DeleteFestivalReviewBoardResponseDto> deleteBoard(String userId, int boardNumber);
+    public ResponseDto<DeleteReviewBoardResponseDto> deleteBoard(String userId, int boardNumber);
 
-    public ResponseDto<GetSearchFestivalReviewBoardListResponseDto> getSearchFestivalReviewBoardList(String searchWord);
+    public ResponseDto<GetSearchReviewBoardListResponseDto> getSearchReviewBoardList(String searchWord);
 
-    public ResponseDto<List<GetOneFestivalReviewBoardListResponseDto>> getOneFestivalReviewBoard(int festivalNumber);
+    public ResponseDto<List<GetOneReviewBoardListResponseDto>> getOneFestivalReviewBoard(int festivalNumber);
     
     public ResponseDto<List<GetReviewBoardListResponseDto>> getAllReviewBoardList();
 

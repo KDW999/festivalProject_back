@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(value = "특정 게시물 삭제 Response Body-data")
-public class DeleteFestivalReviewBoardResponseDto {
+public class DeleteReviewBoardResponseDto {
     @ApiModelProperty(value = "특정게시물 삭제 결과",example = "true",required = true)
     private boolean resultStatus;
 }
