@@ -9,6 +9,7 @@ import com.festival.back.common.constant.ResponseMessage;
 import com.festival.back.dto.request.freeboard.PatchFreeBoardRequestDto;
 import com.festival.back.dto.request.freeboard.PostFreeBoardRequestDto;
 import com.festival.back.dto.response.ResponseDto;
+import com.festival.back.dto.response.freeboard.DeleteFreeBoardResponseDto;
 import com.festival.back.dto.response.freeboard.PatchFreeBoardResponseDto;
 import com.festival.back.dto.response.freeboard.PostFreeBoardResponseDto;
 import com.festival.back.entity.FreeBoardCommentEntity;
@@ -54,7 +55,7 @@ public class FreeBoardServiceImplements implements FreeBoardService {
             FreeBoardEntity freeBoardEntity = freeBoardRepository.findByFreeBoardNumber(freeBoardNumber);
             if(freeBoardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
 
-            boolean isEqualWriter = userId.equals(freeBoardEntity.getWriterUserId());
+            boolean isEqualWriter = freeBoardEntity.getWriterUserId().equals(userId);
             if (!isEqualWriter) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSION);
 
             List<FreeBoardCommentEntity> commentList = freeBoardCommentRepository.findByFreeBoardNumberOrderByWriteDatetimeDesc(freeBoardNumber);
@@ -62,10 +63,33 @@ public class FreeBoardServiceImplements implements FreeBoardService {
 
             freeBoardEntity.patch(dto);
             freeBoardRepository.save(freeBoardEntity);
-            
+
             data = new PatchFreeBoardResponseDto(freeBoardEntity, commentList, recommendList);
 
             
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+    }
+
+    public ResponseDto<DeleteFreeBoardResponseDto> deleteFreeBoard(String userId, int freeBoardNumber) {
+        DeleteFreeBoardResponseDto data = null;
+
+        try {
+            FreeBoardEntity freeBoardEntity = freeBoardRepository.findByFreeBoardNumber(freeBoardNumber);
+            if (freeBoardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
+
+            boolean isEqualWriter = freeBoardEntity.getWriterUserId().equals(userId);
+            if (!isEqualWriter) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSION);
+
+            freeBoardCommentRepository.deleteByFreeBoardNumber(freeBoardNumber);
+            freeBoardRecommendRepository.deleteByFreeBoardNumber(freeBoardNumber);
+
+            freeBoardRepository.delete(freeBoardEntity);
+            data = new DeleteFreeBoardResponseDto(true);
+
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
