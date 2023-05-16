@@ -46,7 +46,7 @@ public class UserController {
         return response;
     }
 
-    @ApiOperation(value="닉네임 및 프로필 사진 URL 수정하기", notes="Request Header에 Athorization 에 Bearer JWT 를 포함하여 요청하고, 성공시 수정한 닉네임 및 프로필 사진 URL을 반환하고, 실패시 실패 메세지를 반환")
+    @ApiOperation(value= "닉네임 및 프로필 사진 URL 수정하기", notes="Request Header에 Athorization 에 Bearer JWT 를 포함하여 요청하고, 성공시 수정한 닉네임 및 프로필 사진 URL을 반환하고, 실패시 실패 메세지를 반환")
     @PatchMapping(PATCH_PROFILE)
     public ResponseDto<PatchProfileResponseDto> 
     patchProfile(@ApiParam(hidden=true) @AuthenticationPrincipal String userId, 
