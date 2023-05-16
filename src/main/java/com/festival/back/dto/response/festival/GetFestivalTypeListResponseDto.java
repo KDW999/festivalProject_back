@@ -19,11 +19,11 @@ public class GetFestivalTypeListResponseDto {
         this.festivalType = festivalEntity.getFestivalType();
     }
 
-    public static List<GetFestivalTypeListResponseDto> copyList(List<FestivalEntity> festivalEntityList) {
+    public static List<GetFestivalTypeListResponseDto> copyList(List<String> festivalEntityList) {
         
         List<GetFestivalTypeListResponseDto> list = new ArrayList<>();
 
-        for (FestivalEntity festivalEntity: festivalEntityList) {
+        for (String festivalEntity: festivalEntityList) {
             GetFestivalTypeListResponseDto dto = new GetFestivalTypeListResponseDto(festivalEntity);
             list.add(dto);
         }
