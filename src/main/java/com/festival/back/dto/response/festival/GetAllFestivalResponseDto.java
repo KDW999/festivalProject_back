@@ -54,7 +54,7 @@ public class GetAllFestivalResponseDto {
     public GetAllFestivalResponseDto(FestivalEntity festivalEntity){
         Date now = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        this.festivalNumber=festivalEntity.getFestivalNumber();
+        this.festivalNumber = festivalEntity.getFestivalNumber();
         this.festivalName = festivalEntity.getFestivalName();
         this.festivalType = festivalEntity.getFestivalType();
         this.festivalDurationStart = festivalEntity.getFestivalDurationStart();

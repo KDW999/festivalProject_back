@@ -137,13 +137,13 @@ public class BoardController {
     }
     
      // ? 특정축제 전체 후기 게시글 불러오기 -김종빈
-     @ApiOperation(value = "특정 축제 정보의 후기 게시글 전체 반환.",
-     notes = "Request Body 에 PathVariable festivalNumber 을 받으면 특정 축제를 불러오면 그에 애당하는 축제 정보와 전체 후기 게시글을 반환 한다")
-     @GetMapping(GET_FESTIVAL_REVIEW_LIST)
-     public ResponseDto<GetFestivalReviewBoardListResponseDto> getFestivalReviewBoardList(@PathVariable("festivalNumber")int festivalNumber){
+    @ApiOperation(value = "특정 축제 정보의 후기 게시글 전체 반환.",
+    notes = "Request Body 에 PathVariable festivalNumber 을 받으면 특정 축제를 불러오면 그에 애당하는 축제 정보와 전체 후기 게시글을 반환 한다")
+    @GetMapping(GET_FESTIVAL_REVIEW_LIST)
+    public ResponseDto<GetFestivalReviewBoardListResponseDto> getFestivalReviewBoardList(@PathVariable("festivalNumber")int festivalNumber){
         ResponseDto<GetFestivalReviewBoardListResponseDto> response =boardService.getFestivalReviewBoardList(festivalNumber);
         return response;
-     }
+    }
 
     //  ?특정 축제 후기 수정하기 -김종빈
     @ApiOperation(value = "특정 축제 특정 후기 게시글 수정한다.",
@@ -153,7 +153,7 @@ public class BoardController {
         ResponseDto<PatchFestivalReviewBoardResponseDto> response =boardService.patchReivewBoard(userId, requestBody);
         return response;
     } 
- 
+
     // ? 특정 게시물 삭제-김종빈
     @ApiOperation(value = "축제 후기 게시물 삭제"
     ,notes = "Reques Header 에 Athorization 에 Bearer JWT 를 포함하고 pathvariable 에 boardNumber 를 포함하여 반환하면"+
