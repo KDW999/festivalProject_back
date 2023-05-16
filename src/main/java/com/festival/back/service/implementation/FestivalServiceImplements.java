@@ -1,6 +1,7 @@
 package com.festival.back.service.implementation;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -307,9 +308,19 @@ public class FestivalServiceImplements implements FestivalService {
 
     public ResponseDto<List<GetTop1OneLineReviewResponseDto>> getTop1OneLineReview() {
         List<GetTop1OneLineReviewResponseDto> data = null;
+        
+        // ? now 에 현제 시간을 받음.
+        LocalDate now = LocalDate.now();
+        String monthValue = now.getMonthValue() < 10 ? "0" + now.getMonthValue() : "" + now.getMonthValue();
+        String monthNextValue = now.getMonthValue() + 1 < 10 ? "0" + (now.getMonthValue() + 1) : "" + (now.getMonthValue() + 1);
+        String nowMonth = now.getYear() + "-" + monthValue + "-01";
+        String nextMOnth = now.getYear() + "-" + monthNextValue + "-01";
         try {
-            FestivalEntity festivalEntity = festivalRepository.
+         
+            FestivalEntity festivalEntity = festivalRepository.getTop1OneLineReview(nowMonth,nextMOnth);
+            List<OneLineReviewEntity> oneLineReviewList=oneLineReviewRepository.findByFestivalNumberOrderByWriteDatetimeDesc(festivalEntity.getFestivalNumber());
             
+            data = GetTop1OneLineReviewResponseDto.copyList(oneLineReviewList);
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
@@ -318,3 +329,4 @@ public class FestivalServiceImplements implements FestivalService {
     }
 
 }
+

@@ -14,11 +14,7 @@ import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
 import com.festival.back.dto.request.board.RecommendReviewBoardRequestDto;
 import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.board.DeleteCommentResponseDto;
-<<<<<<< HEAD
-import com.festival.back.dto.response.board.DeleteFestivalReviewBoardResponseDto;
-=======
 import com.festival.back.dto.response.board.DeleteReviewBoardResponseDto;
->>>>>>> 945bb428e333cfa80e1cab23c25645dbd08d2007
 import com.festival.back.dto.response.board.GetReviewBoardResponseDto;
 import com.festival.back.dto.response.board.GetInterestedFestivalListResponseDto;
 import com.festival.back.dto.response.board.GetMyReviewBoardListResponseDto;

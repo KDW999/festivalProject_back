@@ -27,6 +27,7 @@ import com.festival.back.dto.response.festival.GetFestivalResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalTypeListResponseDto;
 import com.festival.back.dto.response.festival.GetOneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.GetSearchFestivalListResponseDto;
+import com.festival.back.dto.response.festival.GetTop1OneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.PatchOneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.PostFestivalResponseDto;
 import com.festival.back.dto.response.festival.PostOneLineReviewResponseDto;
@@ -61,6 +62,7 @@ public class FestivalController {
     private final String GET_FESTIVAL="/festival/{festivalNumber}";
     private final String GET_ALL_FESTIVAL="";
     private final String GET_FESTIVAL_TYPE_LIST="/type-list";
+    private final String GET_TOP1_ONELINEREVIEW="/top1-onelinereview";
 
     private final String GET_INTERESTED_FESTIVAL_LIST = "/festival/interested-list";
     private final String GET_ONLY_FESTIVAL_LIST="/onlyfestival/{festivalNumber}";
@@ -183,6 +185,13 @@ public class FestivalController {
         @GetMapping(GET_ONLY_FESTIVAL_LIST)
         public ResponseDto<List<GetOneReviewBoardListResponseDto>> getOneFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber){
             ResponseDto<List<GetOneReviewBoardListResponseDto>> response = boardService.getOneFestivalReviewBoard(festivalNumber);
+            return response;
+        }
+        
+        @ApiOperation(value = "현재 월을 불러와서 가장 빠른 축제 의 한줄 평가를 반한환다.")
+        @GetMapping(GET_TOP1_ONELINEREVIEW)
+        public ResponseDto<List<GetTop1OneLineReviewResponseDto>> getTop1OneLineReview(){
+            ResponseDto<List<GetTop1OneLineReviewResponseDto>> response = festivalService.getTop1OneLineReview();
             return response;
         }
 

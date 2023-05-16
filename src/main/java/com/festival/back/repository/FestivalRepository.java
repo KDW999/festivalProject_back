@@ -68,4 +68,7 @@ public interface FestivalRepository extends JpaRepository<FestivalEntity, Intege
 
       @Query(value=" SELECT DISTINCT festival_type FROM festival ORDER BY festival_type DESC ", nativeQuery=true)
       public List<String> getFestivalTypeList();
+    
+       @Query(value = " SELECT *  FROM Festival WHERE ? <= festival_duration_start AND ?> festival_duration_start ORDER BY festival_duration_start ASC LIMIT 1 " ,nativeQuery =  true)
+      public FestivalEntity getTop1OneLineReview(String date1,String date2);
 }
