@@ -289,10 +289,18 @@ public class FestivalServiceImplements implements FestivalService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
-    @Override
     public ResponseDto<List<GetFestivalTypeListResponseDto>> getFestivalTypeList() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getFestivalTypeList'");
+        List<GetFestivalTypeListResponseDto> data = null;
+
+        try {
+            List<String> festivalEntity = festivalRepository.getFestivalTypeList();
+            data = GetFestivalTypeListResponseDto.copyList(festivalEntity);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
 }
