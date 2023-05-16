@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.festival.back.common.constant.ApiPattern;
 import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.board.GetInterestedFestivalListResponseDto;
-import com.festival.back.dto.response.board.GetOneFestivalReviewBoardListResponseDto;
+import com.festival.back.dto.response.board.GetOneReviewBoardListResponseDto;
 import com.festival.back.dto.response.festival.DeleteOneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.GetAllFestivalResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalAreaListResponseDto;
@@ -69,7 +69,7 @@ public class FestivalController {
 
     // ? 축제 작성
     @ApiOperation(value = "축제 작성", notes =
-     "Request Header Authorization에 Bearer JWT를 포함하고 festivalName, festivalType, festivalDurationStart, festivalDurationEnd, festivalTime, festivalArea, festivalCost, festivalInformationUrl을 전송하면 축제 작성 결과로 작성된 정보를 반환, 실패시 실패 메시지 반환")
+    "Request Header Authorization에 Bearer JWT를 포함하고 festivalName, festivalType, festivalDurationStart, festivalDurationEnd, festivalTime, festivalArea, festivalCost, festivalInformationUrl을 전송하면 축제 작성 결과로 작성된 정보를 반환, 실패시 실패 메시지 반환")
     @PostMapping(POST_FESTIVAL)
     public ResponseDto<PostFestivalResponseDto> postFestival(
             @ApiParam(hidden = true) @AuthenticationPrincipal String festivalName,
@@ -181,9 +181,9 @@ public class FestivalController {
     // ? 특정 후기 만 전체 반환.
     @ApiOperation(value = "특정 축제 후기 만 전체 반환 한다.")
     @GetMapping(GET_ONLY_FESTIVAL_LIST)
-    public ResponseDto<List<GetOneFestivalReviewBoardListResponseDto>> getOneFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber){
-        ResponseDto<List<GetOneFestivalReviewBoardListResponseDto>> response = boardService.getOneFestivalReviewBoard(festivalNumber);
+    public ResponseDto<List<GetOneReviewBoardListResponseDto>> getOneFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber){
+        ResponseDto<List<GetOneReviewBoardListResponseDto>> response = boardService.getOneFestivalReviewBoard(festivalNumber);
         return response;
-    }   
+    }
 
 }
