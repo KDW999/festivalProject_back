@@ -12,6 +12,7 @@ import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.user.CheckUserIdResponseDto;
 import com.festival.back.dto.response.user.CheckUserNicknameResponseDto;
 import com.festival.back.dto.response.user.CheckUserTelNumberResponseDto;
+import com.festival.back.dto.response.user.GetUserResponseDto;
 import com.festival.back.dto.response.user.PatchProfileResponseDto;
 import com.festival.back.entity.UserEntity;
 import com.festival.back.repository.UserRepository;
@@ -21,6 +22,27 @@ import com.festival.back.service.UserService;
 public class UserServiceImplements implements UserService {
 
     @Autowired UserRepository userRepository;
+
+    //? 유저 조회
+    public ResponseDto<GetUserResponseDto> getUser(String userId) {
+
+        GetUserResponseDto data = null;
+
+        try {
+
+            UserEntity userEntity = userRepository.findByUserId(userId);
+
+            if(userEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
+
+            data = new GetUserResponseDto(userEntity);
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+    }
     
     //? 닉네임 및 프로필 사진 URL 수정 기능     -감재현
     public ResponseDto<PatchProfileResponseDto> patchProfile (String userId, PatchProfileRequestDto dto) {

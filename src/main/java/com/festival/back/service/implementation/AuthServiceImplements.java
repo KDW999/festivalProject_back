@@ -55,7 +55,7 @@ public class AuthServiceImplements implements AuthService {
             
             UserEntity userEntity = new UserEntity(dto);
             userRepository.save(userEntity);
-
+            
             if (interestedFestivalType != null) {
                 List<InterestedFestivalEntity> interestedFestivalEntity = InterestedFestivalEntity.createList(dto);
                 interestedFestivalRepository.saveAll(interestedFestivalEntity);
