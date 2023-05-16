@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(value = "내가 작성한 축제 전체 후기게시글 LIST Response.")
-public class GetMyFestivalReviewBoardListResponseDto {
+public class GetMyReviewBoardListResponseDto {
 
     @ApiModelProperty(value = "게시물 번호", example = "1", required = true)
     private int boardNumber;
@@ -42,7 +42,7 @@ public class GetMyFestivalReviewBoardListResponseDto {
     @ApiModelProperty(value = "축제 게시물 번호", example = "1", required = true)
     private int festivalNumber;
 
-    public GetMyFestivalReviewBoardListResponseDto(BoardEntity boardEntity) {
+    public GetMyReviewBoardListResponseDto(BoardEntity boardEntity) {
         this.boardNumber = boardEntity.getBoardNumber();
         this.boardTitle = boardEntity.getBoardTitle();
         this.boardContent = boardEntity.getBoardContent();
@@ -56,11 +56,11 @@ public class GetMyFestivalReviewBoardListResponseDto {
         this.festivalNumber = boardEntity.getFestivalNumber();
     }
 
-    public static List<GetMyFestivalReviewBoardListResponseDto> copyList(List<BoardEntity> boardEntityList) {
-        List<GetMyFestivalReviewBoardListResponseDto> list = new ArrayList<>();
+    public static List<GetMyReviewBoardListResponseDto> copyList(List<BoardEntity> boardEntityList) {
+        List<GetMyReviewBoardListResponseDto> list = new ArrayList<>();
 
         for (BoardEntity boardEntity : boardEntityList) {
-            GetMyFestivalReviewBoardListResponseDto dto = new GetMyFestivalReviewBoardListResponseDto(boardEntity);
+            GetMyReviewBoardListResponseDto dto = new GetMyReviewBoardListResponseDto(boardEntity);
             list.add(dto);
         }
         return list;

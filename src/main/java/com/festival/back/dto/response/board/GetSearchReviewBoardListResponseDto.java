@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetSearchFestivalReviewBoardListResponseDto {
+public class GetSearchReviewBoardListResponseDto {
     private List<BoardEntity> boardList;
 }

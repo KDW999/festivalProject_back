@@ -22,12 +22,14 @@ import com.festival.back.dto.request.board.PostCommentRequestDto;
 import com.festival.back.dto.request.board.RecommendReviewBoardRequestDto;
 import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.board.GetReviewBoardResponseDto;
-import com.festival.back.dto.response.board.GetMyFestivalReviewBoardListResponseDto;
+import com.festival.back.dto.response.board.GetInterestedFestivalListResponseDto;
+import com.festival.back.dto.response.board.GetMyReviewBoardListResponseDto;
+import com.festival.back.dto.response.board.GetOneReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.GetReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.DeleteCommentResponseDto;
-import com.festival.back.dto.response.board.DeleteFestivalReviewBoardResponseDto;
+import com.festival.back.dto.response.board.DeleteReviewBoardResponseDto;
 import com.festival.back.dto.response.board.PatchCommentResponseDto;
-import com.festival.back.dto.response.board.PatchFestivalReviewBoardResponseDto;
+import com.festival.back.dto.response.board.PatchReviewBoardResponseDto;
 import com.festival.back.dto.response.board.PostCommentResponseDto;
 import com.festival.back.dto.response.board.RecommendReviewBoardResponseDto;
 import com.festival.back.service.BoardService;
@@ -37,7 +39,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
-import com.festival.back.dto.response.board.PostFestivalReviewBoardResponseDto;
+import com.festival.back.dto.response.board.PostReviewBoardResponseDto;
 
 @Api(description="게시글 모듈")
 @RestController
@@ -115,11 +117,11 @@ public class BoardController {
     @ApiOperation(value = " 축제 후기 게시글 작성",notes = "Request Header Authorization에 Bearer JWT를 포함하고 "+
     "Request Bdody 에 작성할 festivalNumber 과 boardTitle boardContent boardimgurl 을 작성하면 게시물 전제 테이터 바환." )
     @PostMapping(POST_FESTIVAL_REVIEW_BOARD)
-    public ResponseDto<PostFestivalReviewBoardResponseDto> 
+    public ResponseDto<PostReviewBoardResponseDto> 
     postFestivalReviewBoard(@AuthenticationPrincipal String userId,
     @Valid @RequestBody PostReviewBoardRequestDto requestbody){
-        ResponseDto<PostFestivalReviewBoardResponseDto> 
-        response=boardService.postFestivalReviewBoard(userId,requestbody);
+        ResponseDto<PostReviewBoardResponseDto> 
+        response=boardService.postReviewBoard(userId,requestbody);
         return response; 
     }
 
@@ -128,18 +130,16 @@ public class BoardController {
     ,notes = "특정 축제 festivalNumber 과 boardNumber 을 pathvariable 로 받아서 보내면 축제정보 와 게시물을 반환하고 실패 시 실폐 메세지 반환. ")
     @GetMapping(GET_FESTIVAL_REVIEW_BOARD)
         public ResponseDto<GetReviewBoardResponseDto> getFestivalReviewBoard(@PathVariable(name="boardNumber") Integer boardNumber){
-            ResponseDto<GetReviewBoardResponseDto> response=boardService.getFestivalReviewBoard(boardNumber);
+            ResponseDto<GetReviewBoardResponseDto> response=boardService.getReviewBoard(boardNumber);
             return response;
     }
     
- 
-
     //  ?특정 축제 후기 수정하기 -김종빈
     @ApiOperation(value = "특정 축제 특정 후기 게시글 수정한다.",
     notes = "Request Header Authorization에 Bearer JWT를 포함하고 필요정보를 받고 성공하면 게시글이 수정되고 실패하면 실패 메세지 반환")
     @PatchMapping(PATCH_FESTIVAL_REVIEW_BOARD)
-    public ResponseDto<PatchFestivalReviewBoardResponseDto> patchReivewBoard(@AuthenticationPrincipal String userId,@Valid @RequestBody PatchReviewBoardRequestDto requestBody){
-        ResponseDto<PatchFestivalReviewBoardResponseDto> response =boardService.patchReivewBoard(userId, requestBody);
+    public ResponseDto<PatchReviewBoardResponseDto> patchReivewBoard(@AuthenticationPrincipal String userId,@Valid @RequestBody PatchReviewBoardRequestDto requestBody){
+        ResponseDto<PatchReviewBoardResponseDto> response =boardService.patchReivewBoard(userId, requestBody);
         return response;
     } 
 
@@ -148,12 +148,12 @@ public class BoardController {
     ,notes = "Reques Header 에 Athorization 에 Bearer JWT 를 포함하고 pathvariable 에 boardNumber 를 포함하여 반환하면"+
     "성공시 전체 게시물 데이터를 반환하고,실패시 실패 메세지를 반환")
     @DeleteMapping(DELETE_BOARD)
-    public ResponseDto<DeleteFestivalReviewBoardResponseDto> deleteBoard(
+    public ResponseDto<DeleteReviewBoardResponseDto> deleteBoard(
         @ApiParam(hidden = true)
         @AuthenticationPrincipal String email,
     @ApiParam(value = "게시물 번호",example = "1",required = true)
     @PathVariable("boardNumber")int boardNumber){
-        ResponseDto<DeleteFestivalReviewBoardResponseDto> response = boardService.deleteBoard(email,boardNumber);
+        ResponseDto<DeleteReviewBoardResponseDto> response = boardService.deleteBoard(email,boardNumber);
         return response;
     }
     
@@ -161,12 +161,14 @@ public class BoardController {
     @ApiOperation(value = "본인 작성 게시물 리스트 가져오기"
     ,notes = "Request Header 에 Athorization 에 Bearer JWT 를 포함하여 요청하면 성공시 요청자가 게시물 ")
     @GetMapping(GET_MY_LIST)
-    public ResponseDto<List<GetMyFestivalReviewBoardListResponseDto>> getMyList(@ApiParam(hidden = true)@AuthenticationPrincipal String userId){
-        ResponseDto<List<GetMyFestivalReviewBoardListResponseDto>> response= boardService.getMyList(userId);
+    public ResponseDto<List<GetMyReviewBoardListResponseDto>> getMyList(@ApiParam(hidden = true)@AuthenticationPrincipal String userId){
+        ResponseDto<List<GetMyReviewBoardListResponseDto>> response= boardService.getMyList(userId);
         return response;
     }
 
+   
 
+    //? 전체 후기 게시물 리스트 
     @ApiOperation(value = "전체 후기 게시글 리스트 반환")
     @GetMapping(GET_ALL_REVIEWBOARD_LIST)
     public ResponseDto<List<GetReviewBoardListResponseDto>> getAllReviewBoardList(){

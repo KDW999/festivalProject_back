@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(value = "특정 축제 특정 후기 게시글 수정 Response")
-public class PatchFestivalReviewBoardResponseDto {
+public class PatchReviewBoardResponseDto {
 
     @ApiModelProperty(value="게시물 Entity", required=true)
     private BoardEntity board;

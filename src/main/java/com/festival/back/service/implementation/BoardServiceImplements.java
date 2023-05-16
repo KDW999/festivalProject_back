@@ -14,18 +14,22 @@ import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
 import com.festival.back.dto.request.board.RecommendReviewBoardRequestDto;
 import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.board.DeleteCommentResponseDto;
+<<<<<<< HEAD
 import com.festival.back.dto.response.board.DeleteFestivalReviewBoardResponseDto;
+=======
+import com.festival.back.dto.response.board.DeleteReviewBoardResponseDto;
+>>>>>>> 945bb428e333cfa80e1cab23c25645dbd08d2007
 import com.festival.back.dto.response.board.GetReviewBoardResponseDto;
 import com.festival.back.dto.response.board.GetInterestedFestivalListResponseDto;
-import com.festival.back.dto.response.board.GetMyFestivalReviewBoardListResponseDto;
-import com.festival.back.dto.response.board.GetOneFestivalReviewBoardListResponseDto;
+import com.festival.back.dto.response.board.GetMyReviewBoardListResponseDto;
+import com.festival.back.dto.response.board.GetOneReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.GetReviewBoardListResponseDto;
-import com.festival.back.dto.response.board.GetSearchFestivalReviewBoardListResponseDto;
+import com.festival.back.dto.response.board.GetSearchReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.PatchCommentResponseDto;
-import com.festival.back.dto.response.board.PatchFestivalReviewBoardResponseDto;
+import com.festival.back.dto.response.board.PatchReviewBoardResponseDto;
 import com.festival.back.dto.response.board.PostCommentResponseDto;
 import com.festival.back.dto.response.board.RecommendReviewBoardResponseDto;
-import com.festival.back.dto.response.board.PostFestivalReviewBoardResponseDto;
+import com.festival.back.dto.response.board.PostReviewBoardResponseDto;
 import com.festival.back.entity.BoardEntity;
 import com.festival.back.entity.CommentEntity;
 import com.festival.back.entity.FestivalEntity;
@@ -169,8 +173,8 @@ public class BoardServiceImplements implements BoardService {
     }
 
 //   ? 축제 후기 게시글 작성 -김종빈
-    public ResponseDto<PostFestivalReviewBoardResponseDto> postFestivalReviewBoard(String userId,PostReviewBoardRequestDto dto) {
-        PostFestivalReviewBoardResponseDto data = null;
+    public ResponseDto<PostReviewBoardResponseDto> postReviewBoard(String userId,PostReviewBoardRequestDto dto) {
+        PostReviewBoardResponseDto data = null;
         int festivalNumber = dto.getFestivalNumber();
 
         try {
@@ -182,7 +186,7 @@ public class BoardServiceImplements implements BoardService {
 
             BoardEntity boardEntity = new BoardEntity(userEntity,dto);
             boardRepository.save(boardEntity);
-            data = new PostFestivalReviewBoardResponseDto(boardEntity,festivalEntity);
+            data = new PostReviewBoardResponseDto(boardEntity,festivalEntity);
 
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -192,7 +196,7 @@ public class BoardServiceImplements implements BoardService {
     }
 
     // ? 특정 축제 후기 게시글 불러오기-김종빈
-    public ResponseDto<GetReviewBoardResponseDto> getFestivalReviewBoard(int festivalNumber, int boardNumber) {
+    public ResponseDto<GetReviewBoardResponseDto> getReviewBoard(int festivalNumber, int boardNumber) {
         GetReviewBoardResponseDto data = null;
 
         try {
@@ -240,11 +244,10 @@ public class BoardServiceImplements implements BoardService {
         }
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
- 
-
+    
     // ? 후기 게시글 수정-김종빈
-    public ResponseDto<PatchFestivalReviewBoardResponseDto> patchReivewBoard(String userId,PatchReviewBoardRequestDto dto) {
-        PatchFestivalReviewBoardResponseDto data = null;
+    public ResponseDto<PatchReviewBoardResponseDto> patchReivewBoard(String userId,PatchReviewBoardRequestDto dto) {
+        PatchReviewBoardResponseDto data = null;
         int festivalNumber = dto.getFestivalNumber();
         int boardNumber = dto.getBoardNumber();
 
@@ -265,7 +268,7 @@ public class BoardServiceImplements implements BoardService {
             boardEntity.patch(dto);
             boardRepository.save(boardEntity);
 
-            data = new PatchFestivalReviewBoardResponseDto(boardEntity, festivalEntity, commentList, recommdList);
+            data = new PatchReviewBoardResponseDto(boardEntity, festivalEntity, commentList, recommdList);
             
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -275,8 +278,8 @@ public class BoardServiceImplements implements BoardService {
     }
     
     // ? 특정 게시물 삭제-김종빈
-    public ResponseDto<DeleteFestivalReviewBoardResponseDto> deleteBoard(String userId, int boardNumber) {
-        DeleteFestivalReviewBoardResponseDto data = null;
+    public ResponseDto<DeleteReviewBoardResponseDto> deleteBoard(String userId, int boardNumber) {
+        DeleteReviewBoardResponseDto data = null;
 
         try {
             BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
@@ -289,7 +292,7 @@ public class BoardServiceImplements implements BoardService {
             recommendRepository.deleteByBoardNumber(boardNumber);
 
             boardRepository.delete(boardEntity);
-            data = new DeleteFestivalReviewBoardResponseDto(true);
+            data = new DeleteReviewBoardResponseDto(true);
 
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -299,13 +302,13 @@ public class BoardServiceImplements implements BoardService {
     }
 
     // ? 내가 쓴 후기 게시글 불러오기 -김종빈
-    public ResponseDto<List<GetMyFestivalReviewBoardListResponseDto>> getMyList(String userId){
-        List<GetMyFestivalReviewBoardListResponseDto> data = null;
+    public ResponseDto<List<GetMyReviewBoardListResponseDto>> getMyList(String userId){
+        List<GetMyReviewBoardListResponseDto> data = null;
 
         try {
 
             List<BoardEntity> boardList = boardRepository.findBywriterIdOrderByBoardWriteDatetimeDesc(userId);
-            data = GetMyFestivalReviewBoardListResponseDto.copyList(boardList);
+            data = GetMyReviewBoardListResponseDto.copyList(boardList);
             
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -342,8 +345,8 @@ public class BoardServiceImplements implements BoardService {
     }
 
     //? 후기 게시판 검색
-    public ResponseDto<GetSearchFestivalReviewBoardListResponseDto> getSearchFestivalReviewBoardList(String searchWord) {
-        GetSearchFestivalReviewBoardListResponseDto data =null;
+    public ResponseDto<GetSearchReviewBoardListResponseDto> getSearchFestivalReviewBoardList(String searchWord) {
+        GetSearchReviewBoardListResponseDto data =null;
 
         try {
             SearchwordLogEntity searchwordLogEntity = new SearchwordLogEntity(searchWord); 
@@ -351,7 +354,7 @@ public class BoardServiceImplements implements BoardService {
             List<BoardEntity> boardEntity =
             boardRepository.findByBoardTitleContainsOrBoardContentContainsOrderByBoardWriteDatetimeDesc(searchWord,searchWord);
             
-            data = new GetSearchFestivalReviewBoardListResponseDto(boardEntity);
+            data = new GetSearchReviewBoardListResponseDto(boardEntity);
             
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -361,14 +364,14 @@ public class BoardServiceImplements implements BoardService {
     }
 
     //  ? 특정 축제 전체 후기 리스트 만 반환
-    public ResponseDto<List<GetOneFestivalReviewBoardListResponseDto>> getOneFestivalReviewBoard(int festivalNumber) {
+    public ResponseDto<List<GetOneReviewBoardListResponseDto>> getOneFestivalReviewBoard(int festivalNumber) {
     
-    List<GetOneFestivalReviewBoardListResponseDto> data = null;
+    List<GetOneReviewBoardListResponseDto> data = null;
     
     try {
 
         List<BoardEntity> boardEntityList = boardRepository.findByFestivalNumberOrderByBoardWriteDatetimeDesc(festivalNumber);
-        data = GetOneFestivalReviewBoardListResponseDto.copyList(boardEntityList);
+        data = GetOneReviewBoardListResponseDto.copyList(boardEntityList);
         
     } catch (Exception exception) {
         exception.printStackTrace();    
@@ -378,6 +381,7 @@ public class BoardServiceImplements implements BoardService {
 
     }
 
+    //? 전체 축제 반환
     public ResponseDto<List<GetReviewBoardListResponseDto>> getAllReviewBoardList() {
         List<GetReviewBoardListResponseDto> data = null;
 
@@ -395,11 +399,6 @@ public class BoardServiceImplements implements BoardService {
 
     }
 
-    @Override
-    public ResponseDto<GetReviewBoardResponseDto> getFestivalReviewBoard(int boardNumber) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getFestivalReviewBoard'");
-    }
 
 
 }

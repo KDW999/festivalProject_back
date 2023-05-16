@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class GetReviewBoardResponseDto {
     @ApiModelProperty(value = "게시물Entity",required = true)
     private BoardEntity board;
-    @ApiModelProperty(value = "댓글 추천 List",required = true)
+    @ApiModelProperty(value = "추천 List",required = true)
     private List<RecommendEntity> recommendList ;
     @ApiModelProperty(value = "댓글 List",required = true)
     private List<CommentEntity> commentList;

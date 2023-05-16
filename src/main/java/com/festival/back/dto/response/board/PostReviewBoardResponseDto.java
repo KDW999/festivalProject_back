@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(value = "축제 후기글 작성 Response")
-public class PostFestivalReviewBoardResponseDto {
+public class PostReviewBoardResponseDto {
     @ApiModelProperty(value = "게시물Entity",required = true)
     private BoardEntity board;
     @ApiModelProperty(value = "댓글 추천 List",required = true)
@@ -29,7 +29,7 @@ public class PostFestivalReviewBoardResponseDto {
     @ApiModelProperty(value = "후기 축제 정보",required = true)
     private FestivalEntity festivalBoard;
 
-    public PostFestivalReviewBoardResponseDto(BoardEntity board,FestivalEntity festivalBoard){
+    public PostReviewBoardResponseDto(BoardEntity board,FestivalEntity festivalBoard){
         this.board=board;
         this.festivalBoard=festivalBoard;
         this.recommendList=new ArrayList<>();
