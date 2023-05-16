@@ -71,7 +71,7 @@ public class FestivalController {
 
     // ? 축제 작성
     @ApiOperation(value = "축제 작성", notes =
-     "Request Header Authorization에 Bearer JWT를 포함하고 festivalName, festivalType, festivalDurationStart, festivalDurationEnd, festivalTime, festivalArea, festivalCost, festivalInformationUrl을 전송하면 축제 작성 결과로 작성된 정보를 반환, 실패시 실패 메시지 반환")
+    "Request Header Authorization에 Bearer JWT를 포함하고 festivalName, festivalType, festivalDurationStart, festivalDurationEnd, festivalTime, festivalArea, festivalCost, festivalInformationUrl을 전송하면 축제 작성 결과로 작성된 정보를 반환, 실패시 실패 메시지 반환")
     @PostMapping(POST_FESTIVAL)
     public ResponseDto<PostFestivalResponseDto> postFestival(
             @ApiParam(hidden = true) @AuthenticationPrincipal String festivalName,
@@ -194,5 +194,6 @@ public class FestivalController {
             ResponseDto<List<GetTop1OneLineReviewResponseDto>> response = festivalService.getTop1OneLineReview();
             return response;
         }
+
 
 }
