@@ -1,5 +1,8 @@
 package com.festival.back.entity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,13 +23,13 @@ public class FreeBoardCommentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int commentNumber;
     private String commentContent;
-    private int boardNumber;
+    private int freeBoardNumber;
     private String writerId;
     private String writeDatetime;
     private String writerProfileUrl;
     private String writerNickname;
 
-    // public CommentEntity(UserEntity userEntity, PostCommentRequestDto dto) {
+    // public FreeBoardCommentEntity(UserEntity userEntity, PostFreeBoardCommentRequestDto dto) {
     //     Date now = new Date();
     //     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 

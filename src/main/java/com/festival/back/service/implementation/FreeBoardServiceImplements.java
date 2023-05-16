@@ -1,13 +1,19 @@
 package com.festival.back.service.implementation;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.festival.back.common.constant.ResponseMessage;
+import com.festival.back.dto.request.freeboard.PatchFreeBoardRequestDto;
 import com.festival.back.dto.request.freeboard.PostFreeBoardRequestDto;
 import com.festival.back.dto.response.ResponseDto;
+import com.festival.back.dto.response.freeboard.PatchFreeBoardResponseDto;
 import com.festival.back.dto.response.freeboard.PostFreeBoardResponseDto;
+import com.festival.back.entity.FreeBoardCommentEntity;
 import com.festival.back.entity.FreeBoardEntity;
+import com.festival.back.entity.FreeBoardRecommendEntity;
 import com.festival.back.entity.UserEntity;
 import com.festival.back.repository.FreeBoardCommentRepository;
 import com.festival.back.repository.FreeBoardRecommendRepository;
@@ -33,6 +39,33 @@ public class FreeBoardServiceImplements implements FreeBoardService {
             freeBoardRepository.save(freeBoardEntity);
             data = new PostFreeBoardResponseDto(freeBoardEntity);
 
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+    }
+
+    public ResponseDto<PatchFreeBoardResponseDto> patchFreeBoard(String userId, PatchFreeBoardRequestDto dto) {
+        PatchFreeBoardResponseDto data = null;
+        int freeBoardNumber = dto.getFreeBoardNumber();
+
+        try {
+            FreeBoardEntity freeBoardEntity = freeBoardRepository.findByFreeBoardNumber(freeBoardNumber);
+            if(freeBoardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
+
+            boolean isEqualWriter = userId.equals(freeBoardEntity.getWriterUserId());
+            if (!isEqualWriter) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSION);
+
+            List<FreeBoardCommentEntity> commentList = freeBoardCommentRepository.findByFreeBoardNumberOrderByWriteDatetimeDesc(freeBoardNumber);
+            List<FreeBoardRecommendEntity> recommendList = freeBoardRecommendRepository.findByFreeBoardNumber(freeBoardNumber);
+
+            freeBoardEntity.patch(dto);
+            freeBoardRepository.save(freeBoardEntity);
+            
+            data = new PatchFreeBoardResponseDto(freeBoardEntity, commentList, recommendList);
+
+            
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);

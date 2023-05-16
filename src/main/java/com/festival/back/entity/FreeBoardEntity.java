@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.festival.back.dto.request.freeboard.PatchFreeBoardRequestDto;
 import com.festival.back.dto.request.freeboard.PostFreeBoardRequestDto;
 
 import lombok.AllArgsConstructor;
@@ -31,7 +32,7 @@ public class FreeBoardEntity {
     private int viewCount;
     private int recommendCount;
     private int commentCount;
-    private String writerId;
+    private String writerUserId;
     private String writerProfileUrl;
     private String writerNickname;
     
@@ -42,11 +43,17 @@ public class FreeBoardEntity {
         this.freeBoardContent = postFreeBoardRequestDto.getFreeBoardContent();
         this.freeBoardImgUrl = postFreeBoardRequestDto.getFreeBoradImgUrl();
         this.freeBoardWriteDatetime = simpleDateFormat.format(now);
-        this.writerId = userEntity.getUserId();
+        this.writerUserId = userEntity.getUserId();
         this.writerProfileUrl = userEntity.getProfileUrl();
         this.writerNickname = userEntity.getNickname();
         this.viewCount = 0;
         this.recommendCount = 0;
         this.commentCount = 0;
+    }
+
+    public void patch(PatchFreeBoardRequestDto dto) {
+        this.freeBoardTitle=dto.getFreeBoardTitle();
+        this.freeBoardContent=dto.getFreeBoardContent();
+        this.freeBoardImgUrl=dto.getFreeBoardImgUrl();
     }
 }

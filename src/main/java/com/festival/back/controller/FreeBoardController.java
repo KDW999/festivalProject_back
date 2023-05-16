@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.festival.back.common.constant.ApiPattern;
+import com.festival.back.dto.request.freeboard.PatchFreeBoardRequestDto;
 import com.festival.back.dto.request.freeboard.PostFreeBoardRequestDto;
 import com.festival.back.dto.response.ResponseDto;
+import com.festival.back.dto.response.freeboard.PatchFreeBoardResponseDto;
 import com.festival.back.dto.response.freeboard.PostFreeBoardResponseDto;
 import com.festival.back.service.FreeBoardService;
 
@@ -33,8 +35,9 @@ public class FreeBoardController {
     }
 
     @PatchMapping(PATCH_FREE_BOARD)
-    public ResponseDto<PatchFreeBoardResponseDto> patchFreeBoard(AuthenticationPrincipal String userId, @Valid @RequestBody PatchFreeBoardRequestDto requestBody) {
-        ResponseDto<PatchFreeBoardResponseDto> response = freeBoardService.patchFreeBoard(userId, requestBody)
+    public ResponseDto<PatchFreeBoardResponseDto> patchFreeBoard(@AuthenticationPrincipal String userId, @Valid @RequestBody PatchFreeBoardRequestDto requestBody) {
+        ResponseDto<PatchFreeBoardResponseDto> response = freeBoardService.patchFreeBoard(userId, requestBody);
+        return response;
     }
 
 }

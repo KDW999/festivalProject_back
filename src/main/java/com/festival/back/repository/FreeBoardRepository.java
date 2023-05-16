@@ -8,4 +8,5 @@ import com.festival.back.entity.FreeBoardEntity;
 @Repository
 public interface FreeBoardRepository extends JpaRepository<FreeBoardEntity, Integer> {
     
+    public FreeBoardEntity findByFreeBoardNumber(int freeBoardNumber);
 }

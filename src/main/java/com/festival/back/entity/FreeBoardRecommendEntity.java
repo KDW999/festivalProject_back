@@ -25,10 +25,10 @@ public class FreeBoardRecommendEntity {
     private String userProfileUrl;
     private String userNickname;
 
-    // public RecommendEntity(UserEntity userEntity, int boardNumber) {
-    //     this.userId = userEntity.getUserId();
-    //     this.boardNumber = boardNumber;
-    //     this.userProfileUrl = userEntity.getProfileUrl();
-    //     this.userNickname = userEntity.getNickname();
-    // }
+    public FreeBoardRecommendEntity(UserEntity userEntity, int freeBoardNumber) {
+        this.userId = userEntity.getUserId();
+        this.freeBoardNumber = freeBoardNumber;
+        this.userProfileUrl = userEntity.getProfileUrl();
+        this.userNickname = userEntity.getNickname();
+    }
 }

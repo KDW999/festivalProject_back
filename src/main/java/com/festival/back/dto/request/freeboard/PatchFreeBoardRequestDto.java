@@ -11,6 +11,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class PatchFreeBoardRequestDto {
+    @ApiModelProperty(value = "게시물 제목",example = "군항제 후기",required = true)
+    private int freeBoardNumber;
+
     @NotBlank
     @ApiModelProperty(value = "게시물 제목",example = "군항제 후기",required = true)
     private String freeBoardTitle;
