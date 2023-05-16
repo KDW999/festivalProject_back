@@ -12,6 +12,7 @@ import com.festival.back.dto.response.festival.GetFestivalResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalTypeListResponseDto;
 import com.festival.back.dto.response.festival.GetOneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.GetSearchFestivalListResponseDto;
+import com.festival.back.dto.response.festival.GetTop1OneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.PatchOneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.PostFestivalResponseDto;
 import com.festival.back.dto.response.festival.PostOneLineReviewResponseDto;
@@ -32,4 +33,5 @@ public interface FestivalService {
     public ResponseDto<GetFestivalResponseDto> getFestival(int festivalNumber);
     public ResponseDto<List<GetFestivalTypeListResponseDto>> getFestivalTypeList();
     public ResponseDto<List<GetAllFestivalResponseDto>> getAllFestival();
+    public ResponseDto<List<GetTop1OneLineReviewResponseDto>> getTop1OneLineReview();
 }

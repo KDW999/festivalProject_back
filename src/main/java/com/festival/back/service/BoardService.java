@@ -12,8 +12,7 @@ import com.festival.back.dto.request.board.PostReviewBoardRequestDto;
 import com.festival.back.dto.request.board.RecommendReviewBoardRequestDto;
 import com.festival.back.dto.response.board.DeleteCommentResponseDto;
 import com.festival.back.dto.response.board.DeleteFestivalReviewBoardResponseDto;
-import com.festival.back.dto.response.board.GetFestivalReviewBoardListResponseDto;
-import com.festival.back.dto.response.board.GetFestivalReviewBoardResponseDto;
+import com.festival.back.dto.response.board.GetReviewBoardResponseDto;
 import com.festival.back.dto.response.board.GetInterestedFestivalListResponseDto;
 import com.festival.back.dto.response.board.GetMyFestivalReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.GetOneFestivalReviewBoardListResponseDto;
@@ -37,9 +36,7 @@ public interface BoardService {
 
     public ResponseDto<PostFestivalReviewBoardResponseDto> postFestivalReviewBoard(String userId,PostReviewBoardRequestDto dto);
 
-    public ResponseDto<GetFestivalReviewBoardResponseDto> getFestivalReviewBoard(int boardNumber);
-
-    public ResponseDto<GetFestivalReviewBoardListResponseDto> getFestivalReviewBoardList(Integer festivalNumber);
+    public ResponseDto<GetReviewBoardResponseDto> getFestivalReviewBoard(int boardNumber);
 
     public ResponseDto<PatchFestivalReviewBoardResponseDto> patchReivewBoard(String userId,PatchReviewBoardRequestDto dto);
     

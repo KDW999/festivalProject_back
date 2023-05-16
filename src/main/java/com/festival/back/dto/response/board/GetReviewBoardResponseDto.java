@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(value = "후기 게시글 가져오기 Response Body-data")
-public class GetFestivalReviewBoardResponseDto {
+public class GetReviewBoardResponseDto {
     @ApiModelProperty(value = "게시물Entity",required = true)
     private BoardEntity board;
     @ApiModelProperty(value = "댓글 추천 List",required = true)
