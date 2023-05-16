@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,7 @@ import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.user.CheckUserIdResponseDto;
 import com.festival.back.dto.response.user.CheckUserNicknameResponseDto;
 import com.festival.back.dto.response.user.CheckUserTelNumberResponseDto;
+import com.festival.back.dto.response.user.GetUserResponseDto;
 import com.festival.back.dto.response.user.PatchProfileResponseDto;
 import com.festival.back.service.UserService;
 
@@ -31,13 +33,20 @@ public class UserController {
     
     @Autowired UserService userService;
     
+    private final String GET_USER = "/";
     private final String PATCH_PROFILE = "/profile";
     private final String CHECK_USERID = "/check/userid";
     private final String CHECK_NICKNAME = "/check/nickname";
     private final String CHECK_TELNUMBER = "/check/telnumber";
     
+    @ApiOperation(value = "유저 정보 불러오기", notes = "Request Header Authorization에 Bearer Token을 포함하여 요청을 하면, 성공 시 유저 정보를 반환, 실패 시 실패 메세지를 반환")
+    @GetMapping(GET_USER)
+    public ResponseDto<GetUserResponseDto> getUser(@AuthenticationPrincipal String userId){
+        ResponseDto<GetUserResponseDto> response = userService.getUser(userId);
+        return response;
+    }
 
-    @ApiOperation(value="닉네임 및 프로필 사진 URL 수정하기", notes="Request Header에 Athorization 에 Bearer JWT 를 포함하여 요청하고, 성공시 수정한 닉네임 및 프로필 사진 URL을 반환하고, 실패시 실패 메세지를 반환")
+    @ApiOperation(value= "닉네임 및 프로필 사진 URL 수정하기", notes="Request Header에 Athorization 에 Bearer JWT 를 포함하여 요청하고, 성공시 수정한 닉네임 및 프로필 사진 URL을 반환하고, 실패시 실패 메세지를 반환")
     @PatchMapping(PATCH_PROFILE)
     public ResponseDto<PatchProfileResponseDto> 
     patchProfile(@ApiParam(hidden=true) @AuthenticationPrincipal String userId, 
