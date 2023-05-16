@@ -43,7 +43,7 @@ public class CommentEntity {
         this.writerProfileUrl = userEntity.getProfileUrl();
         this.writerNickname = userEntity.getNickname();
         
-         
+        
     }
 
     public void patch(PatchCommentRequestDto dto){
