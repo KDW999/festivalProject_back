@@ -69,7 +69,7 @@ public class FestivalController {
 
     // ? 축제 작성
     @ApiOperation(value = "축제 작성", notes =
-     "Request Header Authorization에 Bearer JWT를 포함하고 festivalName, festivalType, festivalDurationStart, festivalDurationEnd, festivalTime, festivalArea, festivalCost, festivalInformationUrl을 전송하면 축제 작성 결과로 작성된 정보를 반환, 실패시 실패 메시지 반환")
+    "Request Header Authorization에 Bearer JWT를 포함하고 festivalName, festivalType, festivalDurationStart, festivalDurationEnd, festivalTime, festivalArea, festivalCost, festivalInformationUrl을 전송하면 축제 작성 결과로 작성된 정보를 반환, 실패시 실패 메시지 반환")
     @PostMapping(POST_FESTIVAL)
     public ResponseDto<PostFestivalResponseDto> postFestival(
             @ApiParam(hidden = true) @AuthenticationPrincipal String festivalName,
@@ -171,19 +171,19 @@ public class FestivalController {
         return response;
     }
 
-        // ? 추천 페스티벌 리스트 받아오기 -감재현
-        @ApiOperation(value="회원가입시 선택한 추천 축제 타입 리스트 받아오기")
-        @GetMapping(GET_INTERESTED_FESTIVAL_LIST)
-        public ResponseDto<List<GetInterestedFestivalListResponseDto>> GetInterestedFestivalList(@ApiParam(hidden = true) @AuthenticationPrincipal String userId) {
-            ResponseDto<List<GetInterestedFestivalListResponseDto>> response = boardService.getInterestedFestivalList(userId);
-            return response;
-        }
-        // ? 특정 후기 만 전체 반환.
-        @ApiOperation(value = "특정 축제 후기 만 전체 반환 한다.")
-        @GetMapping(GET_ONLY_FESTIVAL_LIST)
-        public ResponseDto<List<GetOneReviewBoardListResponseDto>> getOneFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber){
-            ResponseDto<List<GetOneReviewBoardListResponseDto>> response = boardService.getOneFestivalReviewBoard(festivalNumber);
-            return response;
-        }
+    // ? 추천 페스티벌 리스트 받아오기 -감재현
+    @ApiOperation(value="회원가입시 선택한 추천 축제 타입 리스트 받아오기")
+    @GetMapping(GET_INTERESTED_FESTIVAL_LIST)
+    public ResponseDto<List<GetInterestedFestivalListResponseDto>> GetInterestedFestivalList(@ApiParam(hidden = true) @AuthenticationPrincipal String userId) {
+        ResponseDto<List<GetInterestedFestivalListResponseDto>> response = boardService.getInterestedFestivalList(userId);
+        return response;
+    }
+    // ? 특정 후기 만 전체 반환.
+    @ApiOperation(value = "특정 축제 후기 만 전체 반환 한다.")
+    @GetMapping(GET_ONLY_FESTIVAL_LIST)
+    public ResponseDto<List<GetOneReviewBoardListResponseDto>> getOneFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber){
+        ResponseDto<List<GetOneReviewBoardListResponseDto>> response = boardService.getOneFestivalReviewBoard(festivalNumber);
+        return response;
+    }
 
 }
