@@ -55,7 +55,6 @@ public class BoardController {
     private final String DELETE_BOARD = "/{boardNumber}";
     private final String GET_MY_LIST = "/my-reviewboard-list";
     private final String GET_ALL_REVIEWBOARD_LIST="/all-review-board";
-    private final String GET_FESTIVAL_REVIEW_LIST="/festival/{festivalNumber}";
     
     private final String GET_INTERESTED_FESTIVAL_LIST = "/festival/interested-list";
     private final String GET_ONLY_FESTIVAL_LIST="/onlyfestival/{festivalNumber}";
