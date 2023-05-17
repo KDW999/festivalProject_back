@@ -15,6 +15,8 @@ import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.freeboard.DeleteFreeBoardCommentResponseDto;
 import com.festival.back.dto.response.freeboard.DeleteFreeBoardResponseDto;
 import com.festival.back.dto.response.freeboard.FreeBoardRecommendResponseDto;
+import com.festival.back.dto.response.freeboard.GetFreeBoardListResponseDto;
+import com.festival.back.dto.response.freeboard.GetFreeBoardResponseDto;
 import com.festival.back.dto.response.freeboard.PatchFreeBoardCommentResponseDto;
 import com.festival.back.dto.response.freeboard.PatchFreeBoardResponseDto;
 import com.festival.back.dto.response.freeboard.PostFreeBoardCommentResponseDto;
@@ -54,56 +56,6 @@ public class FreeBoardServiceImplements implements FreeBoardService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
-    public ResponseDto<PatchFreeBoardResponseDto> patchFreeBoard(String userId, PatchFreeBoardRequestDto dto) {
-        PatchFreeBoardResponseDto data = null;
-        int freeBoardNumber = dto.getFreeBoardNumber();
-
-        try {
-            FreeBoardEntity freeBoardEntity = freeBoardRepository.findByFreeBoardNumber(freeBoardNumber);
-            if(freeBoardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
-
-            boolean isEqualWriter = freeBoardEntity.getWriterUserId().equals(userId);
-            if (!isEqualWriter) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSION);
-
-            List<FreeBoardCommentEntity> commentList = freeBoardCommentRepository.findByFreeBoardNumberOrderByWriteDatetimeDesc(freeBoardNumber);
-            List<FreeBoardRecommendEntity> recommendList = freeBoardRecommendRepository.findByFreeBoardNumber(freeBoardNumber);
-
-            freeBoardEntity.patch(dto);
-            freeBoardRepository.save(freeBoardEntity);
-
-            data = new PatchFreeBoardResponseDto(freeBoardEntity, commentList, recommendList);
-
-            
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
-        }
-        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
-    }
-
-    public ResponseDto<DeleteFreeBoardResponseDto> deleteFreeBoard(String userId, int freeBoardNumber) {
-        DeleteFreeBoardResponseDto data = null;
-
-        try {
-            FreeBoardEntity freeBoardEntity = freeBoardRepository.findByFreeBoardNumber(freeBoardNumber);
-            if (freeBoardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
-
-            boolean isEqualWriter = freeBoardEntity.getWriterUserId().equals(userId);
-            if (!isEqualWriter) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSION);
-
-            freeBoardCommentRepository.deleteByFreeBoardNumber(freeBoardNumber);
-            freeBoardRecommendRepository.deleteByFreeBoardNumber(freeBoardNumber);
-
-            freeBoardRepository.delete(freeBoardEntity);
-            data = new DeleteFreeBoardResponseDto(true);
-
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
-        }
-        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
-    }
-
     public ResponseDto<PostFreeBoardCommentResponseDto> postFreeBoardComment(String userId, PostFreeBoardCommentRequestDto dto) {
         PostFreeBoardCommentResponseDto data = null;
         int freeBoardNumber = dto.getFreeBoardNumber();
@@ -126,6 +78,99 @@ public class FreeBoardServiceImplements implements FreeBoardService {
 
             data = new PostFreeBoardCommentResponseDto(freeBoardEntity, commentList, recommendList);
 
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+    }
+
+    public ResponseDto<FreeBoardRecommendResponseDto> freeBoardRecommend (String userId, FreeBoardRecommendRequestDto dto) {
+        FreeBoardRecommendResponseDto data = null;
+        int freeBoardNumber = dto.getFreeBoardNumber();
+
+        try {
+            UserEntity userEntity = userRepository.findByUserId(userId);
+            if (userEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
+
+            FreeBoardEntity freeBoardEntity = freeBoardRepository.findByFreeBoardNumber(freeBoardNumber);
+            if (freeBoardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
+
+            FreeBoardRecommendEntity freeBoardRecommendEntity = freeBoardRecommendRepository.findByUserIdAndFreeBoardNumber(userId, freeBoardNumber);
+            if(freeBoardRecommendEntity == null) {
+                freeBoardRecommendEntity = new FreeBoardRecommendEntity(userEntity, freeBoardNumber);
+                freeBoardRecommendRepository.save(freeBoardRecommendEntity);
+                freeBoardEntity.increaseRecommendCount();
+            }else{
+                freeBoardRecommendRepository.delete(freeBoardRecommendEntity);
+                freeBoardEntity.decreaseRecommendCount();
+            }
+            freeBoardRepository.save(freeBoardEntity);
+
+            List<FreeBoardCommentEntity> commentList = freeBoardCommentRepository.findByFreeBoardNumberOrderByWriteDatetimeDesc(freeBoardNumber);
+            List<FreeBoardRecommendEntity> recommendList = freeBoardRecommendRepository.findByFreeBoardNumber(freeBoardNumber);
+
+            data = new FreeBoardRecommendResponseDto(freeBoardEntity, commentList, recommendList);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+    }
+
+    public ResponseDto<List<GetFreeBoardListResponseDto>> getFreeBoardList() {
+        List<GetFreeBoardListResponseDto> data = null;
+
+        try {
+            List<FreeBoardEntity> boardList = freeBoardRepository.findByOrderByFreeBoardWriteDatetimeDesc();
+
+            data = GetFreeBoardListResponseDto.copyList(boardList);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+    }
+
+    public ResponseDto<GetFreeBoardResponseDto> getFreeBoard(int freeBoardNumber) {
+        GetFreeBoardResponseDto data = null;
+
+        try {
+            FreeBoardEntity freeBoardEntity = freeBoardRepository.findByFreeBoardNumber(freeBoardNumber);
+            if (freeBoardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
+
+            List<FreeBoardCommentEntity> commentList = freeBoardCommentRepository.findByFreeBoardNumberOrderByWriteDatetimeDesc(freeBoardNumber);
+            List<FreeBoardRecommendEntity> recommendList = freeBoardRecommendRepository.findByFreeBoardNumber(freeBoardNumber);
+
+            data = new GetFreeBoardResponseDto(freeBoardEntity, commentList, recommendList);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+    }
+
+    public ResponseDto<PatchFreeBoardResponseDto> patchFreeBoard(String userId, PatchFreeBoardRequestDto dto) {
+        PatchFreeBoardResponseDto data = null;
+        int freeBoardNumber = dto.getFreeBoardNumber();
+
+        try {
+            FreeBoardEntity freeBoardEntity = freeBoardRepository.findByFreeBoardNumber(freeBoardNumber);
+            if(freeBoardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
+
+            boolean isEqualWriter = freeBoardEntity.getWriterUserId().equals(userId);
+            if (!isEqualWriter) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSION);
+
+            List<FreeBoardCommentEntity> commentList = freeBoardCommentRepository.findByFreeBoardNumberOrderByWriteDatetimeDesc(freeBoardNumber);
+            List<FreeBoardRecommendEntity> recommendList = freeBoardRecommendRepository.findByFreeBoardNumber(freeBoardNumber);
+
+            freeBoardEntity.patch(dto);
+            freeBoardRepository.save(freeBoardEntity);
+
+            data = new PatchFreeBoardResponseDto(freeBoardEntity, commentList, recommendList);
+
+            
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
@@ -170,6 +215,29 @@ public class FreeBoardServiceImplements implements FreeBoardService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
+    public ResponseDto<DeleteFreeBoardResponseDto> deleteFreeBoard(String userId, int freeBoardNumber) {
+        DeleteFreeBoardResponseDto data = null;
+
+        try {
+            FreeBoardEntity freeBoardEntity = freeBoardRepository.findByFreeBoardNumber(freeBoardNumber);
+            if (freeBoardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
+
+            boolean isEqualWriter = freeBoardEntity.getWriterUserId().equals(userId);
+            if (!isEqualWriter) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSION);
+
+            freeBoardCommentRepository.deleteByFreeBoardNumber(freeBoardNumber);
+            freeBoardRecommendRepository.deleteByFreeBoardNumber(freeBoardNumber);
+
+            freeBoardRepository.delete(freeBoardEntity);
+            data = new DeleteFreeBoardResponseDto(true);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+    }
+
     public ResponseDto<DeleteFreeBoardCommentResponseDto> deleteFreeBoardComment (String userId, int freeBoardCommentNumber) {
         DeleteFreeBoardCommentResponseDto data = null;
 
@@ -191,40 +259,6 @@ public class FreeBoardServiceImplements implements FreeBoardService {
             freeBoardRepository.save(freeBoardEntity);
 
             data = new DeleteFreeBoardCommentResponseDto(true);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
-        }
-        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
-    }
-
-    public ResponseDto<FreeBoardRecommendResponseDto> freeBoardRecommend (String userId, FreeBoardRecommendRequestDto dto) {
-        FreeBoardRecommendResponseDto data = null;
-        int freeBoardNumber = dto.getFreeBoardNumber();
-
-        try {
-            UserEntity userEntity = userRepository.findByUserId(userId);
-            if (userEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
-
-            FreeBoardEntity freeBoardEntity = freeBoardRepository.findByFreeBoardNumber(freeBoardNumber);
-            if (freeBoardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
-
-            FreeBoardRecommendEntity freeBoardRecommendEntity = freeBoardRecommendRepository.findByUserIdAndFreeBoardNumber(userId, freeBoardNumber);
-            if(freeBoardRecommendEntity == null) {
-                freeBoardRecommendEntity = new FreeBoardRecommendEntity(userEntity, freeBoardNumber);
-                freeBoardRecommendRepository.save(freeBoardRecommendEntity);
-                freeBoardEntity.increaseRecommendCount();
-            }else{
-                freeBoardRecommendRepository.delete(freeBoardRecommendEntity);
-                freeBoardEntity.decreaseRecommendCount();
-            }
-            freeBoardRepository.save(freeBoardEntity);
-
-            List<FreeBoardCommentEntity> commentList = freeBoardCommentRepository.findByFreeBoardNumberOrderByWriteDatetimeDesc(freeBoardNumber);
-            List<FreeBoardRecommendEntity> recommendList = freeBoardRecommendRepository.findByFreeBoardNumber(freeBoardNumber);
-
-            data = new FreeBoardRecommendResponseDto(freeBoardEntity, commentList, recommendList);
-
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
