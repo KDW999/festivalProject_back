@@ -56,4 +56,20 @@ public class FreeBoardEntity {
         this.freeBoardContent=dto.getFreeBoardContent();
         this.freeBoardImgUrl=dto.getFreeBoardImgUrl();
     }
+
+    public void increaseCommentCount() {
+        commentCount++;
+    }
+
+    public void decreaseCommentCount() {
+        commentCount--;
+    }
+
+    public void increaseRecommendCount() {
+        recommendCount++;
+    }
+
+    public void decreaseRecommendCount() {
+        recommendCount--;
+    }
 }
