@@ -26,7 +26,6 @@ import com.festival.back.dto.response.freeboard.PatchFreeBoardCommentResponseDto
 import com.festival.back.dto.response.freeboard.PatchFreeBoardResponseDto;
 import com.festival.back.dto.response.freeboard.PostFreeBoardCommentResponseDto;
 import com.festival.back.dto.response.freeboard.PostFreeBoardResponseDto;
-import com.festival.back.repository.FreeBoardRepository;
 import com.festival.back.service.FreeBoardService;
 
 import io.swagger.annotations.ApiParam;
