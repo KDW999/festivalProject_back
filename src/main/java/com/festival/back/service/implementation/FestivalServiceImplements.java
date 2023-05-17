@@ -169,8 +169,8 @@ public class FestivalServiceImplements implements FestivalService {
     }
 
     //? 검색한 축제 리스트 조회
-    public ResponseDto<GetSearchFestivalListResponseDto> getSearchFestivalList(String searchWord) {
-        GetSearchFestivalListResponseDto data= null;
+    public ResponseDto<List<GetSearchFestivalListResponseDto>> getSearchFestivalList(String searchWord) {
+        List<GetSearchFestivalListResponseDto> data= null;
 
         try {
             SearchwordLogEntity searchwordLogEntity = new SearchwordLogEntity(searchWord);
@@ -181,7 +181,7 @@ public class FestivalServiceImplements implements FestivalService {
                 (searchWord, searchWord, searchWord, searchWord);
             if(festivalList.isEmpty()) return ResponseDto.setFail(ResponseMessage.NO_SEARCH_RESULTS);
                 
-            data = new GetSearchFestivalListResponseDto(festivalList);
+            data = GetSearchFestivalListResponseDto.copyList(festivalList);
 
         } catch (Exception e) {
             e.printStackTrace();

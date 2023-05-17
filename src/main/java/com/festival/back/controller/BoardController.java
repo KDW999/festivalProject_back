@@ -22,6 +22,7 @@ import com.festival.back.dto.request.board.PostCommentRequestDto;
 import com.festival.back.dto.request.board.RecommendReviewBoardRequestDto;
 import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.board.GetReviewBoardResponseDto;
+import com.festival.back.dto.response.board.GetSearchReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.GetInterestedFestivalListResponseDto;
 import com.festival.back.dto.response.board.GetMyReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.GetOneReviewBoardListResponseDto;
@@ -55,6 +56,7 @@ public class BoardController {
     private final String DELETE_BOARD = "/{boardNumber}";
     private final String GET_MY_LIST = "/my-reviewboard-list";
     private final String GET_ALL_REVIEWBOARD_LIST="/all-review-board";
+    private final String GET_SEARCH_REVIEWBOARD_LIST = "/search-reviewboard/{searchWord}";
     
 
 
@@ -127,7 +129,7 @@ public class BoardController {
 
     // ? 특정 축제 특정 후기 게시글 불러오기 -김종빈
     @ApiOperation(value = "특정 축제를 불러와 그에 관한 후기 게시글 1개를 반환한다."
-    ,notes = "특정 축제 festivalNumber 과 boardNumber 을 pathvariable 로 받아서 보내면 축제정보 와 게시물을 반환하고 실패 시 실폐 메세지 반환. ")
+    ,notes = " boardNumber 을 pathvariable 로 받아서 보내면 해당  게시물을 반환하고 실패 시 실폐 메세지 반환. ")
     @GetMapping(GET_FESTIVAL_REVIEW_BOARD)
         public ResponseDto<GetReviewBoardResponseDto> getFestivalReviewBoard(@PathVariable(name="boardNumber") Integer boardNumber){
             ResponseDto<GetReviewBoardResponseDto> response=boardService.getReviewBoard(boardNumber);
@@ -176,5 +178,15 @@ public class BoardController {
         return response;
 
     }
+
+    @ApiOperation(value = "후기 게시판 검색하여서 리스트로 반환.")
+    @GetMapping(GET_SEARCH_REVIEWBOARD_LIST)
+    public ResponseDto<List<GetSearchReviewBoardListResponseDto>> getSearchFestivalReviewBoardList(@PathVariable(name = "searchWord") String searchWord){
+        ResponseDto<List<GetSearchReviewBoardListResponseDto>> response = boardService.getSearchReviewBoardList(searchWord);
+         return response;
+
+    }
+   
+    
     
 }

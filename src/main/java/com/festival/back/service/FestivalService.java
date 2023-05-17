@@ -26,7 +26,7 @@ public interface FestivalService {
     public ResponseDto<PostOneLineReviewResponseDto> postOneLineReview(String userId, PostOneLineReviewRequestDto dto);
     public ResponseDto<PatchOneLineReviewResponseDto> patchOneLineReview(String userId, PatchOneLineReviewRequestDto dto);
     public ResponseDto<DeleteOneLineReviewResponseDto> deleteOneLineReview(int festivalNumber, String userId);
-    public ResponseDto<GetSearchFestivalListResponseDto> getSearchFestivalList(String searchWord);
+    public ResponseDto<List<GetSearchFestivalListResponseDto>> getSearchFestivalList(String searchWord);
     public ResponseDto<List<GetFestivalAreaListResponseDto>> getFestivalAreaList(String festivalArea);
     public ResponseDto<GetFestivalMonthResponseDto> getFestivalMonthList(int month);
     public ResponseDto<List<GetOneLineReviewResponseDto>> getOneLineReview(int festivalNumber);

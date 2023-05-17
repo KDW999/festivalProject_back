@@ -1,5 +1,7 @@
 package com.festival.back.service.implementation;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +16,9 @@ import com.festival.back.dto.response.user.CheckUserNicknameResponseDto;
 import com.festival.back.dto.response.user.CheckUserTelNumberResponseDto;
 import com.festival.back.dto.response.user.GetUserResponseDto;
 import com.festival.back.dto.response.user.PatchProfileResponseDto;
+import com.festival.back.entity.InterestedFestivalEntity;
 import com.festival.back.entity.UserEntity;
+import com.festival.back.repository.InterestedFestivalRepository;
 import com.festival.back.repository.UserRepository;
 import com.festival.back.service.UserService;
 
@@ -22,23 +26,32 @@ import com.festival.back.service.UserService;
 public class UserServiceImplements implements UserService {
 
     @Autowired UserRepository userRepository;
+    @Autowired InterestedFestivalRepository interestedFestivalRepository;
 
     //? 유저 조회
     public ResponseDto<GetUserResponseDto> getUser(String userId) {
 
         GetUserResponseDto data = null;
-
+      
+        UserEntity userEntity = null;
         try {
 
-            UserEntity userEntity = userRepository.findByUserId(userId);
-
+             userEntity = userRepository.findByUserId(userId);
             if(userEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
 
-            data = new GetUserResponseDto(userEntity);
-            
+        
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        try {
+            List<InterestedFestivalEntity> interestedFestivalEntity = interestedFestivalRepository.findByUserId(userId);
+           
+            data = new GetUserResponseDto(userEntity,interestedFestivalEntity);
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.FAIL_SIGN_IN);
         }
 
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);

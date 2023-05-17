@@ -22,9 +22,6 @@ public class PatchReviewBoardResponseDto {
     @ApiModelProperty(value="게시물 Entity", required=true)
     private BoardEntity board;
 
-    @ApiModelProperty(value="축제 Entity", required=true)
-    private FestivalEntity festival;
-
     @ApiModelProperty(value="댓글 Entity List", required=true)
     private List<CommentEntity> commentList;
 

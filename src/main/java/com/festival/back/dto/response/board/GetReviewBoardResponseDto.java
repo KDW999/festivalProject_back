@@ -1,10 +1,13 @@
 package com.festival.back.dto.response.board;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.festival.back.entity.BoardEntity;
 import com.festival.back.entity.CommentEntity;
+import com.festival.back.entity.FestivalEntity;
 import com.festival.back.entity.RecommendEntity;
+import com.festival.back.entity.UserEntity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -17,11 +20,83 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @ApiModel(value = "후기 게시글 가져오기 Response Body-data")
 public class GetReviewBoardResponseDto {
-    @ApiModelProperty(value = "게시물Entity",required = true)
-    private BoardEntity board;
-    @ApiModelProperty(value = "추천 List",required = true)
-    private List<RecommendEntity> recommendList ;
-    @ApiModelProperty(value = "댓글 List",required = true)
-    private List<CommentEntity> commentList;
+    @ApiModelProperty(value = "후기 게시글 번호", example = "1", required = true)
+    private int boardNumber;
+    @ApiModelProperty(value = "후기 게시글 제목", example = "빙어가 없어요", required = true)
+    private String boardTitle;
+    @ApiModelProperty(value = "후기 게시글 내용", example = "빙어가 너무 없어요", required = true)
+    private String boardContent;
+    @ApiModelProperty(value = "후기 게시글 첨부된 이미지", example = "http:// url", required = true)
+    private String boardImgUrl;
+    @ApiModelProperty(value = "작성된 날자+시간", example = "2023-05-10 17:00", required = true)
+    private String boardWriteDatetime;
+    @ApiModelProperty(value = "조회수", example = "0", required = true)
+    private int viewCount;
+    @ApiModelProperty(value = "추천수", example = "0", required = true)
+    private int recommendCount;
+    @ApiModelProperty(value = "댓글수", example = "0", required = true)
+    private int commentCount;
+    @ApiModelProperty(value = "작성자 아이디", example = "karurna", required = true)
+    private String writerId;
+    @ApiModelProperty(value = "작성자 프로필 사진", example = "http:// url", required = true)
+    private String writerProfileUrl;
+    @ApiModelProperty(value = "작성자 닉네임", example = "혼자가아님", required = true)
+    private String writerNickname;
+    @ApiModelProperty(value = "작성자 휴대폰 번호", example = "010-9159-3089", required = true)
+    private int festivalNumber;
+    @ApiModelProperty(value = "댓글 List", required = true)
+    private List<Comment> commentList;
+
+    public GetReviewBoardResponseDto(BoardEntity boardEntity,List<CommentEntity> commentEntity) {
+        this.boardNumber = boardEntity.getBoardNumber();
+        this.boardTitle = boardEntity.getBoardTitle();
+        this.boardContent = boardEntity.getBoardContent();
+        this.boardImgUrl = boardEntity.getBoardImgUrl();
+        this.boardWriteDatetime = boardEntity.getBoardWriteDatetime();
+        this.viewCount = boardEntity.getViewCount();
+        this.recommendCount = boardEntity.getRecommendCount();
+        this.commentCount = boardEntity.getCommentCount();
+        this.writerId = boardEntity.getWriterId();
+        this.writerProfileUrl = boardEntity.getWriterProfileUrl();
+        this.writerNickname = boardEntity.getWriterId();
+        this.festivalNumber = boardEntity.getFestivalNumber();
+        this.commentList = Comment.createList(commentEntity);
+
+    }
+
+}
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+class Comment {
+    private int commentNumber;
+    private String commentContent;
+    private int boardNumber;
+    private String writerId;
+    private String writeDatetime;
+    private String writerProfileUrl;
+    private String writerNickname;
+
+    Comment (CommentEntity commentEntity){
+        this.commentNumber=commentEntity.getCommentNumber();
+        this.commentContent=commentEntity.getCommentContent();
+        this.boardNumber=commentEntity.getBoardNumber();
+        this.writerId=commentEntity.getWriterId();
+        this.writeDatetime=commentEntity.getWriteDatetime();
+        this.writerProfileUrl=commentEntity.getWriterProfileUrl();
+        this.writerNickname=commentEntity.getWriterNickname();
+
+    }
+
+    static List<Comment> createList(List<CommentEntity> commentEntities){
+        List<Comment> commentList = new ArrayList<>();
+        for(CommentEntity commentEntity : commentEntities){
+            Comment comment = new Comment(commentEntity);
+            commentList.add(comment);
+            
+        }
+        return commentList;
+    }
 
 }

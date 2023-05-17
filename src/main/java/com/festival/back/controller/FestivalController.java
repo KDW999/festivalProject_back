@@ -131,9 +131,9 @@ public class FestivalController {
     //? 축제를 검색후 검색한 단어를 포함한 전체 리스트 반환 -김종빈
     @ApiOperation(value = "축제를 검색한다. festivalNmae fetivalType festivalArea festivalInformaion PathVariable 에 검색어를 입력하고 성공하면 성공값을 반환한다.")
     @GetMapping(GET_SEARCH_FESTIVAL)
-    public ResponseDto<GetSearchFestivalListResponseDto> getSearchFestivalList(@PathVariable("searchWord") String searchWord){
+    public ResponseDto<List<GetSearchFestivalListResponseDto>> getSearchFestivalList(@PathVariable("searchWord") String searchWord){
     
-        ResponseDto<GetSearchFestivalListResponseDto> response =festivalService.getSearchFestivalList(searchWord);
+        ResponseDto<List<GetSearchFestivalListResponseDto>> response =festivalService.getSearchFestivalList(searchWord);
         return response;
     }
 
