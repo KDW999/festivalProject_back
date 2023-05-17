@@ -17,4 +17,6 @@ public interface FreeBoardRecommendRepository extends JpaRepository<FreeBoardRec
 
     @Transactional
     public void deleteByFreeBoardNumber(int freeBoardNumber);
+
+    public FreeBoardRecommendEntity findByUserIdAndFreeBoardNumber(String userId, int freeBoardNumber);
 }

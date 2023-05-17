@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.festival.back.common.constant.ApiPattern;
+import com.festival.back.dto.request.freeboard.FreeBoardRecommendRequestDto;
 import com.festival.back.dto.request.freeboard.PatchFreeBoardCommentRequestDto;
 import com.festival.back.dto.request.freeboard.PatchFreeBoardRequestDto;
 import com.festival.back.dto.request.freeboard.PostFreeBoardCommentRequestDto;
@@ -20,6 +21,7 @@ import com.festival.back.dto.request.freeboard.PostFreeBoardRequestDto;
 import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.freeboard.DeleteFreeBoardCommentResponseDto;
 import com.festival.back.dto.response.freeboard.DeleteFreeBoardResponseDto;
+import com.festival.back.dto.response.freeboard.FreeBoardRecommendResponseDto;
 import com.festival.back.dto.response.freeboard.PatchFreeBoardCommentResponseDto;
 import com.festival.back.dto.response.freeboard.PatchFreeBoardResponseDto;
 import com.festival.back.dto.response.freeboard.PostFreeBoardCommentResponseDto;
@@ -36,10 +38,13 @@ public class FreeBoardController {
     @Autowired private FreeBoardService freeBoardService;
 
     private final String POST_FREE_BOARD = "";
-    private final String PATCH_FREE_BOARD = "";
-    private final String DELETE_FREE_BOARD = "/{freeBoardNumber}";
     private final String POST_FREE_BOARD_COMMENT = "/comment";
+    private final String FREE_BOARD_RECOMMEND = "/recommend";
+
+    private final String PATCH_FREE_BOARD = "";
     private final String PATCH_FREE_BOARD_COMMENT = "/comment";
+
+    private final String DELETE_FREE_BOARD = "/{freeBoardNumber}";
     private final String DELETE_FREE_BOARD_COMMENT = "/comment/{freeBoardCommentNumber}";
 
     @PostMapping(POST_FREE_BOARD)
@@ -82,6 +87,12 @@ public class FreeBoardController {
     @ApiParam(value = "게시물 번호",example = "1", required = true)
     @PathVariable("freeBoardCommentNumber")int freeBoardCommentNumber) {
         ResponseDto<DeleteFreeBoardCommentResponseDto> response = freeBoardService.deleteFreeBoardComment(userId, freeBoardCommentNumber);
+        return response;
+    }
+
+    @PostMapping(FREE_BOARD_RECOMMEND)
+    public ResponseDto<FreeBoardRecommendResponseDto> freeBoardRecommend (@AuthenticationPrincipal String userId, @Valid @RequestBody FreeBoardRecommendRequestDto requestBody) {
+        ResponseDto<FreeBoardRecommendResponseDto> response = freeBoardService.freeBoardRecommend(userId, requestBody);
         return response;
     }
 
