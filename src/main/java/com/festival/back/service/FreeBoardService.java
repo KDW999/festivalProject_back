@@ -1,0 +1,27 @@
+package com.festival.back.service;
+
+
+import com.festival.back.dto.request.freeboard.FreeBoardRecommendRequestDto;
+import com.festival.back.dto.request.freeboard.PatchFreeBoardCommentRequestDto;
+import com.festival.back.dto.request.freeboard.PatchFreeBoardRequestDto;
+import com.festival.back.dto.request.freeboard.PostFreeBoardCommentRequestDto;
+import com.festival.back.dto.request.freeboard.PostFreeBoardRequestDto;
+import com.festival.back.dto.response.ResponseDto;
+import com.festival.back.dto.response.freeboard.DeleteFreeBoardCommentResponseDto;
+import com.festival.back.dto.response.freeboard.DeleteFreeBoardResponseDto;
+import com.festival.back.dto.response.freeboard.FreeBoardRecommendResponseDto;
+import com.festival.back.dto.response.freeboard.PatchFreeBoardCommentResponseDto;
+import com.festival.back.dto.response.freeboard.PatchFreeBoardResponseDto;
+import com.festival.back.dto.response.freeboard.PostFreeBoardCommentResponseDto;
+import com.festival.back.dto.response.freeboard.PostFreeBoardResponseDto;
+
+public interface FreeBoardService{
+    
+    public ResponseDto<PostFreeBoardResponseDto> postFreeBoard(String userId, PostFreeBoardRequestDto requestBody);
+    public ResponseDto<PatchFreeBoardResponseDto> patchFreeBoard(String userId, PatchFreeBoardRequestDto requestBody);
+    public ResponseDto<DeleteFreeBoardResponseDto> deleteFreeBoard(String userId, int freeBoardNumber);
+    public ResponseDto<PostFreeBoardCommentResponseDto> postFreeBoardComment(String userId, PostFreeBoardCommentRequestDto requestBody);
+    public ResponseDto<PatchFreeBoardCommentResponseDto> patchFreeBoardComment(String userId, PatchFreeBoardCommentRequestDto requestBody);
+    public ResponseDto<DeleteFreeBoardCommentResponseDto> deleteFreeBoardComment(String userId, int freeBoardCommentNumber);
+    public ResponseDto<FreeBoardRecommendResponseDto> freeBoardRecommend(String userId, FreeBoardRecommendRequestDto requestBody);
+}
