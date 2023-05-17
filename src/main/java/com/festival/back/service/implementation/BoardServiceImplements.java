@@ -231,10 +231,14 @@ public class BoardServiceImplements implements BoardService {
             if(!isEqualWriter) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSION);
 
             commentRepository.deleteByCommentNumber(commentNumber);
-
             commentRepository.delete(commentEntity);
+            
+            int boardNumber = commentEntity.getBoardNumber();
+            BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+            boardEntity.decreaseCommentCount();
+            boardRepository.save(boardEntity);
+            
             data = new DeleteCommentResponseDto(true);
-
         } catch(Exception exception) {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
