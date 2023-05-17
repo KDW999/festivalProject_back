@@ -192,7 +192,7 @@ public class BoardServiceImplements implements BoardService {
     }
 
     // ? 특정 축제 후기 게시글 불러오기-김종빈
-    public ResponseDto<GetReviewBoardResponseDto> getReviewBoard(int festivalNumber, int boardNumber) {
+    public ResponseDto<GetReviewBoardResponseDto> getReviewBoard(int boardNumber) {
         GetReviewBoardResponseDto data = null;
 
         try {
@@ -201,9 +201,6 @@ public class BoardServiceImplements implements BoardService {
 
             List<RecommendEntity> recommdList = recommendRepository.findByBoardNumber(boardNumber);
             List<CommentEntity> commentList = commentRepository.findByBoardNumberOrderByWriteDatetimeDesc(boardNumber);
-            FestivalEntity festivalEntity = festivalRepository.findByFestivalNumber(festivalNumber);
-
-            if(festivalEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_FESTIVAL_NUMBER);
 
             boardEntity.increaseViewCount();
             boardRepository.save(boardEntity);
@@ -400,12 +397,5 @@ public class BoardServiceImplements implements BoardService {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getSearchReviewBoardList'");
     }
-
-    @Override
-    public ResponseDto<GetReviewBoardResponseDto> getReviewBoard(int boardNumber) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getReviewBoard'");
-    }
-
 
 }

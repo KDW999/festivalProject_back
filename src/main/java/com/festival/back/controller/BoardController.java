@@ -61,7 +61,6 @@ public class BoardController {
     private final String GET_ONLY_FESTIVAL_LIST="/onlyfestival/{festivalNumber}";
 
     private final String GET_FESTIVAL_REVIEW_BOARD="/{boardNumber}";
- 
 
     private final String PATCH_COMMENT = "/patch-comment";
 
@@ -131,8 +130,8 @@ public class BoardController {
     @ApiOperation(value = "특정 축제를 불러와 그에 관한 후기 게시글 1개를 반환한다."
     ,notes = "특정 축제 festivalNumber 과 boardNumber 을 pathvariable 로 받아서 보내면 축제정보 와 게시물을 반환하고 실패 시 실폐 메세지 반환. ")
     @GetMapping(GET_FESTIVAL_REVIEW_BOARD)
-        public ResponseDto<GetReviewBoardResponseDto> getFestivalReviewBoard(@PathVariable(name="boardNumber") Integer boardNumber){
-            ResponseDto<GetReviewBoardResponseDto> response=boardService.getReviewBoard(boardNumber);
+        public ResponseDto<GetReviewBoardResponseDto> getFestivalReviewBoard(@PathVariable(name="boardNumber") int boardNumber){
+            ResponseDto<GetReviewBoardResponseDto> response= boardService.getReviewBoard(boardNumber);
             return response;
     }
     
