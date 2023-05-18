@@ -20,5 +20,5 @@ public class PostFreeBoardRequestDto {
     private String freeBoardContent;
     
     @ApiModelProperty(value = "첨부할 이미지",example = "업로드할 img url",required = true)
-    private String freeBoradImgUrl;
+    private String freeBoardImgUrl;
 }

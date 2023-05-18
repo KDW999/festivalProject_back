@@ -41,7 +41,7 @@ public class FreeBoardEntity {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.freeBoardTitle = postFreeBoardRequestDto.getFreeBoardTitle();
         this.freeBoardContent = postFreeBoardRequestDto.getFreeBoardContent();
-        this.freeBoardImgUrl = postFreeBoardRequestDto.getFreeBoradImgUrl();
+        this.freeBoardImgUrl = postFreeBoardRequestDto.getFreeBoardImgUrl();
         this.freeBoardWriteDatetime = simpleDateFormat.format(now);
         this.writerUserId = userEntity.getUserId();
         this.writerProfileUrl = userEntity.getProfileUrl();
