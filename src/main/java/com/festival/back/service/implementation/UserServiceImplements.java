@@ -61,18 +61,12 @@ public class UserServiceImplements implements UserService {
             System.out.println(nickname);
             System.out.println(existUser);
             boolean hasNickname = userRepository.existsByNickname(nickname);
-            
-            // todo: 닉네임이 같지 않을때
-
-            // todo: profile 사진이 dto 존재할때
-
-            // todo: save
 
             if (hasNickname) {
                 //? DB에 저장되어있는 데이터의 닉네임과 Dto로 빋은 닉네임 일치
                 if(nickname.equals(existUser)){
                     userEntity.setProfileUrl(profileUrl);
-                }else {
+                } else {
                     return ResponseDto.setFail(ResponseMessage.EXIST_NICKNAME);
                 }
             }

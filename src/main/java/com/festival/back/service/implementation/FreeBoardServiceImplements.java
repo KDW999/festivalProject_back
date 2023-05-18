@@ -124,8 +124,8 @@ public class FreeBoardServiceImplements implements FreeBoardService {
 
         try {
             List<FreeBoardEntity> boardList = freeBoardRepository.findByOrderByFreeBoardWriteDatetimeDesc();
-
             data = GetFreeBoardListResponseDto.copyList(boardList);
+            
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
