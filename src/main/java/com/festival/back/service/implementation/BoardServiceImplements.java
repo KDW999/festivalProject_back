@@ -30,7 +30,6 @@ import com.festival.back.entity.BoardEntity;
 import com.festival.back.entity.CommentEntity;
 import com.festival.back.entity.FestivalEntity;
 import com.festival.back.entity.InterestedFestivalEntity;
-import com.festival.back.entity.OneLineReviewEntity;
 import com.festival.back.entity.RecommendEntity;
 import com.festival.back.entity.SearchwordLogEntity;
 import com.festival.back.entity.UserEntity;
@@ -56,7 +55,6 @@ public class BoardServiceImplements implements BoardService {
     @Autowired private FestivalRepository festivalRepository;
     @Autowired private InterestedFestivalRepository interestedFestivalRepository;
     @Autowired private SearchWordLogRepository searchWordLogRepository;
-    @Autowired private OneLineReviewRepository oneLineReviewRepository;
     
     //? 댓글 작성
     public ResponseDto<PostCommentResponseDto> postComment(String userId, PostCommentRequestDto dto) {

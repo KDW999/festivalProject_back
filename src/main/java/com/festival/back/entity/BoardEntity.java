@@ -43,7 +43,7 @@ public class BoardEntity {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.boardTitle=postreviewBoardRequestDto.getBoardTitle();
         this.boardContent=postreviewBoardRequestDto.getBoardContent();
-        this.boardImgUrl=postreviewBoardRequestDto.getBoradImgUrl();
+        this.boardImgUrl=postreviewBoardRequestDto.getBoardImgUrl();
         this.boardWriteDatetime=simpleDateFormat.format(now);
         this.writerId=userEntity.getUserId();
         this.writerProfileUrl=userEntity.getProfileUrl();
