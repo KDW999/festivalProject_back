@@ -181,7 +181,7 @@ public class BoardController {
 
     @ApiOperation(value = "후기 게시판 검색하여서 리스트로 반환.")
     @GetMapping(GET_SEARCH_REVIEWBOARD_LIST)
-    public ResponseDto<List<GetSearchReviewBoardListResponseDto>> getSearchFestivalReviewBoardList(@PathVariable(name = "searchWord") String searchWord){
+    public ResponseDto<List<GetSearchReviewBoardListResponseDto>> getSearchReviewBoardList(@PathVariable("searchWord") String searchWord){
         ResponseDto<List<GetSearchReviewBoardListResponseDto>> response = boardService.getSearchReviewBoardList(searchWord);
          return response;
 

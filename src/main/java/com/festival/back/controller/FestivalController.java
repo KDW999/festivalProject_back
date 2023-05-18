@@ -132,7 +132,6 @@ public class FestivalController {
     @ApiOperation(value = "축제를 검색한다. festivalNmae fetivalType festivalArea festivalInformaion PathVariable 에 검색어를 입력하고 성공하면 성공값을 반환한다.")
     @GetMapping(GET_SEARCH_FESTIVAL)
     public ResponseDto<List<GetSearchFestivalListResponseDto>> getSearchFestivalList(@PathVariable("searchWord") String searchWord){
-    
         ResponseDto<List<GetSearchFestivalListResponseDto>> response =festivalService.getSearchFestivalList(searchWord);
         return response;
     }

@@ -202,13 +202,15 @@ public class BoardServiceImplements implements BoardService {
 
             BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
             if(boardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
-
+             
+            List<RecommendEntity> recommdList = recommendRepository.findByBoardNumber(boardNumber);
             List<CommentEntity> commentList = commentRepository.findByBoardNumberOrderByWriteDatetimeDesc(boardNumber);
+        
 
 
             boardEntity.increaseViewCount();
             boardRepository.save(boardEntity);
-            data=new GetReviewBoardResponseDto(boardEntity, commentList);
+            data=new GetReviewBoardResponseDto(boardEntity,recommdList,commentList);
             
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -343,7 +345,7 @@ public class BoardServiceImplements implements BoardService {
     }
 
     //? 후기 게시판 검색
-    public ResponseDto<List<GetSearchReviewBoardListResponseDto>> getSearchFestivalReviewBoardList(String searchWord) {
+    public ResponseDto<List<GetSearchReviewBoardListResponseDto>> getSearchReviewBoardList(String searchWord) {
         List<GetSearchReviewBoardListResponseDto> data =null;
 
         try {
@@ -351,6 +353,7 @@ public class BoardServiceImplements implements BoardService {
             searchWordLogRepository.save(searchwordLogEntity);
             List<BoardEntity> boardEntity =
             boardRepository.findByBoardTitleContainsOrBoardContentContainsOrderByBoardWriteDatetimeDesc(searchWord,searchWord);
+            if(boardEntity.isEmpty()) return ResponseDto.setFail(ResponseMessage.NO_SEARCH_RESULTS);
             
             data = GetSearchReviewBoardListResponseDto.copyList(boardEntity);
             
