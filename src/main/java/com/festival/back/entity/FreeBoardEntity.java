@@ -72,4 +72,8 @@ public class FreeBoardEntity {
     public void decreaseRecommendCount() {
         recommendCount--;
     }
+
+    public void increaseViewCount() {
+        viewCount++;
+    }
 }

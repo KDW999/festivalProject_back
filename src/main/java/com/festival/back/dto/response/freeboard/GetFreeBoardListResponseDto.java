@@ -26,6 +26,7 @@ public class GetFreeBoardListResponseDto {
     private String writerNickname;
     
     public GetFreeBoardListResponseDto(FreeBoardEntity freeBoardEntity){
+        this.freeBoardNumber = freeBoardEntity.getFreeBoardNumber();
         this.freeBoardTitle = freeBoardEntity.getFreeBoardTitle();
         this.freeBoardContent = freeBoardEntity.getFreeBoardContent();
         this.freeBoardImgUrl = freeBoardEntity.getFreeBoardImgUrl();
