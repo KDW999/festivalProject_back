@@ -1,5 +1,9 @@
 package com.festival.back.dto.response.user;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.festival.back.entity.InterestedFestivalEntity;
 import com.festival.back.entity.UserEntity;
 
 import io.swagger.annotations.ApiModel;
@@ -26,10 +30,19 @@ public class GetUserResponseDto {
     @ApiModelProperty(value = "유저 전화번호", example = "010-1234-5423", required = true)
     private String telNumber;
 
-    public GetUserResponseDto(UserEntity userEntity){
+    @ApiModelProperty(value = "유져 관심 축제", example = "[얼음,빙어]",required = true )
+    private List<String> interestedFestival;
+
+    public GetUserResponseDto(UserEntity userEntity , List<InterestedFestivalEntity> interestedFestivalEntity){
+        List<String> interestedFestivalList = new ArrayList<>();
+        for (InterestedFestivalEntity interestedFestivalEntityList : interestedFestivalEntity) {
+            String dto = interestedFestivalEntityList.getInterestedFestivalType();
+            interestedFestivalList.add(dto);
+        }
         this.userId = userEntity.getUserId();
         this.nickname = userEntity.getNickname();
         this.profileUrl = userEntity.getProfileUrl();
         this.telNumber = userEntity.getTelNumber();
+        this.interestedFestival = interestedFestivalList;
     }
 }

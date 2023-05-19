@@ -1,5 +1,7 @@
 package com.festival.back.entity;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -31,4 +33,6 @@ public class RecommendEntity {
         this.userProfileUrl = userEntity.getProfileUrl();
         this.userNickname = userEntity.getNickname();
     }
+
+  
 }

@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.spel.ast.NullLiteral;
 import org.springframework.stereotype.Service;
 
 import com.festival.back.common.constant.ResponseMessage;
@@ -19,6 +20,7 @@ import com.festival.back.dto.response.festival.GetFestivalResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalTypeListResponseDto;
 import com.festival.back.dto.response.festival.GetOneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.GetSearchFestivalListResponseDto;
+import com.festival.back.dto.response.festival.GetTop1OneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.PatchOneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.PostFestivalResponseDto;
 import com.festival.back.dto.response.festival.PostOneLineReviewResponseDto;
@@ -167,8 +169,8 @@ public class FestivalServiceImplements implements FestivalService {
     }
 
     //? 검색한 축제 리스트 조회
-    public ResponseDto<GetSearchFestivalListResponseDto> getSearchFestivalList(String searchWord) {
-        GetSearchFestivalListResponseDto data= null;
+    public ResponseDto<List<GetSearchFestivalListResponseDto>> getSearchFestivalList(String searchWord) {
+        List<GetSearchFestivalListResponseDto> data= null;
 
         try {
             SearchwordLogEntity searchwordLogEntity = new SearchwordLogEntity(searchWord);
@@ -179,7 +181,7 @@ public class FestivalServiceImplements implements FestivalService {
                 (searchWord, searchWord, searchWord, searchWord);
             if(festivalList.isEmpty()) return ResponseDto.setFail(ResponseMessage.NO_SEARCH_RESULTS);
                 
-            data = new GetSearchFestivalListResponseDto(festivalList);
+            data = GetSearchFestivalListResponseDto.copyList(festivalList);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -307,4 +309,27 @@ public class FestivalServiceImplements implements FestivalService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
+    public ResponseDto<List<GetTop1OneLineReviewResponseDto>> getTop1OneLineReview() {
+        List<GetTop1OneLineReviewResponseDto> data = null;
+        
+        // ? now 에 현제 시간을 받음.
+        LocalDate now = LocalDate.now();
+        String monthValue = now.getMonthValue() < 10 ? "0" + now.getMonthValue() : "" + now.getMonthValue();
+        String monthNextValue = now.getMonthValue() + 1 < 10 ? "0" + (now.getMonthValue() + 1) : "" + (now.getMonthValue() + 1);
+        String nowMonth = now.getYear() + "-" + monthValue + "-01";
+        String nextMOnth = now.getYear() + "-" + monthNextValue + "-01";
+        try {
+         
+            FestivalEntity festivalEntity = festivalRepository.getTop1OneLineReview(nowMonth,nextMOnth);
+            List<OneLineReviewEntity> oneLineReviewList=oneLineReviewRepository.findByFestivalNumberOrderByWriteDatetimeDesc(festivalEntity.getFestivalNumber());
+            
+            data = GetTop1OneLineReviewResponseDto.copyList(oneLineReviewList);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+    }
+
 }
+
