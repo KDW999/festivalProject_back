@@ -22,6 +22,7 @@ import com.festival.back.dto.request.board.PostCommentRequestDto;
 import com.festival.back.dto.request.board.RecommendReviewBoardRequestDto;
 import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.board.GetReviewBoardResponseDto;
+import com.festival.back.dto.response.board.GetSearchReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.GetInterestedFestivalListResponseDto;
 import com.festival.back.dto.response.board.GetMyReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.GetOneReviewBoardListResponseDto;
@@ -55,9 +56,9 @@ public class BoardController {
     private final String DELETE_BOARD = "/{boardNumber}";
     private final String GET_MY_LIST = "/my-reviewboard-list";
     private final String GET_ALL_REVIEWBOARD_LIST="/all-review-board";
+    private final String GET_SEARCH_REVIEWBOARD_LIST = "/search-reviewboard/{searchWord}";
     
-    private final String GET_INTERESTED_FESTIVAL_LIST = "/festival/interested-list";
-    private final String GET_ONLY_FESTIVAL_LIST="/onlyfestival/{festivalNumber}";
+
 
     private final String GET_FESTIVAL_REVIEW_BOARD="/{boardNumber}";
  
@@ -128,7 +129,7 @@ public class BoardController {
 
     // ? 특정 축제 특정 후기 게시글 불러오기 -김종빈
     @ApiOperation(value = "특정 축제를 불러와 그에 관한 후기 게시글 1개를 반환한다."
-    ,notes = "특정 축제 festivalNumber 과 boardNumber 을 pathvariable 로 받아서 보내면 축제정보 와 게시물을 반환하고 실패 시 실폐 메세지 반환. ")
+    ,notes = " boardNumber 을 pathvariable 로 받아서 보내면 해당  게시물을 반환하고 실패 시 실폐 메세지 반환. ")
     @GetMapping(GET_FESTIVAL_REVIEW_BOARD)
         public ResponseDto<GetReviewBoardResponseDto> getFestivalReviewBoard(@PathVariable(name="boardNumber") Integer boardNumber){
             ResponseDto<GetReviewBoardResponseDto> response=boardService.getReviewBoard(boardNumber);
@@ -167,20 +168,7 @@ public class BoardController {
         return response;
     }
 
-    // ? 추천 페스티벌 리스트 받아오기 -감재현
-    @ApiOperation(value="회원가입시 선택한 추천 축제 타입 리스트 받아오기")
-    @GetMapping(GET_INTERESTED_FESTIVAL_LIST)
-    public ResponseDto<List<GetInterestedFestivalListResponseDto>> GetInterestedFestivalList(@ApiParam(hidden = true) @AuthenticationPrincipal String userId) {
-        ResponseDto<List<GetInterestedFestivalListResponseDto>> response = boardService.getInterestedFestivalList(userId);
-        return response;
-    }
-    // ? 특정 후기 만 전체 반환.
-    @ApiOperation(value = "특정 축제 후기 만 전체 반환 한다.")
-    @GetMapping(GET_ONLY_FESTIVAL_LIST)
-    public ResponseDto<List<GetOneReviewBoardListResponseDto>> getOneFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber){
-        ResponseDto<List<GetOneReviewBoardListResponseDto>> response = boardService.getOneFestivalReviewBoard(festivalNumber);
-        return response;
-    }
+   
 
     //? 전체 후기 게시물 리스트 
     @ApiOperation(value = "전체 후기 게시글 리스트 반환")
@@ -190,5 +178,15 @@ public class BoardController {
         return response;
 
     }
+
+    @ApiOperation(value = "후기 게시판 검색하여서 리스트로 반환.")
+    @GetMapping(GET_SEARCH_REVIEWBOARD_LIST)
+    public ResponseDto<List<GetSearchReviewBoardListResponseDto>> getSearchReviewBoardList(@PathVariable("searchWord") String searchWord){
+        ResponseDto<List<GetSearchReviewBoardListResponseDto>> response = boardService.getSearchReviewBoardList(searchWord);
+         return response;
+
+    }
+   
+    
     
 }

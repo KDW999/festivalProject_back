@@ -27,7 +27,7 @@ public class FreeBoardCommentEntity {
     private int freeBoardCommentNumber;
     private String freeBoardCommentContent;
     private int freeBoardNumber;
-    private String writerId;
+    private String writerUserId;
     private String writeDatetime;
     private String writerProfileUrl;
     private String writerNickname;
@@ -39,7 +39,7 @@ public class FreeBoardCommentEntity {
         this.freeBoardCommentContent = dto.getFreeBoardCommentContent();
         this.freeBoardNumber = dto.getFreeBoardNumber();
         this.writeDatetime = simpleDateFormat.format(now);
-        this.writerId = userEntity.getUserId();
+        this.writerUserId = userEntity.getUserId();
         this.writerProfileUrl = userEntity.getProfileUrl();
         this.writerNickname = userEntity.getNickname();
     }

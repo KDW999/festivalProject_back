@@ -36,7 +36,7 @@ public interface BoardService {
 
     public ResponseDto<PostReviewBoardResponseDto> postReviewBoard(String userId,PostReviewBoardRequestDto dto);
 
-    public ResponseDto<GetReviewBoardResponseDto> getReviewBoard(int boardNumber);
+    public ResponseDto<GetReviewBoardResponseDto> getReviewBoard(Integer boardNumber);
 
     public ResponseDto<PatchReviewBoardResponseDto> patchReivewBoard(String userId,PatchReviewBoardRequestDto dto);
     
@@ -46,11 +46,10 @@ public interface BoardService {
 
     public ResponseDto<DeleteReviewBoardResponseDto> deleteBoard(String userId, int boardNumber);
 
-    public ResponseDto<GetSearchReviewBoardListResponseDto> getSearchReviewBoardList(String searchWord);
+    public ResponseDto<List<GetSearchReviewBoardListResponseDto>>  getSearchReviewBoardList(String searchWord);
 
     public ResponseDto<List<GetOneReviewBoardListResponseDto>> getOneFestivalReviewBoard(int festivalNumber);
     
     public ResponseDto<List<GetAllReviewBoardListResponseDto>> getAllReviewBoardList();
-
 
 }
