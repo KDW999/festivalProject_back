@@ -15,6 +15,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PostFreeBoardCommentResponseDto {
     private FreeBoardEntity freeBoard;
-    private List<FreeBoardCommentEntity> freeBoardCommentList;
-    private List<FreeBoardRecommendEntity> freeBoardRecommendList;
+    private List<FreeBoardCommentEntity> commentList;
+    private List<FreeBoardRecommendEntity> recommendList;
 }
