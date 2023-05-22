@@ -46,13 +46,13 @@ public class FreeBoardController {
     private final String FREE_BOARD_RECOMMEND = "/recommend";
 
     private final String GET_FREE_BOARD_LIST = "";
-    private final String GET_FREE_BOARD = "/{freeBoardNumber}";
+    private final String GET_FREE_BOARD = "/{boardNumber}";
 
     private final String PATCH_FREE_BOARD = "";
     private final String PATCH_FREE_BOARD_COMMENT = "/comment";
 
-    private final String DELETE_FREE_BOARD = "/{freeBoardNumber}";
-    private final String DELETE_FREE_BOARD_COMMENT = "/comment/{freeBoardCommentNumber}";
+    private final String DELETE_FREE_BOARD = "/{boardNumber}";
+    private final String DELETE_FREE_BOARD_COMMENT = "/comment/{boardCommentNumber}";
 
     @PostMapping(POST_FREE_BOARD)
     public ResponseDto<PostFreeBoardResponseDto> postFreeBoard(@AuthenticationPrincipal String userId,
@@ -80,8 +80,8 @@ public class FreeBoardController {
     }
 
     @GetMapping(GET_FREE_BOARD)
-    public ResponseDto<GetFreeBoardResponseDto> getFreeBoard(@PathVariable("freeBoardNumber") int freeBoardNumber) {
-        ResponseDto<GetFreeBoardResponseDto> response = freeBoardService.getFreeBoard(freeBoardNumber);
+    public ResponseDto<GetFreeBoardResponseDto> getFreeBoard(@PathVariable("boardNumber") int boardNumber) {
+        ResponseDto<GetFreeBoardResponseDto> response = freeBoardService.getFreeBoard(boardNumber);
         return response;
     }
 
@@ -101,8 +101,8 @@ public class FreeBoardController {
     public ResponseDto<DeleteFreeBoardResponseDto> deleteFreeBoard(
     @ApiParam(hidden = true) @AuthenticationPrincipal String userId, 
     @ApiParam(value = "게시물 번호",example = "1",required = true)
-    @PathVariable("freeBoardNumber")int freeBoardNumber){
-        ResponseDto<DeleteFreeBoardResponseDto> response = freeBoardService.deleteFreeBoard(userId, freeBoardNumber);
+    @PathVariable("boardNumber")int boardNumber){
+        ResponseDto<DeleteFreeBoardResponseDto> response = freeBoardService.deleteFreeBoard(userId, boardNumber);
         return response;
     }
 
@@ -110,8 +110,8 @@ public class FreeBoardController {
     public ResponseDto<DeleteFreeBoardCommentResponseDto> deleteFreeBoardComment(
     @ApiParam(hidden = true) @AuthenticationPrincipal String userId, 
     @ApiParam(value = "게시물 번호",example = "1", required = true)
-    @PathVariable("freeBoardCommentNumber")int freeBoardCommentNumber) {
-        ResponseDto<DeleteFreeBoardCommentResponseDto> response = freeBoardService.deleteFreeBoardComment(userId, freeBoardCommentNumber);
+    @PathVariable("boardCommentNumber")int boardCommentNumber) {
+        ResponseDto<DeleteFreeBoardCommentResponseDto> response = freeBoardService.deleteFreeBoardComment(userId, boardCommentNumber);
         return response;
     }
 

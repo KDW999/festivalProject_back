@@ -24,11 +24,11 @@ import lombok.NoArgsConstructor;
 public class FreeBoardEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int freeBoardNumber;
-    private String freeBoardTitle;
-    private String freeBoardContent;
-    private String freeBoardImgUrl;
-    private String freeBoardWriteDatetime;
+    private int boardNumber;
+    private String boardTitle;
+    private String boardContent;
+    private String boardImgUrl;
+    private String boardWriteDatetime;
     private int viewCount;
     private int recommendCount;
     private int commentCount;
@@ -39,10 +39,10 @@ public class FreeBoardEntity {
     public FreeBoardEntity(UserEntity userEntity, PostFreeBoardRequestDto postFreeBoardRequestDto){
         Date now = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        this.freeBoardTitle = postFreeBoardRequestDto.getFreeBoardTitle();
-        this.freeBoardContent = postFreeBoardRequestDto.getFreeBoardContent();
-        this.freeBoardImgUrl = postFreeBoardRequestDto.getFreeBoardImgUrl();
-        this.freeBoardWriteDatetime = simpleDateFormat.format(now);
+        this.boardTitle = postFreeBoardRequestDto.getBoardTitle();
+        this.boardContent = postFreeBoardRequestDto.getBoardContent();
+        this.boardImgUrl = postFreeBoardRequestDto.getBoardImgUrl();
+        this.boardWriteDatetime = simpleDateFormat.format(now);
         this.writerUserId = userEntity.getUserId();
         this.writerProfileUrl = userEntity.getProfileUrl();
         this.writerNickname = userEntity.getNickname();
@@ -52,9 +52,9 @@ public class FreeBoardEntity {
     }
 
     public void patch(PatchFreeBoardRequestDto dto) {
-        this.freeBoardTitle=dto.getFreeBoardTitle();
-        this.freeBoardContent=dto.getFreeBoardContent();
-        this.freeBoardImgUrl=dto.getFreeBoardImgUrl();
+        this.boardTitle=dto.getBoardTitle();
+        this.boardContent=dto.getBoardContent();
+        this.boardImgUrl=dto.getBoardImgUrl();
     }
 
     public void increaseCommentCount() {

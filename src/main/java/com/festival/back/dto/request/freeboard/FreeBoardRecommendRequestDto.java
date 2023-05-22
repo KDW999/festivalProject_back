@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class FreeBoardRecommendRequestDto {
     @Min(1)
-    private int freeBoardNumber;
+    private int boardNumber;
 }

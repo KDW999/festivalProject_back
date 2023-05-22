@@ -58,13 +58,13 @@ public class FreeBoardServiceImplements implements FreeBoardService {
 
     public ResponseDto<PostFreeBoardCommentResponseDto> postFreeBoardComment(String userId, PostFreeBoardCommentRequestDto dto) {
         PostFreeBoardCommentResponseDto data = null;
-        int freeBoardNumber = dto.getFreeBoardNumber();
+        int boardNumber = dto.getBoardNumber();
 
         try {
             UserEntity userEntity = userRepository.findByUserId(userId);
             if (userEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
 
-            FreeBoardEntity freeBoardEntity = freeBoardRepository.findByFreeBoardNumber(freeBoardNumber);
+            FreeBoardEntity freeBoardEntity = freeBoardRepository.findByBoardNumber(boardNumber);
             if (freeBoardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
 
             FreeBoardCommentEntity freeBoardCommentEntity = new FreeBoardCommentEntity(userEntity, dto);
@@ -73,8 +73,8 @@ public class FreeBoardServiceImplements implements FreeBoardService {
             freeBoardEntity.increaseCommentCount();
             freeBoardRepository.save(freeBoardEntity);
 
-            List<FreeBoardCommentEntity> commentList = freeBoardCommentRepository.findByFreeBoardNumberOrderByWriteDatetimeDesc(freeBoardNumber);
-            List<FreeBoardRecommendEntity> recommendList = freeBoardRecommendRepository.findByFreeBoardNumber(freeBoardNumber);
+            List<FreeBoardCommentEntity> commentList = freeBoardCommentRepository.findByBoardNumberOrderByWriteDatetimeDesc(boardNumber);
+            List<FreeBoardRecommendEntity> recommendList = freeBoardRecommendRepository.findByBoardNumber(boardNumber);
 
             data = new PostFreeBoardCommentResponseDto(freeBoardEntity, commentList, recommendList);
 
@@ -87,18 +87,18 @@ public class FreeBoardServiceImplements implements FreeBoardService {
 
     public ResponseDto<FreeBoardRecommendResponseDto> freeBoardRecommend (String userId, FreeBoardRecommendRequestDto dto) {
         FreeBoardRecommendResponseDto data = null;
-        int freeBoardNumber = dto.getFreeBoardNumber();
+        int boardNumber = dto.getBoardNumber();
 
         try {
             UserEntity userEntity = userRepository.findByUserId(userId);
             if (userEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
 
-            FreeBoardEntity freeBoardEntity = freeBoardRepository.findByFreeBoardNumber(freeBoardNumber);
+            FreeBoardEntity freeBoardEntity = freeBoardRepository.findByBoardNumber(boardNumber);
             if (freeBoardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
 
-            FreeBoardRecommendEntity freeBoardRecommendEntity = freeBoardRecommendRepository.findByUserIdAndFreeBoardNumber(userId, freeBoardNumber);
+            FreeBoardRecommendEntity freeBoardRecommendEntity = freeBoardRecommendRepository.findByUserIdAndBoardNumber(userId, boardNumber);
             if(freeBoardRecommendEntity == null) {
-                freeBoardRecommendEntity = new FreeBoardRecommendEntity(userEntity, freeBoardNumber);
+                freeBoardRecommendEntity = new FreeBoardRecommendEntity(userEntity, boardNumber);
                 freeBoardRecommendRepository.save(freeBoardRecommendEntity);
                 freeBoardEntity.increaseRecommendCount();
             }else{
@@ -107,8 +107,8 @@ public class FreeBoardServiceImplements implements FreeBoardService {
             }
             freeBoardRepository.save(freeBoardEntity);
 
-            List<FreeBoardCommentEntity> commentList = freeBoardCommentRepository.findByFreeBoardNumberOrderByWriteDatetimeDesc(freeBoardNumber);
-            List<FreeBoardRecommendEntity> recommendList = freeBoardRecommendRepository.findByFreeBoardNumber(freeBoardNumber);
+            List<FreeBoardCommentEntity> commentList = freeBoardCommentRepository.findByBoardNumberOrderByWriteDatetimeDesc(boardNumber);
+            List<FreeBoardRecommendEntity> recommendList = freeBoardRecommendRepository.findByBoardNumber(boardNumber);
 
             data = new FreeBoardRecommendResponseDto(freeBoardEntity, commentList, recommendList);
 
@@ -123,7 +123,7 @@ public class FreeBoardServiceImplements implements FreeBoardService {
         List<GetFreeBoardListResponseDto> data = null;
 
         try {
-            List<FreeBoardEntity> boardList = freeBoardRepository.findByOrderByFreeBoardWriteDatetimeDesc();
+            List<FreeBoardEntity> boardList = freeBoardRepository.findByOrderByBoardWriteDatetimeDesc();
             data = GetFreeBoardListResponseDto.copyList(boardList);
             
         } catch (Exception exception) {
@@ -133,15 +133,15 @@ public class FreeBoardServiceImplements implements FreeBoardService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
-    public ResponseDto<GetFreeBoardResponseDto> getFreeBoard(int freeBoardNumber) {
+    public ResponseDto<GetFreeBoardResponseDto> getFreeBoard(int boardNumber) {
         GetFreeBoardResponseDto data = null;
 
         try {
-            FreeBoardEntity freeBoardEntity = freeBoardRepository.findByFreeBoardNumber(freeBoardNumber);
+            FreeBoardEntity freeBoardEntity = freeBoardRepository.findByBoardNumber(boardNumber);
             if (freeBoardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
 
-            List<FreeBoardCommentEntity> commentList = freeBoardCommentRepository.findByFreeBoardNumberOrderByWriteDatetimeDesc(freeBoardNumber);
-            List<FreeBoardRecommendEntity> recommendList = freeBoardRecommendRepository.findByFreeBoardNumber(freeBoardNumber);
+            List<FreeBoardCommentEntity> commentList = freeBoardCommentRepository.findByBoardNumberOrderByWriteDatetimeDesc(boardNumber);
+            List<FreeBoardRecommendEntity> recommendList = freeBoardRecommendRepository.findByBoardNumber(boardNumber);
 
             freeBoardEntity.increaseViewCount();
             freeBoardRepository.save(freeBoardEntity);
@@ -156,17 +156,17 @@ public class FreeBoardServiceImplements implements FreeBoardService {
 
     public ResponseDto<PatchFreeBoardResponseDto> patchFreeBoard(String userId, PatchFreeBoardRequestDto dto) {
         PatchFreeBoardResponseDto data = null;
-        int freeBoardNumber = dto.getFreeBoardNumber();
+        int boardNumber = dto.getBoardNumber();
 
         try {
-            FreeBoardEntity freeBoardEntity = freeBoardRepository.findByFreeBoardNumber(freeBoardNumber);
+            FreeBoardEntity freeBoardEntity = freeBoardRepository.findByBoardNumber(boardNumber);
             if(freeBoardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
 
             boolean isEqualWriter = freeBoardEntity.getWriterUserId().equals(userId);
             if (!isEqualWriter) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSION);
 
-            List<FreeBoardCommentEntity> commentList = freeBoardCommentRepository.findByFreeBoardNumberOrderByWriteDatetimeDesc(freeBoardNumber);
-            List<FreeBoardRecommendEntity> recommendList = freeBoardRecommendRepository.findByFreeBoardNumber(freeBoardNumber);
+            List<FreeBoardCommentEntity> commentList = freeBoardCommentRepository.findByBoardNumberOrderByWriteDatetimeDesc(boardNumber);
+            List<FreeBoardRecommendEntity> recommendList = freeBoardRecommendRepository.findByBoardNumber(boardNumber);
 
             freeBoardEntity.patch(dto);
             freeBoardRepository.save(freeBoardEntity);
@@ -183,30 +183,30 @@ public class FreeBoardServiceImplements implements FreeBoardService {
 
     public ResponseDto<PatchFreeBoardCommentResponseDto> patchFreeBoardComment (String userId, PatchFreeBoardCommentRequestDto dto) {
         PatchFreeBoardCommentResponseDto data = null;
-        int freeBoardNumber = dto.getFreeBoardNumber();
-        int freeBoardCommentNumber = dto.getFreeBoardCommentNumber();
+        int boardNumber = dto.getBoardNumber();
+        int boardCommentNumber = dto.getCommentNumber();
 
         try {
             UserEntity userEntity = userRepository.findByUserId(userId);
             if (userEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
 
-            FreeBoardEntity freeBoardEntity = freeBoardRepository.findByFreeBoardNumber(freeBoardNumber);
+            FreeBoardEntity freeBoardEntity = freeBoardRepository.findByBoardNumber(boardNumber);
             if (freeBoardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
 
-            FreeBoardCommentEntity freeBoardCommentEntity = freeBoardCommentRepository.findByFreeBoardCommentNumber(freeBoardCommentNumber);
+            FreeBoardCommentEntity freeBoardCommentEntity = freeBoardCommentRepository.findByCommentNumber(boardCommentNumber);
             if (freeBoardCommentEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_COMMENT_NUMBER);
 
             boolean isEqualWriter = freeBoardEntity.getWriterUserId().equals(userId);
             if (!isEqualWriter) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSION);
 
-            boolean matchFreeboardNumber = freeBoardEntity.getFreeBoardNumber() == freeBoardCommentEntity.getFreeBoardNumber();
-            if (!matchFreeboardNumber) return ResponseDto.setFail(ResponseMessage.NOT_MATCH_BOARD_NUMBER);
+            boolean matchBoardNumber = freeBoardEntity.getBoardNumber() == freeBoardCommentEntity.getBoardNumber();
+            if (!matchBoardNumber) return ResponseDto.setFail(ResponseMessage.NOT_MATCH_BOARD_NUMBER);
 
             freeBoardCommentEntity.patch(dto);
             freeBoardCommentRepository.save(freeBoardCommentEntity);
 
-            List<FreeBoardCommentEntity> commentList = freeBoardCommentRepository.findByFreeBoardNumberOrderByWriteDatetimeDesc(freeBoardNumber);
-            List<FreeBoardRecommendEntity> recommendList = freeBoardRecommendRepository.findByFreeBoardNumber(freeBoardNumber);
+            List<FreeBoardCommentEntity> commentList = freeBoardCommentRepository.findByBoardNumberOrderByWriteDatetimeDesc(boardNumber);
+            List<FreeBoardRecommendEntity> recommendList = freeBoardRecommendRepository.findByBoardNumber(boardNumber);
 
             data = new PatchFreeBoardCommentResponseDto(freeBoardEntity, commentList, recommendList);
 
@@ -218,18 +218,18 @@ public class FreeBoardServiceImplements implements FreeBoardService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
-    public ResponseDto<DeleteFreeBoardResponseDto> deleteFreeBoard(String userId, int freeBoardNumber) {
+    public ResponseDto<DeleteFreeBoardResponseDto> deleteFreeBoard(String userId, int boardNumber) {
         DeleteFreeBoardResponseDto data = null;
 
         try {
-            FreeBoardEntity freeBoardEntity = freeBoardRepository.findByFreeBoardNumber(freeBoardNumber);
+            FreeBoardEntity freeBoardEntity = freeBoardRepository.findByBoardNumber(boardNumber);
             if (freeBoardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
 
             boolean isEqualWriter = freeBoardEntity.getWriterUserId().equals(userId);
             if (!isEqualWriter) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSION);
 
-            freeBoardCommentRepository.deleteByFreeBoardNumber(freeBoardNumber);
-            freeBoardRecommendRepository.deleteByFreeBoardNumber(freeBoardNumber);
+            freeBoardCommentRepository.deleteByBoardNumber(boardNumber);
+            freeBoardRecommendRepository.deleteByBoardNumber(boardNumber);
 
             freeBoardRepository.delete(freeBoardEntity);
             data = new DeleteFreeBoardResponseDto(true);
@@ -241,23 +241,23 @@ public class FreeBoardServiceImplements implements FreeBoardService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
-    public ResponseDto<DeleteFreeBoardCommentResponseDto> deleteFreeBoardComment (String userId, int freeBoardCommentNumber) {
+    public ResponseDto<DeleteFreeBoardCommentResponseDto> deleteFreeBoardComment (String userId, int boardCommentNumber) {
         DeleteFreeBoardCommentResponseDto data = null;
 
         try {
             UserEntity userEntity = userRepository.findByUserId(userId);
             if (userEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
 
-            FreeBoardCommentEntity freeBoardCommentEntity = freeBoardCommentRepository.findByFreeBoardCommentNumber(freeBoardCommentNumber);
+            FreeBoardCommentEntity freeBoardCommentEntity = freeBoardCommentRepository.findByCommentNumber(boardCommentNumber);
             if (freeBoardCommentEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_COMMENT_NUMBER);
             
-            boolean isEqualWriter = freeBoardCommentEntity.getWriterId().equals(userId);
+            boolean isEqualWriter = freeBoardCommentEntity.getWriterUserId().equals(userId);
             if (!isEqualWriter) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSION);
             
             freeBoardCommentRepository.delete(freeBoardCommentEntity);
 
-            int freeBoardNumber = freeBoardCommentEntity.getFreeBoardNumber();
-            FreeBoardEntity freeBoardEntity = freeBoardRepository.findByFreeBoardNumber(freeBoardNumber);
+            int boardNumber = freeBoardCommentEntity.getBoardNumber();
+            FreeBoardEntity freeBoardEntity = freeBoardRepository.findByBoardNumber(boardNumber);
             freeBoardEntity.decreaseCommentCount();
             freeBoardRepository.save(freeBoardEntity);
 
