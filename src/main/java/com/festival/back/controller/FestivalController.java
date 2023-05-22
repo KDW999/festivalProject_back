@@ -27,6 +27,7 @@ import com.festival.back.dto.response.festival.GetFestivalResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalTypeListResponseDto;
 import com.festival.back.dto.response.festival.GetOneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.GetSearchFestivalListResponseDto;
+import com.festival.back.dto.response.festival.GetTop1OneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.PatchOneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.PostFestivalResponseDto;
 import com.festival.back.dto.response.festival.PostOneLineReviewResponseDto;
@@ -61,6 +62,7 @@ public class FestivalController {
     private final String GET_FESTIVAL="/festival/{festivalNumber}";
     private final String GET_ALL_FESTIVAL="";
     private final String GET_FESTIVAL_TYPE_LIST="/type-list";
+    private final String GET_TOP1_ONELINEREVIEW="/top1-onelinereview";
 
     private final String GET_INTERESTED_FESTIVAL_LIST = "/festival/interested-list";
     private final String GET_ONLY_FESTIVAL_LIST="/onlyfestival/{festivalNumber}";
@@ -129,9 +131,8 @@ public class FestivalController {
     //? 축제를 검색후 검색한 단어를 포함한 전체 리스트 반환 -김종빈
     @ApiOperation(value = "축제를 검색한다. festivalNmae fetivalType festivalArea festivalInformaion PathVariable 에 검색어를 입력하고 성공하면 성공값을 반환한다.")
     @GetMapping(GET_SEARCH_FESTIVAL)
-    public ResponseDto<GetSearchFestivalListResponseDto> getSearchFestivalList(@PathVariable("searchWord") String searchWord){
-    
-        ResponseDto<GetSearchFestivalListResponseDto> response =festivalService.getSearchFestivalList(searchWord);
+    public ResponseDto<List<GetSearchFestivalListResponseDto>> getSearchFestivalList(@PathVariable("searchWord") String searchWord){
+        ResponseDto<List<GetSearchFestivalListResponseDto>> response =festivalService.getSearchFestivalList(searchWord);
         return response;
     }
 
@@ -171,19 +172,27 @@ public class FestivalController {
         return response;
     }
 
-    // ? 추천 페스티벌 리스트 받아오기 -감재현
-    @ApiOperation(value="회원가입시 선택한 추천 축제 타입 리스트 받아오기")
-    @GetMapping(GET_INTERESTED_FESTIVAL_LIST)
-    public ResponseDto<List<GetInterestedFestivalListResponseDto>> GetInterestedFestivalList(@ApiParam(hidden = true) @AuthenticationPrincipal String userId) {
-        ResponseDto<List<GetInterestedFestivalListResponseDto>> response = boardService.getInterestedFestivalList(userId);
-        return response;
-    }
-    // ? 특정 후기 만 전체 반환.
-    @ApiOperation(value = "특정 축제 후기 만 전체 반환 한다.")
-    @GetMapping(GET_ONLY_FESTIVAL_LIST)
-    public ResponseDto<List<GetOneReviewBoardListResponseDto>> getOneFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber){
-        ResponseDto<List<GetOneReviewBoardListResponseDto>> response = boardService.getOneFestivalReviewBoard(festivalNumber);
-        return response;
-    }
+        // ? 추천 페스티벌 리스트 받아오기 -감재현
+        @ApiOperation(value="회원가입시 선택한 추천 축제 타입 리스트 받아오기")
+        @GetMapping(GET_INTERESTED_FESTIVAL_LIST)
+        public ResponseDto<List<GetInterestedFestivalListResponseDto>> GetInterestedFestivalList(@ApiParam(hidden = true) @AuthenticationPrincipal String userId) {
+            ResponseDto<List<GetInterestedFestivalListResponseDto>> response = boardService.getInterestedFestivalList(userId);
+            return response;
+        }
+        // ? 특정 후기 만 전체 반환.
+        @ApiOperation(value = "특정 축제 후기 만 전체 반환 한다.")
+        @GetMapping(GET_ONLY_FESTIVAL_LIST)
+        public ResponseDto<List<GetOneReviewBoardListResponseDto>> getOneFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber){
+            ResponseDto<List<GetOneReviewBoardListResponseDto>> response = boardService.getOneFestivalReviewBoard(festivalNumber);
+            return response;
+        }
+        
+        @ApiOperation(value = "현재 월을 불러와서 가장 빠른 축제 의 한줄 평가를 반한환다.")
+        @GetMapping(GET_TOP1_ONELINEREVIEW)
+        public ResponseDto<List<GetTop1OneLineReviewResponseDto>> getTop1OneLineReview(){
+            ResponseDto<List<GetTop1OneLineReviewResponseDto>> response = festivalService.getTop1OneLineReview();
+            return response;
+        }
+
 
 }

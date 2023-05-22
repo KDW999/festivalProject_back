@@ -143,6 +143,9 @@ public class FreeBoardServiceImplements implements FreeBoardService {
             List<FreeBoardCommentEntity> commentList = freeBoardCommentRepository.findByFreeBoardNumberOrderByWriteDatetimeDesc(freeBoardNumber);
             List<FreeBoardRecommendEntity> recommendList = freeBoardRecommendRepository.findByFreeBoardNumber(freeBoardNumber);
 
+            freeBoardEntity.increaseViewCount();
+            freeBoardRepository.save(freeBoardEntity);
+
             data = new GetFreeBoardResponseDto(freeBoardEntity, commentList, recommendList);
         } catch (Exception exception) {
             exception.printStackTrace();
