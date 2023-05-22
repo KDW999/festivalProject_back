@@ -13,9 +13,11 @@ import org.springframework.stereotype.Service;
 import com.festival.back.common.constant.ResponseMessage;
 import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.festival.DeleteOneLineReviewResponseDto;
+import com.festival.back.dto.response.festival.GetFestivalNameListResponseDto;
 import com.festival.back.dto.response.festival.GetAllFestivalResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalAreaListResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalMonthResponseDto;
+import com.festival.back.dto.response.festival.GetFestivalNameResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalTypeListResponseDto;
 import com.festival.back.dto.response.festival.GetOneLineReviewResponseDto;
@@ -329,6 +331,46 @@ public class FestivalServiceImplements implements FestivalService {
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
         }
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+    }
+
+    public ResponseDto<GetFestivalNameResponseDto> getFestivalName(int festivalNumber) {
+          
+        GetFestivalNameResponseDto data = null;
+
+        try {
+             
+            
+            FestivalEntity festivalEntity = festivalRepository.findByFestivalNumber(festivalNumber);
+            if(festivalEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_FESTIVAL_NUMBER);
+            
+            String festivalName = festivalEntity.getFestivalName();
+            
+            data = new GetFestivalNameResponseDto(festivalName);
+
+            
+        } catch (Exception exception) {
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+              
+    }
+
+    public ResponseDto<List<GetFestivalNameListResponseDto>> getFestivalNameList() {
+        List<GetFestivalNameListResponseDto> data = null;
+
+        try {
+          
+            List<FestivalEntity> festivalEntity = festivalRepository.findBy();
+            
+            data = GetFestivalNameListResponseDto.copyList(festivalEntity);
+
+        } catch (Exception exception) {
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+
+
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+ 
     }
 
 }
