@@ -37,7 +37,7 @@ public class PostReviewBoardResponseDto {
     @ApiModelProperty(value = "게시물 댓글 수", example = "1", required = true)
     private int commentCount;
     @ApiModelProperty(value = "게시물 작성자 아이디", example = "karurana", required = true)
-    private String writerId;
+    private String writerUserId;
     @ApiModelProperty(value = "게시물 작성자 프로필 사진", example = "1", required = true)
     private String writerProfileUrl;
     @ApiModelProperty(value = "게시물 번호", example = "1IMG HTTP URL", required = true)
@@ -58,7 +58,7 @@ public class PostReviewBoardResponseDto {
         this.viewCount=boardEntity.getViewCount();
         this.recommendCount=boardEntity.getRecommendCount();
         this.commentCount=boardEntity.getCommentCount();
-        this.writerId=boardEntity.getWriterId();
+        this.writerUserId=boardEntity.getWriterUserId();
         this.writerProfileUrl=boardEntity.getWriterNickname();
         this.writerNickname=boardEntity.getWriterNickname();
         this.recommendList=new ArrayList<>();

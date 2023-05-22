@@ -3,6 +3,7 @@ package com.festival.back.service.implementation;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.springframework.expression.spel.ast.NullLiteral;
 import org.springframework.stereotype.Service;
 
 import com.festival.back.common.constant.ResponseMessage;
+import com.festival.back.common.util.AreaSet;
 import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.festival.DeleteOneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalNameListResponseDto;
@@ -178,7 +180,7 @@ public class FestivalServiceImplements implements FestivalService {
             SearchwordLogEntity searchwordLogEntity = new SearchwordLogEntity(searchWord);
             searchWordLogRepository.save(searchwordLogEntity);
     
-            List<FestivalEntity> festivalList=festivalRepository.
+            List<FestivalEntity> festivalList = festivalRepository.
                 findByFestivalNameContainsOrFestivalTypeContainsOrFestivalInformationContainsOrFestivalAreaOrderByFestivalDurationStartDesc
                 (searchWord, searchWord, searchWord, searchWord);
             if(festivalList.isEmpty()) return ResponseDto.setFail(ResponseMessage.NO_SEARCH_RESULTS);
@@ -198,10 +200,16 @@ public class FestivalServiceImplements implements FestivalService {
         List<GetFestivalAreaListResponseDto> data = null;
 
         try {
-
             //? findByFestivalAreaOrderBy -> findByFestivalAreaContainingOrderBy로 바꿨음
             //? Containing이 SQL에서 LIKE와 같은 기능
-            List<FestivalEntity> areaList = festivalRepository.findByFestivalAreaContainingOrderByFestivalDurationStart(festivalArea);
+
+            List<String> festivalAreaList = AreaSet.getAreaList(festivalArea);
+
+            List<FestivalEntity> areaList = new ArrayList<>();
+            for (String searchArea: festivalAreaList) {
+                List<FestivalEntity> festivalList = festivalRepository.findByFestivalAreaContainingOrderByFestivalDurationStart(searchArea);
+                areaList.addAll(festivalList);
+            }
             data = GetFestivalAreaListResponseDto.copyList(areaList);
             
         } catch (Exception exception) {
@@ -321,7 +329,7 @@ public class FestivalServiceImplements implements FestivalService {
         String nowMonth = now.getYear() + "-" + monthValue + "-01";
         String nextMOnth = now.getYear() + "-" + monthNextValue + "-01";
         try {
-         
+        
             FestivalEntity festivalEntity = festivalRepository.getTop1OneLineReview(nowMonth,nextMOnth);
             List<OneLineReviewEntity> oneLineReviewList=oneLineReviewRepository.findByFestivalNumberOrderByWriteDatetimeDesc(festivalEntity.getFestivalNumber());
             

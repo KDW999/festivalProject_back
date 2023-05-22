@@ -33,7 +33,7 @@ public class BoardEntity {
     private int viewCount;
     private int recommendCount;
     private int commentCount;
-    private String writerId;
+    private String writerUserId;
     private String writerProfileUrl;
     private String writerNickname;
     private int festivalNumber;
@@ -45,7 +45,7 @@ public class BoardEntity {
         this.boardContent=postreviewBoardRequestDto.getBoardContent();
         this.boardImgUrl=postreviewBoardRequestDto.getBoardImgUrl();
         this.boardWriteDatetime=simpleDateFormat.format(now);
-        this.writerId=userEntity.getUserId();
+        this.writerUserId=userEntity.getUserId();
         this.writerProfileUrl=userEntity.getProfileUrl();
         this.writerNickname=userEntity.getNickname();
         this.festivalNumber=postreviewBoardRequestDto.getFestivalNumber();

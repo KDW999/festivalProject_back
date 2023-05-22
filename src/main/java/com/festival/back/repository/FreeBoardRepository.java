@@ -10,8 +10,8 @@ import com.festival.back.entity.FreeBoardEntity;
 @Repository
 public interface FreeBoardRepository extends JpaRepository<FreeBoardEntity, Integer> {
     
-    public FreeBoardEntity findByFreeBoardNumber(int freeBoardNumber);
+    public FreeBoardEntity findByBoardNumber(int freeBoardNumber);
     
-    public List<FreeBoardEntity> findByOrderByFreeBoardWriteDatetimeDesc ();
+    public List<FreeBoardEntity> findByOrderByBoardWriteDatetimeDesc ();
     
 }

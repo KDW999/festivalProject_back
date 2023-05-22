@@ -21,13 +21,13 @@ public class FreeBoardRecommendEntity {
     @Id
     private String userId;
     @Id
-    private int freeBoardNumber;
+    private int boardNumber;
     private String userProfileUrl;
     private String userNickname;
 
-    public FreeBoardRecommendEntity(UserEntity userEntity, int freeBoardNumber) {
+    public FreeBoardRecommendEntity(UserEntity userEntity, int boardNumber) {
         this.userId = userEntity.getUserId();
-        this.freeBoardNumber = freeBoardNumber;
+        this.boardNumber = boardNumber;
         this.userProfileUrl = userEntity.getProfileUrl();
         this.userNickname = userEntity.getNickname();
     }
