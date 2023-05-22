@@ -27,6 +27,7 @@ import com.festival.back.dto.response.festival.GetFestivalAreaListResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalMonthResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalNameResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalResponseDto;
+import com.festival.back.dto.response.festival.GetFestivalSearchNameResposneDto;
 import com.festival.back.dto.response.festival.GetFestivalTypeListResponseDto;
 import com.festival.back.dto.response.festival.GetOneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.GetSearchFestivalListResponseDto;
@@ -68,6 +69,7 @@ public class FestivalController {
     private final String GET_TOP1_ONELINEREVIEW="/top1-onelinereview";
     private final String GET_ONELINE_REVIEW_FETIVALNAME = "/festivalname/{festivalNumber}";
     private final String GET_FESTIVALNAME_LIST = "/festivalname-list";
+    private final String GET_FESTIVALNAME_SEARCH_LIST="/namesearch/{searchName}";
 
     private final String GET_INTERESTED_FESTIVAL_LIST = "/festival/interested-list";
     private final String GET_ONLY_FESTIVAL_LIST="/onlyfestival/{festivalNumber}";
@@ -211,6 +213,14 @@ public class FestivalController {
             ResponseDto<List<GetFestivalNameListResponseDto>> response = festivalService.getFestivalNameList();
             return response;
 
+        }
+
+        @ApiOperation(value = "후기 작성할때 검색창에서 전체 축제를 검색할수있음")
+        @GetMapping(GET_FESTIVALNAME_SEARCH_LIST)
+        public ResponseDto<List<GetFestivalSearchNameResposneDto>> getFestivalSearchName(@PathVariable("searchName") String searchName){
+            ResponseDto<List<GetFestivalSearchNameResposneDto>> response = festivalService.getFestivalSearchName(searchName);
+            return response;
+            
         }
 
 

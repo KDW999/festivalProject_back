@@ -16,7 +16,9 @@ public interface FestivalRepository extends JpaRepository<FestivalEntity, Intege
       public FestivalEntity findByFestivalNumber(int festivalNumber);
       public List<FestivalEntity> findByOrderByFestivalDurationStartAsc();
 
-      public FestivalEntity findByFestivalName(String festivalName);
+
+      @Query(value = "select * from festival where festival_name OR festival_area like %?% " , nativeQuery = true)
+      public List<FestivalEntity> searchName(String festivalName);
 
       public List<FestivalEntity> findByFestivalTypeIn(List<String> interestedFestivalTypeList);
 

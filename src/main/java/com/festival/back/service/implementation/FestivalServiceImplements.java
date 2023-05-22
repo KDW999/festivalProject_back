@@ -21,6 +21,7 @@ import com.festival.back.dto.response.festival.GetFestivalAreaListResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalMonthResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalNameResponseDto;
 import com.festival.back.dto.response.festival.GetFestivalResponseDto;
+import com.festival.back.dto.response.festival.GetFestivalSearchNameResposneDto;
 import com.festival.back.dto.response.festival.GetFestivalTypeListResponseDto;
 import com.festival.back.dto.response.festival.GetOneLineReviewResponseDto;
 import com.festival.back.dto.response.festival.GetSearchFestivalListResponseDto;
@@ -328,11 +329,11 @@ public class FestivalServiceImplements implements FestivalService {
         String monthNextValue = now.getMonthValue() + 1 < 10 ? "0" + (now.getMonthValue() + 1) : "" + (now.getMonthValue() + 1);
         String nowMonth = now.getYear() + "-" + monthValue + "-01";
         String nextMOnth = now.getYear() + "-" + monthNextValue + "-01";
+
         try {
         
             FestivalEntity festivalEntity = festivalRepository.getTop1OneLineReview(nowMonth,nextMOnth);
             List<OneLineReviewEntity> oneLineReviewList=oneLineReviewRepository.findByFestivalNumberOrderByWriteDatetimeDesc(festivalEntity.getFestivalNumber());
-            
             data = GetTop1OneLineReviewResponseDto.copyList(oneLineReviewList);
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -373,12 +374,34 @@ public class FestivalServiceImplements implements FestivalService {
             data = GetFestivalNameListResponseDto.copyList(festivalEntity);
 
         } catch (Exception exception) {
+            exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
         }
 
 
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
  
+    }
+
+    public ResponseDto<List<GetFestivalSearchNameResposneDto>> getFestivalSearchName(String searchName) {
+        List<GetFestivalSearchNameResposneDto> data = null;
+
+        try {
+
+            List<FestivalEntity> festivalEntity = festivalRepository.searchName(searchName);
+            System.out.println(searchName);
+            System.out.println(festivalEntity.toString());
+
+            data = GetFestivalSearchNameResposneDto.copyList(festivalEntity);
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+            
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+        
+
     }
 
 }
