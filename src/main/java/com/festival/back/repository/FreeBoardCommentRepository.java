@@ -13,7 +13,7 @@ import com.festival.back.entity.FreeBoardCommentEntity;
 public interface FreeBoardCommentRepository extends JpaRepository <FreeBoardCommentEntity, Integer> {
     public List<FreeBoardCommentEntity> findByBoardNumberOrderByWriteDatetimeDesc (int boardNumber);
 
-    public FreeBoardCommentEntity findByCommentNumber(int boardCommentNumber);
+    public FreeBoardCommentEntity findByCommentNumber(int commentNumber);
 
     @Transactional
     public void deleteByBoardNumber(int boardNumber);

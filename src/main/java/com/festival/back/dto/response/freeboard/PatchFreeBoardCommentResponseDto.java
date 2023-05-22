@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class PatchFreeBoardCommentResponseDto {
     private FreeBoardEntity freeBoard;
 
-    private List<FreeBoardCommentEntity> freeBoardCommentList;
+    private List<FreeBoardCommentEntity> commentList;
     
-    private List<FreeBoardRecommendEntity> freeBoardRecommendList;
+    private List<FreeBoardRecommendEntity> recommendList;
 }

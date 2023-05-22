@@ -184,7 +184,7 @@ public class FreeBoardServiceImplements implements FreeBoardService {
     public ResponseDto<PatchFreeBoardCommentResponseDto> patchFreeBoardComment (String userId, PatchFreeBoardCommentRequestDto dto) {
         PatchFreeBoardCommentResponseDto data = null;
         int boardNumber = dto.getBoardNumber();
-        int boardCommentNumber = dto.getCommentNumber();
+        int commentNumber = dto.getCommentNumber();
 
         try {
             UserEntity userEntity = userRepository.findByUserId(userId);
@@ -193,7 +193,7 @@ public class FreeBoardServiceImplements implements FreeBoardService {
             FreeBoardEntity freeBoardEntity = freeBoardRepository.findByBoardNumber(boardNumber);
             if (freeBoardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
 
-            FreeBoardCommentEntity freeBoardCommentEntity = freeBoardCommentRepository.findByCommentNumber(boardCommentNumber);
+            FreeBoardCommentEntity freeBoardCommentEntity = freeBoardCommentRepository.findByCommentNumber(commentNumber);
             if (freeBoardCommentEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_COMMENT_NUMBER);
 
             boolean isEqualWriter = freeBoardEntity.getWriterUserId().equals(userId);
