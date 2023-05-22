@@ -26,11 +26,11 @@ public interface FreeBoardService{
     public ResponseDto<FreeBoardRecommendResponseDto> freeBoardRecommend(String userId, FreeBoardRecommendRequestDto requestBody);
 
     public ResponseDto<List<GetFreeBoardListResponseDto>> getFreeBoardList();
-    public ResponseDto<GetFreeBoardResponseDto> getFreeBoard(int freeBoardNumber);
+    public ResponseDto<GetFreeBoardResponseDto> getFreeBoard(int boardNumber);
 
     public ResponseDto<PatchFreeBoardResponseDto> patchFreeBoard(String userId, PatchFreeBoardRequestDto requestBody);
     public ResponseDto<PatchFreeBoardCommentResponseDto> patchFreeBoardComment(String userId, PatchFreeBoardCommentRequestDto requestBody);
 
-    public ResponseDto<DeleteFreeBoardResponseDto> deleteFreeBoard(String userId, int freeBoardNumber);
-    public ResponseDto<DeleteFreeBoardCommentResponseDto> deleteFreeBoardComment(String userId, int freeBoardCommentNumber);
+    public ResponseDto<DeleteFreeBoardResponseDto> deleteFreeBoard(String userId, int boardNumber);
+    public ResponseDto<DeleteFreeBoardCommentResponseDto> deleteFreeBoardComment(String userId, int boardCommentNumber);
 }

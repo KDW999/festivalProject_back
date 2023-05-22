@@ -24,10 +24,10 @@ import lombok.NoArgsConstructor;
 public class FreeBoardCommentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int freeBoardCommentNumber;
-    private String freeBoardCommentContent;
-    private int freeBoardNumber;
-    private String writerId;
+    private int commentNumber;
+    private String commentContent;
+    private int boardNumber;
+    private String writerUserId;
     private String writeDatetime;
     private String writerProfileUrl;
     private String writerNickname;
@@ -36,15 +36,15 @@ public class FreeBoardCommentEntity {
         Date now = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         
-        this.freeBoardCommentContent = dto.getFreeBoardCommentContent();
-        this.freeBoardNumber = dto.getFreeBoardNumber();
+        this.commentContent = dto.getCommentContent();
+        this.boardNumber = dto.getBoardNumber();
         this.writeDatetime = simpleDateFormat.format(now);
-        this.writerId = userEntity.getUserId();
+        this.writerUserId = userEntity.getUserId();
         this.writerProfileUrl = userEntity.getProfileUrl();
         this.writerNickname = userEntity.getNickname();
     }
 
     public void patch(PatchFreeBoardCommentRequestDto dto) {
-        this.freeBoardCommentContent = dto.getFreeBoardCommentContent();
+        this.commentContent = dto.getCommentContent();
     }
 }

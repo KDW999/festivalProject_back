@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PostFreeBoardCommentRequestDto {
     @Min(1)
-    private int freeBoardNumber;
+    private int boardNumber;
 
     @NotBlank
-    private String freeBoardCommentContent;
+    private String CommentContent;
 
 }
