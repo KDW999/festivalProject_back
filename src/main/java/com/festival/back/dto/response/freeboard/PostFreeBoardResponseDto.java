@@ -20,14 +20,14 @@ public class PostFreeBoardResponseDto {
     private FreeBoardEntity freeBoard;
 
     @ApiModelProperty(value="댓글 Entity List", required=true)
-    private List<FreeBoardCommentEntity> freeBoardCommentList;
+    private List<FreeBoardCommentEntity> commentList;
 
     @ApiModelProperty(value="좋아요 Entity List", required=true)
-    private List<FreeBoardRecommendEntity> freeBoardRecommendList;
+    private List<FreeBoardRecommendEntity> recommendList;
 
     public PostFreeBoardResponseDto(FreeBoardEntity freeBoard){
         this.freeBoard = freeBoard;
-        this.freeBoardRecommendList = new ArrayList<>();
-        this.freeBoardCommentList=new ArrayList<>();
+        this.recommendList = new ArrayList<>();
+        this.commentList=new ArrayList<>();
     }
 }

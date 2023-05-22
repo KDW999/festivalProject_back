@@ -52,7 +52,7 @@ public class FreeBoardController {
     private final String PATCH_FREE_BOARD_COMMENT = "/comment";
 
     private final String DELETE_FREE_BOARD = "/{boardNumber}";
-    private final String DELETE_FREE_BOARD_COMMENT = "/comment/{boardCommentNumber}";
+    private final String DELETE_FREE_BOARD_COMMENT = "/comment/{commentNumber}";
 
     @PostMapping(POST_FREE_BOARD)
     public ResponseDto<PostFreeBoardResponseDto> postFreeBoard(@AuthenticationPrincipal String userId,
@@ -110,8 +110,8 @@ public class FreeBoardController {
     public ResponseDto<DeleteFreeBoardCommentResponseDto> deleteFreeBoardComment(
     @ApiParam(hidden = true) @AuthenticationPrincipal String userId, 
     @ApiParam(value = "게시물 번호",example = "1", required = true)
-    @PathVariable("boardCommentNumber")int boardCommentNumber) {
-        ResponseDto<DeleteFreeBoardCommentResponseDto> response = freeBoardService.deleteFreeBoardComment(userId, boardCommentNumber);
+    @PathVariable("commentNumber")int commentNumber) {
+        ResponseDto<DeleteFreeBoardCommentResponseDto> response = freeBoardService.deleteFreeBoardComment(userId, commentNumber);
         return response;
     }
 

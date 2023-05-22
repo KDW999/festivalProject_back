@@ -13,10 +13,10 @@ import com.festival.back.entity.primaryKey.FreeBoardRecommendPk;
 @Repository
 public interface FreeBoardRecommendRepository extends JpaRepository<FreeBoardRecommendEntity, FreeBoardRecommendPk> {
     
-    public List<FreeBoardRecommendEntity>findByBoardNumber(int freeBoardNumber);
+    public List<FreeBoardRecommendEntity>findByBoardNumber(int boardNumber);
 
     @Transactional
-    public void deleteByBoardNumber(int freeBoardNumber);
+    public void deleteByBoardNumber(int boardNumber);
 
-    public FreeBoardRecommendEntity findByUserIdAndBoardNumber(String userId, int freeBoardNumber);
+    public FreeBoardRecommendEntity findByUserIdAndBoardNumber(String userId, int boardNumber);
 }
