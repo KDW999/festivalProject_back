@@ -166,6 +166,25 @@ CREATE TABLE IF NOT EXISTS `festival`.`freeboardcomment` (
 );
 
 ### 7) 자유 게시판 추천
+CREATE TABLE IF NOT EXISTS `festival`.`freeboardrecommend` (
+  `user_id` VARCHAR(20) NOT NULL,             -- PK -- 사용자 아이디 </br>
+  `free_board_number` INT NOT NULL,           -- PK -- 자유 게시판 게시물 번호 </br>
+  `user_profile_url` TEXT NULL DEFAULT NULL,  -- 유저 프로필 사진 URL </br>
+  `user_nickname` VARCHAR(30) NOT NULL,       -- 추천한 유저 닉네임 </br>
+  PRIMARY KEY (`user_id`, `free_board_number`), </br>
+  INDEX `fk_user_has_freeboard_freeboard1_idx` (`free_board_number` ASC) VISIBLE, </br>
+  INDEX `fk_user_has_freeboard_user1_idx` (`user_id` ASC) VISIBLE, </br>
+  CONSTRAINT `fk_user_has_freeboard_user1` </br>
+    FOREIGN KEY (`user_id`) </br>
+    REFERENCES `festival`.`user` (`user_id`) </br>
+    ON DELETE NO ACTION </br>
+    ON UPDATE NO ACTION, </br>
+  CONSTRAINT `fk_user_has_freeboard_freeboard1` </br>
+    FOREIGN KEY (`free_board_number`) </br>
+    REFERENCES `festival`.`freeboard` (`board_number`) </br>
+    ON DELETE NO ACTION </br>
+    ON UPDATE NO ACTION) </br>
+);
 
 ### 8) 관심있는 축제
 
