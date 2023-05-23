@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 @Entity(name = "Interestedfestival")
 @Table(name = "Interestedfestival")
 public class InterestedFestivalEntity {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int sequence;

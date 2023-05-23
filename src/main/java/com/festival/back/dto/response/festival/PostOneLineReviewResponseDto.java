@@ -16,12 +16,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PostOneLineReviewResponseDto {
-    //? 한 줄 평은 축제 정보 게시물에 달린 댓글과 같다.
 
     @ApiModelProperty(value = "축제 정보 Entity", required = true)
     private FestivalEntity festival;
 
     @ApiModelProperty(value = "한 줄 평 Entity List", required = true)
     private List<OneLineReviewEntity> oneLineReviewList;
-
 }

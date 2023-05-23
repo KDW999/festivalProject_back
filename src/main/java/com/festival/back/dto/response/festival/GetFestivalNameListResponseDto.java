@@ -17,14 +17,13 @@ public class GetFestivalNameListResponseDto {
     private String festivalName;
     private int festivalNumber;
 
-    public GetFestivalNameListResponseDto (FestivalEntity festivalEntity){
-     
+    public GetFestivalNameListResponseDto (FestivalEntity festivalEntity) {
         this.festivalName = festivalEntity.getFestivalName();
         this.festivalNumber = festivalEntity.getFestivalNumber();
     
-      }
+    }
 
-      public static List<GetFestivalNameListResponseDto> copyList(List<FestivalEntity> festivalEntityList){
+    public static List<GetFestivalNameListResponseDto> copyList(List<FestivalEntity> festivalEntityList) {
         
         List<GetFestivalNameListResponseDto> list = new ArrayList<>();
 
@@ -36,5 +35,4 @@ public class GetFestivalNameListResponseDto {
         }
         return list;
     }
-    
 }

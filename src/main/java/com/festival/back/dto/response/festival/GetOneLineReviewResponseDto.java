@@ -27,7 +27,6 @@ public class GetOneLineReviewResponseDto {
     @ApiModelProperty(value = "작성 날짜",example = "jonh",required = true)
     private String writeDatetime;
 
-
     public GetOneLineReviewResponseDto(OneLineReviewEntity oneLineReviewEntity){
         this.average=oneLineReviewEntity.getAverage();
         this.oneLineReviewContent=oneLineReviewEntity.getOneLineReviewContent();
@@ -35,7 +34,7 @@ public class GetOneLineReviewResponseDto {
         this.userNickname=oneLineReviewEntity.getUserNickname();
         this.writeDatetime=oneLineReviewEntity.getWriteDatetime();
     } 
-   
+
     public static List<GetOneLineReviewResponseDto> copyList(List<OneLineReviewEntity> oneLineReviewList){
         List<GetOneLineReviewResponseDto> list=new ArrayList<>();
 
@@ -46,9 +45,4 @@ public class GetOneLineReviewResponseDto {
         }
         return list;
     }
-
-
-
-
-    
 }

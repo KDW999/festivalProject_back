@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SignInResponseDto {
+
     @ApiModelProperty(value="사용자 아이디", example="qwer1234", required=true)
     private String userId;
 
@@ -29,9 +30,6 @@ public class SignInResponseDto {
     @ApiModelProperty(value="사용자 휴대전화번호", example="010-1234-5678", required=true)
     private String telNumber;
 
-    // private boolean adminCheck;
-    // private boolean reportUser; api구현후 사용
-
     @ApiModelProperty(value="JWT", example="eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJxd2VAcXdlLmNvbSIsImlhdCI6MTY3OTU1MDM0MiwiZXhwIjoxNjc5NTUzOTQyfQ.Cvdm7jpRfAKdst99Elo35yW-XLygzI2kMBz5VfwtJf0", required=true)
     private String token;
 
@@ -41,9 +39,8 @@ public class SignInResponseDto {
     private List<String> interestedFestival;
 
     public SignInResponseDto(UserEntity userEntity, List<InterestedFestivalEntity> interestedFestivalEntity , String token) {
-    //   ? 새로운 리스트 생성
+    //? 새로운 리스트 생성
         List<String> interestedFestivalList = new ArrayList<>();
-        // ? foreach 반복문을 돌면서  dto 에interestedFestivalEntityList 에 있는 getInterestedFestivalType 를 가져와서 생성된 list 에 저장
         for (InterestedFestivalEntity interestedFestivalEntityList : interestedFestivalEntity) {
             String dto = interestedFestivalEntityList.getInterestedFestivalType();
             interestedFestivalList.add(dto);
