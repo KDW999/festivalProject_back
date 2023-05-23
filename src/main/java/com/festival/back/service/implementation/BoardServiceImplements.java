@@ -191,9 +191,6 @@ public class BoardServiceImplements implements BoardService {
     // ? 특정 축제 후기 게시글 불러오기-김종빈
     public ResponseDto<GetReviewBoardResponseDto> getReviewBoard( Integer boardNumber) {
         GetReviewBoardResponseDto data = null;
-
-        
-
         try {
 
             if(boardNumber == null) return ResponseDto.setFail(ResponseMessage.VAILDATION_FAILD);
@@ -203,8 +200,6 @@ public class BoardServiceImplements implements BoardService {
              
             List<RecommendEntity> recommdList = recommendRepository.findByBoardNumber(boardNumber);
             List<CommentEntity> commentList = commentRepository.findByBoardNumberOrderByWriteDatetimeDesc(boardNumber);
-        
-
 
             boardEntity.increaseViewCount();
             boardRepository.save(boardEntity);
@@ -397,9 +392,4 @@ public class BoardServiceImplements implements BoardService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
 
     }
-    
-
-
-
-
 }

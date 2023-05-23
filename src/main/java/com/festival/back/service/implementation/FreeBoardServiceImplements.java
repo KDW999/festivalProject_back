@@ -17,6 +17,7 @@ import com.festival.back.dto.response.freeboard.DeleteFreeBoardResponseDto;
 import com.festival.back.dto.response.freeboard.FreeBoardRecommendResponseDto;
 import com.festival.back.dto.response.freeboard.GetFreeBoardListResponseDto;
 import com.festival.back.dto.response.freeboard.GetFreeBoardResponseDto;
+import com.festival.back.dto.response.freeboard.GetSearchFreeBoardListResponseDto;
 import com.festival.back.dto.response.freeboard.PatchFreeBoardCommentResponseDto;
 import com.festival.back.dto.response.freeboard.PatchFreeBoardResponseDto;
 import com.festival.back.dto.response.freeboard.PostFreeBoardCommentResponseDto;
@@ -24,10 +25,12 @@ import com.festival.back.dto.response.freeboard.PostFreeBoardResponseDto;
 import com.festival.back.entity.FreeBoardCommentEntity;
 import com.festival.back.entity.FreeBoardEntity;
 import com.festival.back.entity.FreeBoardRecommendEntity;
+import com.festival.back.entity.SearchwordLogEntity;
 import com.festival.back.entity.UserEntity;
 import com.festival.back.repository.FreeBoardCommentRepository;
 import com.festival.back.repository.FreeBoardRecommendRepository;
 import com.festival.back.repository.FreeBoardRepository;
+import com.festival.back.repository.SearchWordLogRepository;
 import com.festival.back.repository.UserRepository;
 import com.festival.back.service.FreeBoardService;
 
@@ -38,6 +41,7 @@ public class FreeBoardServiceImplements implements FreeBoardService {
     @Autowired private FreeBoardRepository freeBoardRepository;
     @Autowired private FreeBoardCommentRepository freeBoardCommentRepository;
     @Autowired private FreeBoardRecommendRepository freeBoardRecommendRepository;
+    @Autowired private SearchWordLogRepository searchWordLogRepository;
 
     public ResponseDto<PostFreeBoardResponseDto> postFreeBoard(String userId, PostFreeBoardRequestDto dto) {
         PostFreeBoardResponseDto data = null;
@@ -125,6 +129,26 @@ public class FreeBoardServiceImplements implements FreeBoardService {
         try {
             List<FreeBoardEntity> boardList = freeBoardRepository.findByOrderByBoardWriteDatetimeDesc();
             data = GetFreeBoardListResponseDto.copyList(boardList);
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
+        }
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+    }
+
+    //? 자유 게시판 검색
+    public ResponseDto<List<GetSearchFreeBoardListResponseDto>> getSearchFreeBoardList(String searchWord){
+        List<GetSearchFreeBoardListResponseDto> data = null;
+
+        try {
+            SearchwordLogEntity searchwordLogEntity = new SearchwordLogEntity(searchWord);
+            searchWordLogRepository.save(searchwordLogEntity);
+
+            List<FreeBoardEntity> freeBoardEntity = freeBoardRepository.findByBoardTitleContainsOrBoardContentContainsOrderByBoardWriteDatetimeDesc(searchWord, searchWord);
+            if(freeBoardEntity.isEmpty()) return ResponseDto.setFail(ResponseMessage.NO_SEARCH_RESULTS);
+
+            data = GetSearchFreeBoardListResponseDto.copyList(freeBoardEntity);
             
         } catch (Exception exception) {
             exception.printStackTrace();

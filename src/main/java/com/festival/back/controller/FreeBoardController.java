@@ -27,12 +27,14 @@ import com.festival.back.dto.response.freeboard.DeleteFreeBoardResponseDto;
 import com.festival.back.dto.response.freeboard.FreeBoardRecommendResponseDto;
 import com.festival.back.dto.response.freeboard.GetFreeBoardListResponseDto;
 import com.festival.back.dto.response.freeboard.GetFreeBoardResponseDto;
+import com.festival.back.dto.response.freeboard.GetSearchFreeBoardListResponseDto;
 import com.festival.back.dto.response.freeboard.PatchFreeBoardCommentResponseDto;
 import com.festival.back.dto.response.freeboard.PatchFreeBoardResponseDto;
 import com.festival.back.dto.response.freeboard.PostFreeBoardCommentResponseDto;
 import com.festival.back.dto.response.freeboard.PostFreeBoardResponseDto;
 import com.festival.back.service.FreeBoardService;
 
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 @RestController
@@ -47,6 +49,7 @@ public class FreeBoardController {
 
     private final String GET_FREE_BOARD_LIST = "";
     private final String GET_FREE_BOARD = "/{boardNumber}";
+    private final String GET_SEARCH_FREE_BOARD_LIST = "/search-free-board/{searchWord}";
 
     private final String PATCH_FREE_BOARD = "";
     private final String PATCH_FREE_BOARD_COMMENT = "/comment";
@@ -112,6 +115,13 @@ public class FreeBoardController {
     @ApiParam(value = "게시물 번호",example = "1", required = true)
     @PathVariable("commentNumber")int commentNumber) {
         ResponseDto<DeleteFreeBoardCommentResponseDto> response = freeBoardService.deleteFreeBoardComment(userId, commentNumber);
+        return response;
+    }
+
+    @ApiOperation(value = "자유 게시판 검색 기능", notes = "Path Variable에 searchWord를 포함하여 요청, 성공 시 검색어와 관련된 자유 게시물 List 반환, 실패 시 실패 메세지 반환")
+    @GetMapping(GET_SEARCH_FREE_BOARD_LIST)
+    public ResponseDto<List<GetSearchFreeBoardListResponseDto>> getSearchFreeBoardList(@PathVariable("searchWord") String searchWord){
+        ResponseDto<List<GetSearchFreeBoardListResponseDto>> response = freeBoardService.getSearchFreeBoardList(searchWord);
         return response;
     }
 

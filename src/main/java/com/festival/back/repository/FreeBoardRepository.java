@@ -13,5 +13,6 @@ public interface FreeBoardRepository extends JpaRepository<FreeBoardEntity, Inte
     public FreeBoardEntity findByBoardNumber(int boardNumber);
     
     public List<FreeBoardEntity> findByOrderByBoardWriteDatetimeDesc ();
+    public List<FreeBoardEntity> findByBoardTitleContainsOrBoardContentContainsOrderByBoardWriteDatetimeDesc(String boardTitle,String boardContent);
     
 }
