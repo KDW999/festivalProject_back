@@ -44,7 +44,9 @@ public class FreeBoardServiceImplements implements FreeBoardService {
     @Autowired private SearchWordLogRepository searchWordLogRepository;
 
     public ResponseDto<PostFreeBoardResponseDto> postFreeBoard(String userId, PostFreeBoardRequestDto dto) {
+        
         PostFreeBoardResponseDto data = null;
+        
         try {
             UserEntity userEntity = userRepository.findByUserId(userId);
             if(userEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
@@ -61,6 +63,7 @@ public class FreeBoardServiceImplements implements FreeBoardService {
     }
 
     public ResponseDto<PostFreeBoardCommentResponseDto> postFreeBoardComment(String userId, PostFreeBoardCommentRequestDto dto) {
+        
         PostFreeBoardCommentResponseDto data = null;
         int boardNumber = dto.getBoardNumber();
 
@@ -90,6 +93,7 @@ public class FreeBoardServiceImplements implements FreeBoardService {
     }
 
     public ResponseDto<FreeBoardRecommendResponseDto> freeBoardRecommend (String userId, FreeBoardRecommendRequestDto dto) {
+        
         FreeBoardRecommendResponseDto data = null;
         int boardNumber = dto.getBoardNumber();
 
@@ -105,7 +109,7 @@ public class FreeBoardServiceImplements implements FreeBoardService {
                 freeBoardRecommendEntity = new FreeBoardRecommendEntity(userEntity, boardNumber);
                 freeBoardRecommendRepository.save(freeBoardRecommendEntity);
                 freeBoardEntity.increaseRecommendCount();
-            }else{
+            } else {
                 freeBoardRecommendRepository.delete(freeBoardRecommendEntity);
                 freeBoardEntity.decreaseRecommendCount();
             }
@@ -124,6 +128,7 @@ public class FreeBoardServiceImplements implements FreeBoardService {
     }
 
     public ResponseDto<List<GetFreeBoardListResponseDto>> getFreeBoardList() {
+        
         List<GetFreeBoardListResponseDto> data = null;
 
         try {
@@ -139,6 +144,7 @@ public class FreeBoardServiceImplements implements FreeBoardService {
 
     //? 자유 게시판 검색
     public ResponseDto<List<GetSearchFreeBoardListResponseDto>> getSearchFreeBoardList(String searchWord){
+        
         List<GetSearchFreeBoardListResponseDto> data = null;
 
         try {
@@ -158,6 +164,7 @@ public class FreeBoardServiceImplements implements FreeBoardService {
     }
 
     public ResponseDto<GetFreeBoardResponseDto> getFreeBoard(int boardNumber) {
+        
         GetFreeBoardResponseDto data = null;
 
         try {
@@ -171,6 +178,7 @@ public class FreeBoardServiceImplements implements FreeBoardService {
             freeBoardRepository.save(freeBoardEntity);
 
             data = new GetFreeBoardResponseDto(freeBoardEntity, commentList, recommendList);
+
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
@@ -197,7 +205,6 @@ public class FreeBoardServiceImplements implements FreeBoardService {
 
             data = new PatchFreeBoardResponseDto(freeBoardEntity, commentList, recommendList);
 
-            
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
@@ -206,6 +213,7 @@ public class FreeBoardServiceImplements implements FreeBoardService {
     }
 
     public ResponseDto<PatchFreeBoardCommentResponseDto> patchFreeBoardComment (String userId, PatchFreeBoardCommentRequestDto dto) {
+        
         PatchFreeBoardCommentResponseDto data = null;
         int boardNumber = dto.getBoardNumber();
         int commentNumber = dto.getCommentNumber();
@@ -234,7 +242,6 @@ public class FreeBoardServiceImplements implements FreeBoardService {
 
             data = new PatchFreeBoardCommentResponseDto(freeBoardEntity, commentList, recommendList);
 
-
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
@@ -243,6 +250,7 @@ public class FreeBoardServiceImplements implements FreeBoardService {
     }
 
     public ResponseDto<DeleteFreeBoardResponseDto> deleteFreeBoard(String userId, int boardNumber) {
+        
         DeleteFreeBoardResponseDto data = null;
 
         try {
@@ -266,6 +274,7 @@ public class FreeBoardServiceImplements implements FreeBoardService {
     }
 
     public ResponseDto<DeleteFreeBoardCommentResponseDto> deleteFreeBoardComment (String userId, int boardCommentNumber) {
+        
         DeleteFreeBoardCommentResponseDto data = null;
 
         try {
@@ -285,7 +294,12 @@ public class FreeBoardServiceImplements implements FreeBoardService {
             freeBoardEntity.decreaseCommentCount();
             freeBoardRepository.save(freeBoardEntity);
 
-            data = new DeleteFreeBoardCommentResponseDto(true);
+            
+            List<FreeBoardCommentEntity> commentList = freeBoardCommentRepository.findByBoardNumberOrderByWriteDatetimeDesc(boardNumber);
+            List<FreeBoardRecommendEntity> recommendList = freeBoardRecommendRepository.findByBoardNumber(boardNumber);
+
+            data = new DeleteFreeBoardCommentResponseDto(freeBoardEntity, commentList, recommendList);
+            
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);

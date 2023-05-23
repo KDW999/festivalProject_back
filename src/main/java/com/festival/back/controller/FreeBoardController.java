@@ -43,9 +43,9 @@ public class FreeBoardController {
     
     @Autowired private FreeBoardService freeBoardService;
 
+    private final String FREE_BOARD_RECOMMEND = "/recommend";
     private final String POST_FREE_BOARD = "";
     private final String POST_FREE_BOARD_COMMENT = "/comment";
-    private final String FREE_BOARD_RECOMMEND = "/recommend";
 
     private final String GET_FREE_BOARD_LIST = "";
     private final String GET_FREE_BOARD = "/{boardNumber}";
@@ -56,6 +56,12 @@ public class FreeBoardController {
 
     private final String DELETE_FREE_BOARD = "/{boardNumber}";
     private final String DELETE_FREE_BOARD_COMMENT = "/comment/{commentNumber}";
+
+    @PostMapping(FREE_BOARD_RECOMMEND)
+    public ResponseDto<FreeBoardRecommendResponseDto> freeBoardRecommend (@AuthenticationPrincipal String userId, @Valid @RequestBody FreeBoardRecommendRequestDto requestBody) {
+        ResponseDto<FreeBoardRecommendResponseDto> response = freeBoardService.freeBoardRecommend(userId, requestBody);
+        return response;
+    }
 
     @PostMapping(POST_FREE_BOARD)
     public ResponseDto<PostFreeBoardResponseDto> postFreeBoard(@AuthenticationPrincipal String userId,
@@ -70,12 +76,6 @@ public class FreeBoardController {
         return response;
     }
 
-    @PostMapping(FREE_BOARD_RECOMMEND)
-    public ResponseDto<FreeBoardRecommendResponseDto> freeBoardRecommend (@AuthenticationPrincipal String userId, @Valid @RequestBody FreeBoardRecommendRequestDto requestBody) {
-        ResponseDto<FreeBoardRecommendResponseDto> response = freeBoardService.freeBoardRecommend(userId, requestBody);
-        return response;
-    }
-
     @GetMapping(GET_FREE_BOARD_LIST)
     public ResponseDto<List<GetFreeBoardListResponseDto>> getFreeBoardList () {
         ResponseDto<List<GetFreeBoardListResponseDto>> response = freeBoardService.getFreeBoardList();
@@ -87,6 +87,14 @@ public class FreeBoardController {
         ResponseDto<GetFreeBoardResponseDto> response = freeBoardService.getFreeBoard(boardNumber);
         return response;
     }
+
+    @ApiOperation(value = "자유 게시판 검색 기능", notes = "Path Variable에 searchWord를 포함하여 요청, 성공 시 검색어와 관련된 자유 게시물 List 반환, 실패 시 실패 메세지 반환")
+    @GetMapping(GET_SEARCH_FREE_BOARD_LIST)
+    public ResponseDto<List<GetSearchFreeBoardListResponseDto>> getSearchFreeBoardList(@PathVariable("searchWord") String searchWord){
+        ResponseDto<List<GetSearchFreeBoardListResponseDto>> response = freeBoardService.getSearchFreeBoardList(searchWord);
+        return response;
+    }
+
 
     @PatchMapping(PATCH_FREE_BOARD)
     public ResponseDto<PatchFreeBoardResponseDto> patchFreeBoard(@AuthenticationPrincipal String userId, @Valid @RequestBody PatchFreeBoardRequestDto requestBody) {
@@ -117,12 +125,4 @@ public class FreeBoardController {
         ResponseDto<DeleteFreeBoardCommentResponseDto> response = freeBoardService.deleteFreeBoardComment(userId, commentNumber);
         return response;
     }
-
-    @ApiOperation(value = "자유 게시판 검색 기능", notes = "Path Variable에 searchWord를 포함하여 요청, 성공 시 검색어와 관련된 자유 게시물 List 반환, 실패 시 실패 메세지 반환")
-    @GetMapping(GET_SEARCH_FREE_BOARD_LIST)
-    public ResponseDto<List<GetSearchFreeBoardListResponseDto>> getSearchFreeBoardList(@PathVariable("searchWord") String searchWord){
-        ResponseDto<List<GetSearchFreeBoardListResponseDto>> response = freeBoardService.getSearchFreeBoardList(searchWord);
-        return response;
-    }
-
 }

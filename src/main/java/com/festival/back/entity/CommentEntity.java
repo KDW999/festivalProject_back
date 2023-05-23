@@ -22,6 +22,7 @@ import lombok.NoArgsConstructor;
 @Entity(name = "Comment")
 @Table(name = "Comment")
 public class CommentEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int commentNumber;
@@ -42,8 +43,6 @@ public class CommentEntity {
         this.writerUserId = userEntity.getUserId();
         this.writerProfileUrl = userEntity.getProfileUrl();
         this.writerNickname = userEntity.getNickname();
-        
-        
     }
 
     public void patch(PatchCommentRequestDto dto){

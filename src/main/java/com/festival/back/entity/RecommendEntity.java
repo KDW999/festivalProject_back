@@ -1,7 +1,5 @@
 package com.festival.back.entity;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -20,6 +18,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "Recommend")
 @IdClass(RecommendPk.class)
 public class RecommendEntity {
+
     @Id
     private String userId;
     @Id
@@ -33,6 +32,4 @@ public class RecommendEntity {
         this.userProfileUrl = userEntity.getProfileUrl();
         this.userNickname = userEntity.getNickname();
     }
-
-  
 }

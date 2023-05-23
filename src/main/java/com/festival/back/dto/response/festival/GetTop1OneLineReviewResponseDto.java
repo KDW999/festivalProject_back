@@ -36,7 +36,7 @@ public class GetTop1OneLineReviewResponseDto {
         this.writeDatetime=oneLineReviewEntity.getWriteDatetime();
         this.festivalNumber=oneLineReviewEntity.getFestivalNumber();
     } 
-   
+
     public static List<GetTop1OneLineReviewResponseDto> copyList(List<OneLineReviewEntity> oneLineReviewList){
         List<GetTop1OneLineReviewResponseDto> list=new ArrayList<>();
 
@@ -47,8 +47,4 @@ public class GetTop1OneLineReviewResponseDto {
         }
         return list;
     }
-
-
-
-    
 }

@@ -7,7 +7,5 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class CheckUserIdRequestDto {
-
   private String userId;
-    
 }

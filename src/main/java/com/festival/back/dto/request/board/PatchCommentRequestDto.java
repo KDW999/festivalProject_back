@@ -24,5 +24,4 @@ public class PatchCommentRequestDto {
     @ApiModelProperty(value="후기 게시물 내용", example="Modified Content", required=true)
     @NotBlank
     private String commentContent;
-
 }

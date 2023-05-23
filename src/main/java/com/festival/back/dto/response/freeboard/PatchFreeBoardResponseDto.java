@@ -6,6 +6,7 @@ import com.festival.back.entity.FreeBoardCommentEntity;
 import com.festival.back.entity.FreeBoardEntity;
 import com.festival.back.entity.FreeBoardRecommendEntity;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,9 +16,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PatchFreeBoardResponseDto {
     
-    private FreeBoardEntity boardEntity;
+    @ApiModelProperty(value="게시물 Entity", required=true)
+    private FreeBoardEntity freeBoard;
 
+    @ApiModelProperty(value="댓글 Entity List", required=true)
     private List<FreeBoardCommentEntity> commentList;
 
+    @ApiModelProperty(value="좋아요 Entity List", required=true)
     private List<FreeBoardRecommendEntity> recommendList;
 }

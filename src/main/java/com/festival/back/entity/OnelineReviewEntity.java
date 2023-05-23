@@ -23,11 +23,11 @@ import lombok.NoArgsConstructor;
 @Table(name = "Onelinereview")
 @IdClass(OneLineReviewPk.class)
 public class OneLineReviewEntity {
+
     @Id
     private int festivalNumber;
     @Id
     private String userId;
-    
     private int average;
     private String oneLineReviewContent;
     private String userProfileUrl;
@@ -37,7 +37,6 @@ public class OneLineReviewEntity {
     public OneLineReviewEntity(UserEntity userEntity, PostOneLineReviewRequestDto dto) {
         Date now = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
         this.festivalNumber = dto.getFestivalNumber();
         this.userId = userEntity.getUserId();
         this.average = dto.getAverage();
@@ -52,6 +51,4 @@ public class OneLineReviewEntity {
         this.average = dto.getAverage();
         this.oneLineReviewContent = dto.getOneLineReviewContent();
     }
-
-    
 }

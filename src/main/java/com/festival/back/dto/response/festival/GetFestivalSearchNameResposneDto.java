@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,13 +18,11 @@ public class GetFestivalSearchNameResposneDto {
     private int festivalNumber;
 
     public GetFestivalSearchNameResposneDto (FestivalEntity festivalEntity){
-     
         this.festivalName = festivalEntity.getFestivalName();
         this.festivalNumber = festivalEntity.getFestivalNumber();
-    
-      }
+    }
 
-      public static List<GetFestivalSearchNameResposneDto> copyList(List<FestivalEntity> festivalEntityList){
+    public static List<GetFestivalSearchNameResposneDto> copyList(List<FestivalEntity> festivalEntityList){
         
         List<GetFestivalSearchNameResposneDto> list = new ArrayList<>();
 
@@ -37,8 +34,4 @@ public class GetFestivalSearchNameResposneDto {
         }
         return list;
     }
-    
 }
-
-    
-

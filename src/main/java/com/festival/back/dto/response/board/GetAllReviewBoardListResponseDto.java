@@ -41,8 +41,7 @@ public class GetAllReviewBoardListResponseDto {
     @ApiModelProperty(value = "작성자 휴대폰 번호",example = "010-9159-3089",required = true)
     private int festivalNumber;
 
-
-    public GetAllReviewBoardListResponseDto(BoardEntity boardEntity){
+    public GetAllReviewBoardListResponseDto(BoardEntity boardEntity) {
         this.boardNumber=boardEntity.getBoardNumber();
         this.boardTitle=boardEntity.getBoardTitle();
         this.boardContent=boardEntity.getBoardContent();
