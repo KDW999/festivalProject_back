@@ -13,11 +13,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetFreeBoardListResponseDto {
-    private int freeBoardNumber;
-    private String freeBoardTitle;
-    private String freeBoardContent;
-    private String freeBoardImgUrl;
-    private String freeBoardWriteDatetime;
+    private int boardNumber;
+    private String boardTitle;
+    private String boardContent;
+    private String boardImgUrl;
+    private String boardWriteDatetime;
     private int viewCount;
     private int recommendCount;
     private int commentCount;
@@ -26,11 +26,11 @@ public class GetFreeBoardListResponseDto {
     private String writerNickname;
     
     public GetFreeBoardListResponseDto(FreeBoardEntity freeBoardEntity){
-        this.freeBoardNumber = freeBoardEntity.getFreeBoardNumber();
-        this.freeBoardTitle = freeBoardEntity.getFreeBoardTitle();
-        this.freeBoardContent = freeBoardEntity.getFreeBoardContent();
-        this.freeBoardImgUrl = freeBoardEntity.getFreeBoardImgUrl();
-        this.freeBoardWriteDatetime = freeBoardEntity.getFreeBoardWriteDatetime();
+        this.boardNumber = freeBoardEntity.getBoardNumber();
+        this.boardTitle = freeBoardEntity.getBoardTitle();
+        this.boardContent = freeBoardEntity.getBoardContent();
+        this.boardImgUrl = freeBoardEntity.getBoardImgUrl();
+        this.boardWriteDatetime = freeBoardEntity.getBoardWriteDatetime();
         this.writerUserId = freeBoardEntity.getWriterUserId();
         this.writerProfileUrl = freeBoardEntity.getWriterProfileUrl();
         this.writerNickname = freeBoardEntity.getWriterNickname();

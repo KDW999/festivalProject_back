@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PatchFreeBoardCommentRequestDto {
     @Min(1)
-    private int freeBoardNumber;
+    private int boardNumber;
 
     @Min(1)
-    private int freeBoardCommentNumber;
+    private int commentNumber;
 
     @NotBlank
-    private String freeBoardCommentContent;
+    private String commentContent;
 }

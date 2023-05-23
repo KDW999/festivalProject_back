@@ -23,9 +23,7 @@ import com.festival.back.dto.request.board.RecommendReviewBoardRequestDto;
 import com.festival.back.dto.response.ResponseDto;
 import com.festival.back.dto.response.board.GetReviewBoardResponseDto;
 import com.festival.back.dto.response.board.GetSearchReviewBoardListResponseDto;
-import com.festival.back.dto.response.board.GetInterestedFestivalListResponseDto;
 import com.festival.back.dto.response.board.GetMyReviewBoardListResponseDto;
-import com.festival.back.dto.response.board.GetOneReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.GetAllReviewBoardListResponseDto;
 import com.festival.back.dto.response.board.DeleteCommentResponseDto;
 import com.festival.back.dto.response.board.DeleteReviewBoardResponseDto;
@@ -49,21 +47,19 @@ public class BoardController {
 
     @Autowired private BoardService boardService;
 
-    private final String POST_RECOMMEND = "/recommend";
-    private final String POST_COMMENT = "/post-comment";
-    private final String POST_FESTIVAL_REVIEW_BOARD = "";
-    private final String PATCH_FESTIVAL_REVIEW_BOARD = "";
-    private final String DELETE_BOARD = "/{boardNumber}";
     private final String GET_MY_LIST = "/my-reviewboard-list";
     private final String GET_ALL_REVIEWBOARD_LIST="/all-review-board";
     private final String GET_SEARCH_REVIEWBOARD_LIST = "/search-reviewboard/{searchWord}";
-    
-
-
     private final String GET_FESTIVAL_REVIEW_BOARD="/{boardNumber}";
+    
+    private final String POST_RECOMMEND = "/recommend";
+    private final String POST_COMMENT = "/post-comment";
+    private final String POST_FESTIVAL_REVIEW_BOARD = "";
 
+    private final String PATCH_FESTIVAL_REVIEW_BOARD = "";
     private final String PATCH_COMMENT = "/patch-comment";
-
+    
+    private final String DELETE_BOARD = "/{boardNumber}";
     private final String DELETE_COMMENT = "/delete-comment/{commentNumber}";
 
     //? 댓글 작성
@@ -178,6 +174,7 @@ public class BoardController {
 
     }
 
+    //? 후기 게시판 검색
     @ApiOperation(value = "후기 게시판 검색하여서 리스트로 반환.")
     @GetMapping(GET_SEARCH_REVIEWBOARD_LIST)
     public ResponseDto<List<GetSearchReviewBoardListResponseDto>> getSearchReviewBoardList(@PathVariable("searchWord") String searchWord){

@@ -14,6 +14,7 @@ import com.festival.back.dto.response.freeboard.DeleteFreeBoardResponseDto;
 import com.festival.back.dto.response.freeboard.FreeBoardRecommendResponseDto;
 import com.festival.back.dto.response.freeboard.GetFreeBoardListResponseDto;
 import com.festival.back.dto.response.freeboard.GetFreeBoardResponseDto;
+import com.festival.back.dto.response.freeboard.GetSearchFreeBoardListResponseDto;
 import com.festival.back.dto.response.freeboard.PatchFreeBoardCommentResponseDto;
 import com.festival.back.dto.response.freeboard.PatchFreeBoardResponseDto;
 import com.festival.back.dto.response.freeboard.PostFreeBoardCommentResponseDto;
@@ -26,11 +27,12 @@ public interface FreeBoardService{
     public ResponseDto<FreeBoardRecommendResponseDto> freeBoardRecommend(String userId, FreeBoardRecommendRequestDto requestBody);
 
     public ResponseDto<List<GetFreeBoardListResponseDto>> getFreeBoardList();
-    public ResponseDto<GetFreeBoardResponseDto> getFreeBoard(int freeBoardNumber);
+    public ResponseDto<GetFreeBoardResponseDto> getFreeBoard(int boardNumber);
+    public ResponseDto<List<GetSearchFreeBoardListResponseDto>> getSearchFreeBoardList(String searchWord);
 
     public ResponseDto<PatchFreeBoardResponseDto> patchFreeBoard(String userId, PatchFreeBoardRequestDto requestBody);
     public ResponseDto<PatchFreeBoardCommentResponseDto> patchFreeBoardComment(String userId, PatchFreeBoardCommentRequestDto requestBody);
 
-    public ResponseDto<DeleteFreeBoardResponseDto> deleteFreeBoard(String userId, int freeBoardNumber);
-    public ResponseDto<DeleteFreeBoardCommentResponseDto> deleteFreeBoardComment(String userId, int freeBoardCommentNumber);
+    public ResponseDto<DeleteFreeBoardResponseDto> deleteFreeBoard(String userId, int boardNumber);
+    public ResponseDto<DeleteFreeBoardCommentResponseDto> deleteFreeBoardComment(String userId, int boardCommentNumber);
 }

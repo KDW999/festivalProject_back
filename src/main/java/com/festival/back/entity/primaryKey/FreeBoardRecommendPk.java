@@ -10,6 +10,6 @@ import lombok.Data;
 public class FreeBoardRecommendPk implements Serializable{
     @Column(name = "user_id")
     private String userId;
-    @Column(name = "free_board_number")
-    private int freeBoardNumber;
+    @Column(name = "board_number")
+    private int boardNumber;
 }

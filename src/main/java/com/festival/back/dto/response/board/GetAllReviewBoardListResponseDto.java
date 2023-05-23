@@ -33,7 +33,7 @@ public class GetAllReviewBoardListResponseDto {
     @ApiModelProperty(value = "댓글수",example = "0",required = true)
     private int commentCount;
     @ApiModelProperty(value = "작성자 아이디",example = "karurna",required = true)
-    private String writerId;
+    private String writerUserId;
     @ApiModelProperty(value = "작성자 프로필 사진",example = "http:// url",required = true)
     private String writerProfileUrl;
     @ApiModelProperty(value = "작성자 닉네임",example = "혼자가아님",required = true)
@@ -51,7 +51,7 @@ public class GetAllReviewBoardListResponseDto {
         this.viewCount=boardEntity.getViewCount();
         this.recommendCount=boardEntity.getRecommendCount();
         this.commentCount=boardEntity.getCommentCount();
-        this.writerId=boardEntity.getWriterId();
+        this.writerUserId=boardEntity.getWriterUserId();
         this.writerProfileUrl=boardEntity.getWriterNickname();
         this.writerNickname=boardEntity.getWriterNickname();
         this.festivalNumber=boardEntity.getFestivalNumber();

@@ -32,7 +32,7 @@ public interface BoardService {
 
     public ResponseDto<DeleteCommentResponseDto> deleteComment(String userId, int commentNumber);
 
-    public ResponseDto<RecommendReviewBoardResponseDto> recommend(String id, RecommendReviewBoardRequestDto dto);
+    public ResponseDto<RecommendReviewBoardResponseDto> recommend(String userId, RecommendReviewBoardRequestDto dto);
 
     public ResponseDto<PostReviewBoardResponseDto> postReviewBoard(String userId,PostReviewBoardRequestDto dto);
 

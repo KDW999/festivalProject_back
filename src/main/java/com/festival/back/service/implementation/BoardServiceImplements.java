@@ -106,7 +106,7 @@ public class BoardServiceImplements implements BoardService {
 
             if(boardEntity.getBoardNumber() != commentEntity.getBoardNumber()) return ResponseDto.setFail(ResponseMessage.NOT_EXITST_FESTIVAL_NAME);
 
-            boolean isEqualWriter = userId.equals(commentEntity.getWriterId());
+            boolean isEqualWriter = userId.equals(commentEntity.getWriterUserId());
             if(!isEqualWriter) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
 
             commentEntity.patch(dto);
@@ -222,7 +222,7 @@ public class BoardServiceImplements implements BoardService {
             CommentEntity commentEntity = commentRepository.findByCommentNumber(commentNumber);
             if(commentEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXITST_COMMENT_NUMBER);
 
-            boolean isEqualWriter = userId.equals(commentEntity.getWriterId());
+            boolean isEqualWriter = userId.equals(commentEntity.getWriterUserId());
             if(!isEqualWriter) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSION);
 
             commentRepository.deleteByCommentNumber(commentNumber);
@@ -250,7 +250,7 @@ public class BoardServiceImplements implements BoardService {
             BoardEntity boardEntity=boardRepository.findByBoardNumber(boardNumber);
             if(boardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
 
-            boolean isEqulWriter = userId.equals(boardEntity.getWriterId());
+            boolean isEqulWriter = userId.equals(boardEntity.getWriterUserId());
             if (!isEqulWriter) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSION);
 
             List<RecommendEntity> recommdList = recommendRepository.findByBoardNumber(boardNumber);
@@ -278,7 +278,7 @@ public class BoardServiceImplements implements BoardService {
             BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
             if (boardEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_BOARD);
 
-            boolean isEqulWriter = userId.equals(boardEntity.getWriterId());
+            boolean isEqulWriter = userId.equals(boardEntity.getWriterUserId());
             if (!isEqulWriter) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSION);
 
             commentRepository.deleteByBoardNumber(boardNumber);
@@ -300,7 +300,7 @@ public class BoardServiceImplements implements BoardService {
 
         try {
 
-            List<BoardEntity> boardList = boardRepository.findBywriterIdOrderByBoardWriteDatetimeDesc(userId);
+            List<BoardEntity> boardList = boardRepository.findBywriterUserIdOrderByBoardWriteDatetimeDesc(userId);
             data = GetMyReviewBoardListResponseDto.copyList(boardList);
             
         } catch (Exception exception) {
