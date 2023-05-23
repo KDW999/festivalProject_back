@@ -154,7 +154,7 @@ public class BoardController {
         return response;
     }
     
-// ? 본인이 작성한 전체리스트 불러오기-김종빈
+    // ? 본인이 작성한 전체리스트 불러오기-김종빈
     @ApiOperation(value = "본인 작성 게시물 리스트 가져오기"
     ,notes = "Request Header 에 Athorization 에 Bearer JWT 를 포함하여 요청하면 성공시 요청자가 게시물 ")
     @GetMapping(GET_MY_LIST)
@@ -163,15 +163,12 @@ public class BoardController {
         return response;
     }
 
-   
-
     //? 전체 후기 게시물 리스트 
     @ApiOperation(value = "전체 후기 게시글 리스트 반환")
     @GetMapping(GET_ALL_REVIEWBOARD_LIST)
     public ResponseDto<List<GetAllReviewBoardListResponseDto>> getAllReviewBoardList(){
         ResponseDto<List<GetAllReviewBoardListResponseDto>> response = boardService.getAllReviewBoardList();
         return response;
-
     }
 
     //? 후기 게시판 검색
@@ -179,10 +176,6 @@ public class BoardController {
     @GetMapping(GET_SEARCH_REVIEWBOARD_LIST)
     public ResponseDto<List<GetSearchReviewBoardListResponseDto>> getSearchReviewBoardList(@PathVariable("searchWord") String searchWord){
         ResponseDto<List<GetSearchReviewBoardListResponseDto>> response = boardService.getSearchReviewBoardList(searchWord);
-         return response;
-
+        return response;
     }
-   
-    
-    
 }
