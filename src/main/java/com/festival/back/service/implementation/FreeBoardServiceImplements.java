@@ -294,7 +294,11 @@ public class FreeBoardServiceImplements implements FreeBoardService {
             freeBoardEntity.decreaseCommentCount();
             freeBoardRepository.save(freeBoardEntity);
 
-            data = new DeleteFreeBoardCommentResponseDto(true);
+            
+            List<FreeBoardCommentEntity> commentList = freeBoardCommentRepository.findByBoardNumberOrderByWriteDatetimeDesc(boardNumber);
+            List<FreeBoardRecommendEntity> recommendList = freeBoardRecommendRepository.findByBoardNumber(boardNumber);
+
+            data = new DeleteFreeBoardCommentResponseDto(freeBoardEntity, commentList, recommendList);
             
         } catch (Exception exception) {
             exception.printStackTrace();
