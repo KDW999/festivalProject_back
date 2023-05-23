@@ -32,13 +32,11 @@ public class UserServiceImplements implements UserService {
     public ResponseDto<GetUserResponseDto> getUser(String userId) {
 
         GetUserResponseDto data = null;
-      
         UserEntity userEntity = null;
+
         try {
-
-             userEntity = userRepository.findByUserId(userId);
+            userEntity = userRepository.findByUserId(userId);
             if(userEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
-
         
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -46,17 +44,15 @@ public class UserServiceImplements implements UserService {
         }
         try {
             List<InterestedFestivalEntity> interestedFestivalEntity = interestedFestivalRepository.findByUserId(userId);
-           
             data = new GetUserResponseDto(userEntity,interestedFestivalEntity);
             
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.FAIL_SIGN_IN);
         }
-
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
-    
+
     //? 닉네임 및 프로필 사진 URL 수정 기능     -감재현
     public ResponseDto<PatchProfileResponseDto> patchProfile (String userId, PatchProfileRequestDto dto) {
 
@@ -66,13 +62,10 @@ public class UserServiceImplements implements UserService {
         String profileUrl = dto.getProfileUrl();
 
         try {
-
             UserEntity userEntity = userRepository.findByUserId(userId);
             if (userEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
 
             String existUser = userEntity.getNickname();
-            System.out.println(nickname);
-            System.out.println(existUser);
             boolean hasNickname = userRepository.existsByNickname(nickname);
 
             if (hasNickname) {
@@ -104,8 +97,10 @@ public class UserServiceImplements implements UserService {
 
     //? 중복 아이디 검증
     public ResponseDto<CheckUserIdResponseDto> checkUserId(CheckUserIdRequestDto dto) {
+        
         CheckUserIdResponseDto data = null;
         String userId=dto.getUserId();
+
         try {
             boolean hasuserId=userRepository.existsById(userId);
             data = new CheckUserIdResponseDto(hasuserId);
@@ -119,12 +114,13 @@ public class UserServiceImplements implements UserService {
 
     //? 중복 닉네임 검증
     public ResponseDto<CheckUserNicknameResponseDto> checkUserNickname(CheckUserNicknameRequestDto dto) {
+        
         CheckUserNicknameResponseDto data= null;
         String nickname=dto.getNickname();
+        
         try {
             boolean hasNickname=userRepository.existsByNickname(nickname);
             data = new CheckUserNicknameResponseDto(hasNickname);
-            
 
         } catch (Exception e) {
             e.printStackTrace();    
@@ -135,12 +131,13 @@ public class UserServiceImplements implements UserService {
 
     //? 중복 전화번호 검증
     public ResponseDto<CheckUserTelNumberResponseDto> checkUserTelNumber(CheckUserTelNumberRequestDto dto) {
+        
         CheckUserTelNumberResponseDto data= null;
         String telNumber=dto.getTelNumber();
+        
         try {
             boolean hasTelNumber=userRepository.existsByTelNumber(telNumber);
             data = new CheckUserTelNumberResponseDto(hasTelNumber);
-            
 
         } catch (Exception e) {
             e.printStackTrace();    

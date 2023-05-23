@@ -9,5 +9,4 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CheckUserIdResponseDto {
     private boolean resultState;
-    
 }
