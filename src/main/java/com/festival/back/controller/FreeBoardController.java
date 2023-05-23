@@ -44,7 +44,6 @@ public class FreeBoardController {
     @Autowired private FreeBoardService freeBoardService;
 
     private final String FREE_BOARD_RECOMMEND = "/recommend";
-
     private final String POST_FREE_BOARD = "";
     private final String POST_FREE_BOARD_COMMENT = "/comment";
 
