@@ -1,6 +1,5 @@
 package com.festival.back.service;
 
-
 import java.util.List;
 
 import com.festival.back.dto.request.freeboard.FreeBoardRecommendRequestDto;
@@ -24,15 +23,17 @@ public interface FreeBoardService{
     
     public ResponseDto<PostFreeBoardResponseDto> postFreeBoard(String userId, PostFreeBoardRequestDto requestBody);
     public ResponseDto<PostFreeBoardCommentResponseDto> postFreeBoardComment(String userId, PostFreeBoardCommentRequestDto requestBody);
-    public ResponseDto<FreeBoardRecommendResponseDto> freeBoardRecommend(String userId, FreeBoardRecommendRequestDto requestBody);
 
-    public ResponseDto<List<GetFreeBoardListResponseDto>> getFreeBoardList();
     public ResponseDto<GetFreeBoardResponseDto> getFreeBoard(int boardNumber);
-    public ResponseDto<List<GetSearchFreeBoardListResponseDto>> getSearchFreeBoardList(String searchWord);
-
+    
     public ResponseDto<PatchFreeBoardResponseDto> patchFreeBoard(String userId, PatchFreeBoardRequestDto requestBody);
     public ResponseDto<PatchFreeBoardCommentResponseDto> patchFreeBoardComment(String userId, PatchFreeBoardCommentRequestDto requestBody);
 
     public ResponseDto<DeleteFreeBoardResponseDto> deleteFreeBoard(String userId, int boardNumber);
     public ResponseDto<DeleteFreeBoardCommentResponseDto> deleteFreeBoardComment(String userId, int boardCommentNumber);
+
+    public ResponseDto<FreeBoardRecommendResponseDto> freeBoardRecommend(String userId, FreeBoardRecommendRequestDto requestBody);
+
+    public ResponseDto<List<GetFreeBoardListResponseDto>> getFreeBoardList();
+    public ResponseDto<List<GetSearchFreeBoardListResponseDto>> getSearchFreeBoardList(String searchWord);
 }

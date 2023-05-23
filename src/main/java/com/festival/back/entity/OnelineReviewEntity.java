@@ -23,6 +23,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "Onelinereview")
 @IdClass(OneLineReviewPk.class)
 public class OneLineReviewEntity {
+
     @Id
     private int festivalNumber;
     @Id
@@ -52,6 +53,4 @@ public class OneLineReviewEntity {
         this.average = dto.getAverage();
         this.oneLineReviewContent = dto.getOneLineReviewContent();
     }
-
-    
 }

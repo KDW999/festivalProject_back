@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @ApiModel(value = "특정 자유 게시물 삭제 Response Body-data")
 public class DeleteFreeBoardResponseDto {
-    @ApiModelProperty(value = "특정 자유 게시물 삭제 결과",example = "true",required = true)
+    @ApiModelProperty(value = "특정 자유 게시물 삭제 결과", example = "true", required = true)
     private boolean resultStatus;
 }

@@ -23,6 +23,7 @@ import lombok.NoArgsConstructor;
 @Entity(name = "Board")
 @Table(name = "Board")
 public class BoardEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int boardNumber;
@@ -52,8 +53,8 @@ public class BoardEntity {
         this.viewCount=0;
         this.recommendCount=0;
         this.commentCount=0;
-
     }
+    
     public void increaseCommentCount(){
         this.commentCount++;
     }

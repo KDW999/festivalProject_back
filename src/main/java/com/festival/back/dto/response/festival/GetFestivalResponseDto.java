@@ -37,5 +37,4 @@ public class GetFestivalResponseDto {
         this.festivalHomepage=festivalEntity.getFestivalHomepage();
         this.onelineReviewAverage=festivalEntity.getOnelineReviewAverage();
     }
-    
 }
