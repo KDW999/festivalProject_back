@@ -21,6 +21,8 @@ public interface OneLineReviewRepository extends JpaRepository<OneLineReviewEnti
 
     public boolean existsByFestivalNumber(int festivalNumber);
 
+
+
     
 
     // public OneLineReviewEntity deleteByFestivalNumberAndUserId(int fetivalNumber, String userId);

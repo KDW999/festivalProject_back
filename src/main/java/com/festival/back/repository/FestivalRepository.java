@@ -16,7 +16,9 @@ public interface FestivalRepository extends JpaRepository<FestivalEntity, Intege
       public FestivalEntity findByFestivalNumber(int festivalNumber);
       public List<FestivalEntity> findByOrderByFestivalDurationStartAsc();
 
-      public FestivalEntity findByFestivalName(String festivalName);
+
+      @Query(value = "select * from festival where festival_name OR festival_area like %?% " , nativeQuery = true)
+      public List<FestivalEntity> searchName(String festivalName);
 
       public List<FestivalEntity> findByFestivalTypeIn(List<String> interestedFestivalTypeList);
 
@@ -74,4 +76,5 @@ public interface FestivalRepository extends JpaRepository<FestivalEntity, Intege
 
       //? 이런 방법도 있다고 했지만 이렇게 쓸 경우 원하는 결과가 나오지 않았음. 그래서 front에서 filter로 만들었음.
       public List<FestivalEntity> findByFestivalDurationStartGreaterThanEqualOrderByFestivalDurationStartAsc(String festivalDurationStart);
+      public List<FestivalEntity> findBy();
 }
