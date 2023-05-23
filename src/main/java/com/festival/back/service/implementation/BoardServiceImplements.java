@@ -220,8 +220,11 @@ public class BoardServiceImplements implements BoardService {
             BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
             boardEntity.decreaseCommentCount();
             boardRepository.save(boardEntity);
+
+            List<RecommendEntity> recommendList = recommendRepository.findByBoardNumber(boardNumber);
+            List<CommentEntity> commentList = commentRepository.findByBoardNumberOrderByWriteDatetimeDesc(boardNumber);
             
-            data = new DeleteCommentResponseDto(true);
+            data = new DeleteCommentResponseDto(boardEntity, recommendList, commentList);
         } catch(Exception exception) {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
