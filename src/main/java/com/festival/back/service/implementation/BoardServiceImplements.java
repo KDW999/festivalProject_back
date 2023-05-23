@@ -354,7 +354,9 @@ public class BoardServiceImplements implements BoardService {
     //  ? 특정 축제 전체 후기 리스트 만 반환
     public ResponseDto<List<GetOneReviewBoardListResponseDto>> getOneFestivalReviewBoard(int festivalNumber) {
     
-        List<GetOneReviewBoardListResponseDto> data = null;
+    List<GetOneReviewBoardListResponseDto> data = null;
+
+
     
         try {
             List<BoardEntity> boardEntityList = boardRepository.findByFestivalNumberOrderByBoardWriteDatetimeDesc(festivalNumber);
