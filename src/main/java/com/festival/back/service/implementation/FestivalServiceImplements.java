@@ -151,8 +151,8 @@ public class FestivalServiceImplements implements FestivalService {
             if(!isEqualUserId) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSION);
             
             oneLineReviewRepository.deleteById(new OneLineReviewPk(userId, festivalNumber));
-
             int festivalAvg = festivalRepository.setAverger(festivalNumber,festivalNumber);
+
             
             data = new DeleteOneLineReviewResponseDto(true);
             
