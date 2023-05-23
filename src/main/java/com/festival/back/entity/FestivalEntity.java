@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 @Entity(name = "Festival")
 @Table(name = "Festival")
 public class FestivalEntity {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int festivalNumber;

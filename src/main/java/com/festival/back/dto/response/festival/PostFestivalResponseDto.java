@@ -48,7 +48,6 @@ public class PostFestivalResponseDto {
     @ApiModelProperty(value="축제 한줄 평가 내용 리스트", example="5.0", required=true)
     private List<OneLineReviewEntity> oneLineReviewContentList;
 
-
     public PostFestivalResponseDto(FestivalEntity festivalEntity) {
         this.festivalName = festivalEntity.getFestivalName();
         this.festivalType = festivalEntity.getFestivalType();

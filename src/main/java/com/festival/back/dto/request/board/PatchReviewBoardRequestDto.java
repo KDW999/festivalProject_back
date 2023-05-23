@@ -27,5 +27,4 @@ public class PatchReviewBoardRequestDto {
 
     @ApiModelProperty(value = "게시물 작성할 이미지", example = "이미지 url", required = false)
     private String boardImgUrl;
-
 }

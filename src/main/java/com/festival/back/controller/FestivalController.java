@@ -2,7 +2,6 @@ package com.festival.back.controller;
 
 import java.util.List;
 
-import javax.annotation.Generated;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,15 +49,12 @@ import io.swagger.annotations.ApiParam;
 @RequestMapping(ApiPattern.FESTIVAL)
 public class FestivalController {
 
-    @Autowired
-    private FestivalService festivalService;
-
+    @Autowired private FestivalService festivalService;
     @Autowired BoardService boardService;
     
-
+    private final String POST_FESTIVAL = "";
     private final String POST_ONE_LINE_REVIEW = "/one-line-review";
-    private final String PATCH_ONE_LINE_REVIEW = "";
-    private final String DELETE_ONE_LINE_REVIEW = "/{festivalNumber}";
+    
     private final String GET_SEARCH_FESTIVAL = "/festivalsearch/{searchWord}";
     private final String GET_FESTIVAL_AREA_LIST = "/area/{festivalArea}";
     private final String GET_FESTIVAL_MONTH="/festivalmonth/{month}";
@@ -70,19 +66,20 @@ public class FestivalController {
     private final String GET_ONELINE_REVIEW_FETIVALNAME = "/festivalname/{festivalNumber}";
     private final String GET_FESTIVALNAME_LIST = "/festivalname-list";
     private final String GET_FESTIVALNAME_SEARCH_LIST="/namesearch/{searchName}";
-
     private final String GET_INTERESTED_FESTIVAL_LIST = "/festival/interested-list";
     private final String GET_ONLY_FESTIVAL_LIST="/onlyfestival/{festivalNumber}";
 
-    private final String POST_FESTIVAL = "";
+    private final String PATCH_ONE_LINE_REVIEW = "";
+
+    private final String DELETE_ONE_LINE_REVIEW = "/{festivalNumber}";
 
     // ? 축제 작성
     @ApiOperation(value = "축제 작성", notes =
     "Request Header Authorization에 Bearer JWT를 포함하고 festivalName, festivalType, festivalDurationStart, festivalDurationEnd, festivalTime, festivalArea, festivalCost, festivalInformationUrl을 전송하면 축제 작성 결과로 작성된 정보를 반환, 실패시 실패 메시지 반환")
     @PostMapping(POST_FESTIVAL)
     public ResponseDto<PostFestivalResponseDto> postFestival(
-            @ApiParam(hidden = true) @AuthenticationPrincipal String festivalName,
-            @Valid @RequestBody PostFestivalRequestDto requestBody) {
+        @ApiParam(hidden = true) @AuthenticationPrincipal String festivalName,
+        @Valid @RequestBody PostFestivalRequestDto requestBody) {
         ResponseDto<PostFestivalResponseDto> response = festivalService.postFestival(festivalName, requestBody);
         return response;
     }
@@ -91,35 +88,9 @@ public class FestivalController {
     @ApiOperation(value = "한 줄 평 작성", notes = "평점, 한 줄 평가, 축제 번호를 전송하면 한 줄평 작성 결과로 작성된 한 줄 평 정보를 반환, 실패 시 실패 메세지 반환")
     @PostMapping(POST_ONE_LINE_REVIEW)
     public ResponseDto<PostOneLineReviewResponseDto> postOneLineReview(
-            @ApiParam(hidden = true) @AuthenticationPrincipal String userId,
-            @Valid @RequestBody PostOneLineReviewRequestDto requestBody) {
+        @ApiParam(hidden = true) @AuthenticationPrincipal String userId,
+        @Valid @RequestBody PostOneLineReviewRequestDto requestBody) {
         ResponseDto<PostOneLineReviewResponseDto> response = festivalService.postOneLineReview(userId, requestBody);
-        return response;
-    }
-
-    // ? 한 줄 평 수정
-    @ApiOperation(value = "특정 한 줄 평 수정", notes = "Request Header에 Authorization에 Bearer JWT를 포함하고 Request Body에 " +
-            "average, oneLineReviewContent, festivalNumber를 포함하여 요청하면 성공 시 축제 정보 게시물 전체 데이터 반환, 실패 시 실패 메세지 반환")
-    @PatchMapping(PATCH_ONE_LINE_REVIEW)
-    public ResponseDto<PatchOneLineReviewResponseDto> patchOneLineReview(
-            @AuthenticationPrincipal String userId,
-            @Valid @RequestBody PatchOneLineReviewRequestDto requestBody) {
-        ResponseDto<PatchOneLineReviewResponseDto> response = festivalService.patchOneLineReview(userId, requestBody);
-        return response;
-    }
-
-    //? 한 줄 평 삭제
-    @ApiOperation(value = "특정 게시물 삭제", notes = "Request Header에 Authorization에 Bearer JWT를 포함하고 Path Variable에 userId를 "
-            +
-            "포함하여 요청하면 성공 시 true 반환, 실패 시 실패 메세지 반환")
-    @DeleteMapping(DELETE_ONE_LINE_REVIEW)
-    public ResponseDto<DeleteOneLineReviewResponseDto> deleteOneLineReview(
-
-        @ApiParam(value = "축제 게시물 번호", example = "1", required = true) @PathVariable("festivalNumber") int festivalNumber,
-
-        // ? 로그인하면 유저 정보 갖고있으니 축제 게시물 번호만 url에 넣으면됨
-        @AuthenticationPrincipal String userId) {
-        ResponseDto<DeleteOneLineReviewResponseDto> response = festivalService.deleteOneLineReview(festivalNumber,userId);
         return response;
     }
 
@@ -130,7 +101,6 @@ public class FestivalController {
     public ResponseDto<List<GetFestivalAreaListResponseDto>> getFestivalAreaList(
         @ApiParam(value = "축제 지역명", example = "부산", required = true)
         @PathVariable(name = "festivalArea", required = true) String festivalArea){
-    
         ResponseDto<List<GetFestivalAreaListResponseDto>> response = festivalService.getFestivalAreaList(festivalArea);
         return response;
     }
@@ -161,7 +131,6 @@ public class FestivalController {
     public ResponseDto<GetFestivalResponseDto> getFestival(@PathVariable("festivalNumber")int festivalNumber){
         ResponseDto<GetFestivalResponseDto> response = festivalService.getFestival(festivalNumber);
         return response;
-
     }
 
     //? 전체 축제 리스트
@@ -179,49 +148,70 @@ public class FestivalController {
         return response;
     }
 
-        // ? 추천 페스티벌 리스트 받아오기 -감재현
-        @ApiOperation(value="회원가입시 선택한 추천 축제 타입 리스트 받아오기")
-        @GetMapping(GET_INTERESTED_FESTIVAL_LIST)
-        public ResponseDto<List<GetInterestedFestivalListResponseDto>> GetInterestedFestivalList(@ApiParam(hidden = true) @AuthenticationPrincipal String userId) {
-            ResponseDto<List<GetInterestedFestivalListResponseDto>> response = boardService.getInterestedFestivalList(userId);
-            return response;
-        }
-        // ? 특정 후기 만 전체 반환.
-        @ApiOperation(value = "특정 축제 후기 만 전체 반환 한다.")
-        @GetMapping(GET_ONLY_FESTIVAL_LIST)
-        public ResponseDto<List<GetOneReviewBoardListResponseDto>> getOneFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber){
-            ResponseDto<List<GetOneReviewBoardListResponseDto>> response = boardService.getOneFestivalReviewBoard(festivalNumber);
-            return response;
-        }
-        
-        @ApiOperation(value = "현재 월을 불러와서 가장 빠른 축제 의 한줄 평가를 반한환다.")
-        @GetMapping(GET_TOP1_ONELINEREVIEW)
-        public ResponseDto<List<GetTop1OneLineReviewResponseDto>> getTop1OneLineReview(){
-            ResponseDto<List<GetTop1OneLineReviewResponseDto>> response = festivalService.getTop1OneLineReview();
-            return response;
-        }
-        @ApiOperation(value = "불러온 한줄평가의 축제 이름을 불러옴.")
-        @GetMapping(GET_ONELINE_REVIEW_FETIVALNAME)
-        public ResponseDto<GetFestivalNameResponseDto> getFestivalName(@PathVariable("festivalNumber") int festivalNumber){
-            ResponseDto<GetFestivalNameResponseDto> response = festivalService.getFestivalName(festivalNumber);
-            return response;
-        }
-        
-        @ApiOperation(value = "전체 축체 이름을 리스트 형테로 반환")
-        @GetMapping(GET_FESTIVALNAME_LIST)
-        public ResponseDto<List<GetFestivalNameListResponseDto>> getFestivalNameList(){
-            ResponseDto<List<GetFestivalNameListResponseDto>> response = festivalService.getFestivalNameList();
-            return response;
+    // ? 추천 페스티벌 리스트 받아오기 -감재현
+    @ApiOperation(value="회원가입시 선택한 추천 축제 타입 리스트 받아오기")
+    @GetMapping(GET_INTERESTED_FESTIVAL_LIST)
+    public ResponseDto<List<GetInterestedFestivalListResponseDto>> GetInterestedFestivalList(@ApiParam(hidden = true) @AuthenticationPrincipal String userId) {
+        ResponseDto<List<GetInterestedFestivalListResponseDto>> response = boardService.getInterestedFestivalList(userId);
+        return response;
+    }
+    // ? 특정 후기 만 전체 반환.
+    @ApiOperation(value = "특정 축제 후기 만 전체 반환 한다.")
+    @GetMapping(GET_ONLY_FESTIVAL_LIST)
+    public ResponseDto<List<GetOneReviewBoardListResponseDto>> getOneFestivalReviewBoard(@PathVariable("festivalNumber")int festivalNumber){
+        ResponseDto<List<GetOneReviewBoardListResponseDto>> response = boardService.getOneFestivalReviewBoard(festivalNumber);
+        return response;
+    }
+    
+    @ApiOperation(value = "현재 월을 불러와서 가장 빠른 축제 의 한줄 평가를 반한환다.")
+    @GetMapping(GET_TOP1_ONELINEREVIEW)
+    public ResponseDto<List<GetTop1OneLineReviewResponseDto>> getTop1OneLineReview(){
+        ResponseDto<List<GetTop1OneLineReviewResponseDto>> response = festivalService.getTop1OneLineReview();
+        return response;
+    }
+    @ApiOperation(value = "불러온 한줄평가의 축제 이름을 불러옴.")
+    @GetMapping(GET_ONELINE_REVIEW_FETIVALNAME)
+    public ResponseDto<GetFestivalNameResponseDto> getFestivalName(@PathVariable("festivalNumber") int festivalNumber){
+        ResponseDto<GetFestivalNameResponseDto> response = festivalService.getFestivalName(festivalNumber);
+        return response;
+    }
+    
+    @ApiOperation(value = "전체 축체 이름을 리스트 형테로 반환")
+    @GetMapping(GET_FESTIVALNAME_LIST)
+    public ResponseDto<List<GetFestivalNameListResponseDto>> getFestivalNameList(){
+        ResponseDto<List<GetFestivalNameListResponseDto>> response = festivalService.getFestivalNameList();
+        return response;
+    }
 
-        }
+    @ApiOperation(value = "후기 작성할때 검색창에서 전체 축제를 검색할수있음")
+    @GetMapping(GET_FESTIVALNAME_SEARCH_LIST)
+    public ResponseDto<List<GetFestivalSearchNameResposneDto>> getFestivalSearchName(@PathVariable("searchName") String searchName){
+        ResponseDto<List<GetFestivalSearchNameResposneDto>> response = festivalService.getFestivalSearchName(searchName);
+        return response;
+    }
 
-        @ApiOperation(value = "후기 작성할때 검색창에서 전체 축제를 검색할수있음")
-        @GetMapping(GET_FESTIVALNAME_SEARCH_LIST)
-        public ResponseDto<List<GetFestivalSearchNameResposneDto>> getFestivalSearchName(@PathVariable("searchName") String searchName){
-            ResponseDto<List<GetFestivalSearchNameResposneDto>> response = festivalService.getFestivalSearchName(searchName);
-            return response;
-            
-        }
+    // ? 한 줄 평 수정
+    @ApiOperation(value = "특정 한 줄 평 수정", notes = "Request Header에 Authorization에 Bearer JWT를 포함하고 Request Body에 " +
+            "average, oneLineReviewContent, festivalNumber를 포함하여 요청하면 성공 시 축제 정보 게시물 전체 데이터 반환, 실패 시 실패 메세지 반환")
+    @PatchMapping(PATCH_ONE_LINE_REVIEW)
+    public ResponseDto<PatchOneLineReviewResponseDto> patchOneLineReview(
+            @AuthenticationPrincipal String userId,
+            @Valid @RequestBody PatchOneLineReviewRequestDto requestBody) {
+        ResponseDto<PatchOneLineReviewResponseDto> response = festivalService.patchOneLineReview(userId, requestBody);
+        return response;
+    }
 
+    //? 한 줄 평 삭제
+    @ApiOperation(value = "특정 게시물 삭제", notes = "Request Header에 Authorization에 Bearer JWT를 포함하고 Path Variable에 userId를 "
+            + "포함하여 요청하면 성공 시 true 반환, 실패 시 실패 메세지 반환")
+    @DeleteMapping(DELETE_ONE_LINE_REVIEW)
+    public ResponseDto<DeleteOneLineReviewResponseDto> deleteOneLineReview(
 
+        @ApiParam(value = "축제 게시물 번호", example = "1", required = true) @PathVariable("festivalNumber") int festivalNumber,
+
+        // ? 로그인하면 유저 정보 갖고있으니 축제 게시물 번호만 url에 넣으면됨
+        @AuthenticationPrincipal String userId) {
+        ResponseDto<DeleteOneLineReviewResponseDto> response = festivalService.deleteOneLineReview(festivalNumber,userId);
+        return response;
+    }
 }

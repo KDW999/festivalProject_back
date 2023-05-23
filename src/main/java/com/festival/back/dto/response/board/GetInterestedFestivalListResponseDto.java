@@ -62,7 +62,6 @@ public class GetInterestedFestivalListResponseDto {
         this.festivalInformation=festivalEntity.getFestivalInformation();
         this.festivalInformationUrl=festivalEntity.getFestivalInformationUrl();
         this.onelineReviewAverage=festivalEntity.getOnelineReviewAverage();
-       
     }
 
     public static List<GetInterestedFestivalListResponseDto> copyList(List<FestivalEntity> festivaleEntityList) {

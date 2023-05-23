@@ -14,5 +14,4 @@ public class PostFreeBoardCommentRequestDto {
 
     @NotBlank
     private String CommentContent;
-
 }

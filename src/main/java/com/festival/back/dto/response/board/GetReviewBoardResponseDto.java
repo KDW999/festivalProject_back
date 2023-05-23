@@ -23,5 +23,4 @@ public class GetReviewBoardResponseDto {
     private List<RecommendEntity> recommendList ;
     @ApiModelProperty(value = "댓글 List",required = true)
     private List<CommentEntity> commentList;
-
 }

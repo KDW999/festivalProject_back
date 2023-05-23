@@ -12,7 +12,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class GetSearchFestivalListResponseDto {
 
-  private int festivalNumber;
+    private int festivalNumber;
     private String festivalName;
     private String festivalType;
     private String festivalDurationStart;

@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetSearchReviewBoardListResponseDto {
+    
     @ApiModelProperty(value = "게시물 번호", example = "1", required = true)
     private int boardNumber;
     @ApiModelProperty(value = "게시물 제목", example = "빙어 좋아요", required = true)
