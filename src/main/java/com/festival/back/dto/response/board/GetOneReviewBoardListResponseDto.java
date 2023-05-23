@@ -53,7 +53,7 @@ public class GetOneReviewBoardListResponseDto {
         this.recommendCount=boardEntity.getRecommendCount();
         this.commentCount=boardEntity.getCommentCount();
         this.writerUserId=boardEntity.getWriterUserId();
-        this.writerProfileUrl=boardEntity.getWriterNickname();
+        this.writerProfileUrl=boardEntity.getWriterProfileUrl();
         this.writerNickname=boardEntity.getWriterNickname();
         this.festivalNumber=boardEntity.getFestivalNumber();
     

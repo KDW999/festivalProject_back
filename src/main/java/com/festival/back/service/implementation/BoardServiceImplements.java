@@ -361,6 +361,8 @@ public class BoardServiceImplements implements BoardService {
     public ResponseDto<List<GetOneReviewBoardListResponseDto>> getOneFestivalReviewBoard(int festivalNumber) {
     
     List<GetOneReviewBoardListResponseDto> data = null;
+
+
     
     try {
 

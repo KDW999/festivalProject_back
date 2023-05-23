@@ -65,6 +65,7 @@ public class GetAllFestivalResponseDto {
         this.festivalInformationUrl = festivalEntity.getFestivalInformationUrl();
         this.festivalInformation = festivalEntity.getFestivalInformation();
         this.festivalHomepage = festivalEntity.getFestivalHomepage();
+        this.onelineReviewAverage=festivalEntity.getOnelineReviewAverage();
     }
 
     public static List<GetAllFestivalResponseDto> copyList(List<FestivalEntity> festivalEntityList) {
