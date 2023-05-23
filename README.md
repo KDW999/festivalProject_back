@@ -121,11 +121,11 @@ CREATE TABLE `festival` (
 
 ### 5) 자유 게시판
 CREATE TABLE `freeboard` (
-  `free_board_number` INT NOT NULL AUTO_INCREMENT, -- PK -- 자유 게시물 번호 </br>
-  `free_board_title` TEXT NOT NULL,                   -- 자유 게시물 제목 </br>
-  `free_board_content` TEXT NOT NULL,                 -- 자유 게시물 내용 </br>
-  `free_board_img_url` TEXT NULL,                     -- 자유 게시물 이미지 URL </br>
-  `free_board_write_datetime` DATETIME NOT NULL DEFAULT now(), -- 자유 게시물 작성 날짜 및 시간 </br>
+  `board_number` INT NOT NULL AUTO_INCREMENT,         -- PK -- 자유 게시물 번호 </br>
+  `board_title` TEXT NOT NULL,                        -- 자유 게시물 제목 </br>
+  `board_content` TEXT NOT NULL,                      -- 자유 게시물 내용 </br>
+  `board_img_url` TEXT NULL,                          -- 자유 게시물 이미지 URL </br>
+  `board_write_datetime` DATETIME NOT NULL DEFAULT now(), -- 자유 게시물 작성 날짜 및 시간 </br>
   `view_count` INT NOT NULL DEFAULT 0,                -- 조회수 </br>
   `recommend_count` INT NOT NULL DEFAULT 0,           -- 추천수 </br>
   `comment_count` INT NOT NULL DEFAULT 0,             -- 댓글수 </br>
@@ -142,6 +142,28 @@ CREATE TABLE `freeboard` (
 );
 
 ### 6) 자유 게시판 댓글
+CREATE TABLE IF NOT EXISTS `festival`.`freeboardcomment` (
+  `comment_number` INT NOT NULL AUTO_INCREMENT,       -- PK -- 댓글 번호  </br>
+  `comment_content` TEXT NOT NULL,                          -- 댓글 내용  </br>
+  `free_board_number` INT NOT NULL,                         -- 자유 게시판 게시물 번호  </br>
+  `writer_id` VARCHAR(20) NOT NULL,                         -- 작성자 아이디 </br>
+  `write_datetime` DATETIME NOT NULL DEFAULT now(),         -- 댓글 작성 날짜 및 시간  </br>
+  `writer_profile_url` TEXT NULL COMMENT '',                -- 댓글 작성자 프로필 사진 URL  </br>
+  `writer_nickname` VARCHAR(30) NOT NULL COMMENT '',        -- 댓글 작성자 닉네임  </br>
+  INDEX `fk_user_has_freeboard1_freeboard1_idx` (`free_board_number` ASC) VISIBLE,  </br>
+  INDEX `fk_user_has_freeboard1_user1_idx` (`writer_id` ASC) VISIBLE,  </br>
+  PRIMARY KEY (`comment_number`),  </br>
+  CONSTRAINT `fk_user_has_freeboard1_user1`  </br>
+    FOREIGN KEY (`writer_id`)  </br>
+    REFERENCES `festival`.`user` (`user_id`)  </br>
+    ON DELETE NO ACTION  </br>
+    ON UPDATE NO ACTION,  </br>
+  CONSTRAINT `fk_user_has_freeboard1_freeboard1`  </br>
+    FOREIGN KEY (`free_board_number`)  </br>
+    REFERENCES `festival`.`freeboard` (`board_number`) </br>
+    ON DELETE NO ACTION  </br>
+    ON UPDATE NO ACTION)  </br>
+);
 
 ### 7) 자유 게시판 추천
 
