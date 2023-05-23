@@ -80,9 +80,8 @@ public class FestivalServiceImplements implements FestivalService {
             UserEntity userEntity = userRepository.findByUserId(userId);
             if(userEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
 
-            boolean hasUserId = oneLineReviewRepository.existsByUserId(userId);
-            boolean hasFestivalNumber = oneLineReviewRepository.existsByFestivalNumber(festivalNumber);
-            if(hasUserId && hasFestivalNumber) return ResponseDto.setFail(ResponseMessage.EXIST_ID);
+            boolean hasUserId = oneLineReviewRepository.existsByUserIdAndFestivalNumber(userId, festivalNumber);
+            if(hasUserId) return ResponseDto.setFail(ResponseMessage.EXIST_ID);
             
             OneLineReviewEntity oneLineReviewEntity = new OneLineReviewEntity(userEntity, dto);
             oneLineReviewRepository.save(oneLineReviewEntity);

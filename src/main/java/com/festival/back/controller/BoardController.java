@@ -97,7 +97,7 @@ public class BoardController {
         return response; 
     }
 
-    //? 특정 축제 특정 후기 게시글 불러오기    -김종빈
+    // ? 축제 후기 게시글 불러오기 -김종빈
     @ApiOperation(value = "특정 축제를 불러와 그에 관한 후기 게시글 1개를 반환한다."
     ,notes = " boardNumber 을 pathvariable 로 받아서 보내면 해당  게시물을 반환하고 실패 시 실폐 메세지 반환. ")
     @GetMapping(GET_FESTIVAL_REVIEW_BOARD)

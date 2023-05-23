@@ -28,7 +28,6 @@ public class OneLineReviewEntity {
     private int festivalNumber;
     @Id
     private String userId;
-    
     private int average;
     private String oneLineReviewContent;
     private String userProfileUrl;
@@ -38,7 +37,6 @@ public class OneLineReviewEntity {
     public OneLineReviewEntity(UserEntity userEntity, PostOneLineReviewRequestDto dto) {
         Date now = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
         this.festivalNumber = dto.getFestivalNumber();
         this.userId = userEntity.getUserId();
         this.average = dto.getAverage();
