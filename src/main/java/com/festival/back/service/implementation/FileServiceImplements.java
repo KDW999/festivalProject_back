@@ -46,6 +46,7 @@ public class FileServiceImplements implements FileService {
         
         try {
             resource = new UrlResource("file:" + FILE_PATH + fileName);
+            
         } catch (Exception e) {
             e.printStackTrace();
             return null;

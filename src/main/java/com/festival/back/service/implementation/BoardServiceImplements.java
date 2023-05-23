@@ -60,7 +60,6 @@ public class BoardServiceImplements implements BoardService {
         int boardNumber = dto.getBoardNumber();
 
         try {
-
             UserEntity userEntity = userRepository.findByUserId(userId);
             if(userEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
             
@@ -95,7 +94,6 @@ public class BoardServiceImplements implements BoardService {
         int commentNumber = dto.getCommentNumber();
 
         try{
-            
             CommentEntity commentEntity = commentRepository.findByCommentNumber(commentNumber);
             BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber); 
             
@@ -128,7 +126,6 @@ public class BoardServiceImplements implements BoardService {
         int boardNumber = dto.getBoardNumber();
 
         try {
-
             UserEntity userEntity = userRepository.findByUserId(userId);
             if(userEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
 
@@ -185,7 +182,6 @@ public class BoardServiceImplements implements BoardService {
         GetReviewBoardResponseDto data = null;
 
         try {
-
             if(boardNumber == null) return ResponseDto.setFail(ResponseMessage.VAILDATION_FAILD);
 
             BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
@@ -211,7 +207,6 @@ public class BoardServiceImplements implements BoardService {
         DeleteCommentResponseDto data = null;
 
         try {
-
             CommentEntity commentEntity = commentRepository.findByCommentNumber(commentNumber);
             if(commentEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXITST_COMMENT_NUMBER);
 
@@ -295,7 +290,6 @@ public class BoardServiceImplements implements BoardService {
         List<GetMyReviewBoardListResponseDto> data = null;
 
         try {
-
             List<BoardEntity> boardList = boardRepository.findBywriterUserIdOrderByBoardWriteDatetimeDesc(userId);
             data = GetMyReviewBoardListResponseDto.copyList(boardList);
             
@@ -312,7 +306,6 @@ public class BoardServiceImplements implements BoardService {
         List<GetInterestedFestivalListResponseDto> data = null;
 
         try {
-
             UserEntity userEntity = userRepository.findByUserId(userId);
             if (userEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
 
@@ -361,7 +354,6 @@ public class BoardServiceImplements implements BoardService {
         List<GetOneReviewBoardListResponseDto> data = null;
     
         try {
-
             List<BoardEntity> boardEntityList = boardRepository.findByFestivalNumberOrderByBoardWriteDatetimeDesc(festivalNumber);
             data = GetOneReviewBoardListResponseDto.copyList(boardEntityList);
             
@@ -378,7 +370,6 @@ public class BoardServiceImplements implements BoardService {
         List<GetAllReviewBoardListResponseDto> data = null;
 
         try {
-
             List<BoardEntity> boardList = boardRepository.findByOrderByBoardWriteDatetimeDesc();
             data= GetAllReviewBoardListResponseDto.copyList(boardList);
             

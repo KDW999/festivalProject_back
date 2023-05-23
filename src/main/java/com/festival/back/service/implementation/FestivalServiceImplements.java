@@ -55,7 +55,6 @@ public class FestivalServiceImplements implements FestivalService {
         PostFestivalResponseDto data = null;
 
         try {
-
             UserEntity userEntity = userRepository.findByUserId(userId);
             if(userEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
 
@@ -78,7 +77,6 @@ public class FestivalServiceImplements implements FestivalService {
         int festivalNumber = dto.getFestivalNumber();
 
         try {
-
             UserEntity userEntity = userRepository.findByUserId(userId);
             if(userEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_USER);
 
@@ -111,7 +109,6 @@ public class FestivalServiceImplements implements FestivalService {
         int festivalNumber = dto.getFestivalNumber();
 
         try {
-
             FestivalEntity festivalEntity = festivalRepository.findByFestivalNumber(festivalNumber);
             if(festivalEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_FESTIVAL_NUMBER);
 
@@ -141,7 +138,6 @@ public class FestivalServiceImplements implements FestivalService {
         DeleteOneLineReviewResponseDto data = null;
 
         try {
-
             FestivalEntity festivalEntity = festivalRepository.findByFestivalNumber(festivalNumber);
             if(festivalEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_FESTIVAL_NUMBER);
 
@@ -168,7 +164,6 @@ public class FestivalServiceImplements implements FestivalService {
         List<GetSearchFestivalListResponseDto> data = null;
 
         try {
-
             SearchwordLogEntity searchwordLogEntity = new SearchwordLogEntity(searchWord);
             searchWordLogRepository.save(searchwordLogEntity);
     
@@ -192,7 +187,6 @@ public class FestivalServiceImplements implements FestivalService {
         List<GetFestivalAreaListResponseDto> data = null;
 
         try {
-
             List<String> festivalAreaList = AreaSet.getAreaList(festivalArea);
 
             List<FestivalEntity> areaList = new ArrayList<>();
@@ -222,7 +216,6 @@ public class FestivalServiceImplements implements FestivalService {
         String nextMonthDate = month == 12 ? now.getYear() + 1 + "-01-01" : now.getYear() + "-" + nextMonthString + "-01";
 
         try {
-
             List<FestivalEntity> festivalEntity =  festivalRepository.getFestivalMonth(monthDate, monthDate, monthDate, nextMonthDate);
             data= new GetFestivalMonthResponseDto(festivalEntity);
             
@@ -239,7 +232,6 @@ public class FestivalServiceImplements implements FestivalService {
         List<GetOneLineReviewResponseDto> data = null;
 
         try {
-
             List<OneLineReviewEntity> oneLineReviewEntity = oneLineReviewRepository.findByFestivalNumberOrderByWriteDatetimeDesc(festivalNumber);
             data = GetOneLineReviewResponseDto.copyList(oneLineReviewEntity);
             
@@ -256,7 +248,6 @@ public class FestivalServiceImplements implements FestivalService {
         GetFestivalResponseDto data= null;
 
         try {
-
             FestivalEntity festivalEntity=festivalRepository.findByFestivalNumber(festivalNumber);
             data=new GetFestivalResponseDto(festivalEntity);
             
@@ -273,7 +264,6 @@ public class FestivalServiceImplements implements FestivalService {
         List<GetAllFestivalResponseDto> data = null;
         
         try{
-
             List<FestivalEntity> festivalEntityList = festivalRepository.findByOrderByFestivalDurationStartAsc();
             data = GetAllFestivalResponseDto.copyList(festivalEntityList);
 
@@ -310,7 +300,6 @@ public class FestivalServiceImplements implements FestivalService {
         String nextMOnth = now.getYear() + "-" + monthNextValue + "-01";
 
         try {
-        
             FestivalEntity festivalEntity = festivalRepository.getTop1OneLineReview(nowMonth,nextMOnth);
             List<OneLineReviewEntity> oneLineReviewList=oneLineReviewRepository.findByFestivalNumberOrderByWriteDatetimeDesc(festivalEntity.getFestivalNumber());
             data = GetTop1OneLineReviewResponseDto.copyList(oneLineReviewList);
@@ -327,7 +316,6 @@ public class FestivalServiceImplements implements FestivalService {
         GetFestivalNameResponseDto data = null;
 
         try {
-            
             FestivalEntity festivalEntity = festivalRepository.findByFestivalNumber(festivalNumber);
             if(festivalEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_FESTIVAL_NUMBER);
             String festivalName = festivalEntity.getFestivalName();
@@ -344,7 +332,6 @@ public class FestivalServiceImplements implements FestivalService {
         List<GetFestivalNameListResponseDto> data = null;
 
         try {
-        
             List<FestivalEntity> festivalEntity = festivalRepository.findBy();
             data = GetFestivalNameListResponseDto.copyList(festivalEntity);
 
@@ -360,7 +347,6 @@ public class FestivalServiceImplements implements FestivalService {
         List<GetFestivalSearchNameResposneDto> data = null;
 
         try {
-
             List<FestivalEntity> festivalEntity = festivalRepository.searchName(searchName);
             data = GetFestivalSearchNameResposneDto.copyList(festivalEntity);
             
