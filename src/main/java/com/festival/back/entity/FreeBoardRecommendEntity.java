@@ -18,6 +18,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "Freeboardrecommend")
 @IdClass(FreeBoardRecommendPk.class)
 public class FreeBoardRecommendEntity {
+
     @Id
     private String userId;
     @Id

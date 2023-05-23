@@ -35,6 +35,6 @@ public class GetFestivalResponseDto {
         this.festivalInformationUrl = festivalEntity.getFestivalInformationUrl();
         this.festivalInformation = festivalEntity.getFestivalInformation();
         this.festivalHomepage=festivalEntity.getFestivalHomepage();
+        this.onelineReviewAverage=festivalEntity.getOnelineReviewAverage();
     }
-    
 }

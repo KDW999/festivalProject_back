@@ -20,8 +20,7 @@ public class FileServiceImplements implements FileService {
 
     public String upload(MultipartFile file) {
 
-        if (file.isEmpty())
-            return null;
+        if (file.isEmpty()) return null;
 
         String originalFileName = file.getOriginalFilename();
         String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
@@ -42,11 +41,12 @@ public class FileServiceImplements implements FileService {
     }
 
     public Resource getFile(String fileName) {
+        
         Resource resource = null;
+        
         try {
-
             resource = new UrlResource("file:" + FILE_PATH + fileName);
-
+            
         } catch (Exception e) {
             e.printStackTrace();
             return null;

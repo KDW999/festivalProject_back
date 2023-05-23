@@ -24,6 +24,10 @@ import lombok.NoArgsConstructor;
 public class FreeBoardCommentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int freeBoardCommentNumber;
+    private String freeBoardCommentContent;
+    private int freeBoardNumber;
+    private String writerId;
     private int commentNumber;
     private String commentContent;
     private int boardNumber;
@@ -39,7 +43,7 @@ public class FreeBoardCommentEntity {
         this.commentContent = dto.getCommentContent();
         this.boardNumber = dto.getBoardNumber();
         this.writeDatetime = simpleDateFormat.format(now);
-        this.writerUserId = userEntity.getUserId();
+        this.writerId = userEntity.getUserId();
         this.writerProfileUrl = userEntity.getProfileUrl();
         this.writerNickname = userEntity.getNickname();
     }

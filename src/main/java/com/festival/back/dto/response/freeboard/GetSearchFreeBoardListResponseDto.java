@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetFreeBoardListResponseDto {
+public class GetSearchFreeBoardListResponseDto {
     
     @ApiModelProperty(value = "게시물 번호", example = "1", required = true)
     private int boardNumber;
@@ -37,26 +37,25 @@ public class GetFreeBoardListResponseDto {
     private String writerProfileUrl;
     @ApiModelProperty(value = "게시물 작성자 닉네임", example = "cherryblossom", required = true)
     private String writerNickname;
-    
-    public GetFreeBoardListResponseDto(FreeBoardEntity freeBoardEntity){
+
+    public GetSearchFreeBoardListResponseDto(FreeBoardEntity freeBoardEntity){
         this.boardNumber = freeBoardEntity.getBoardNumber();
         this.boardTitle = freeBoardEntity.getBoardTitle();
         this.boardContent = freeBoardEntity.getBoardContent();
         this.boardImgUrl = freeBoardEntity.getBoardImgUrl();
         this.boardWriteDatetime = freeBoardEntity.getBoardWriteDatetime();
+        this.viewCount = freeBoardEntity.getViewCount();
+        this.recommendCount = freeBoardEntity.getRecommendCount();
         this.writerUserId = freeBoardEntity.getWriterUserId();
         this.writerProfileUrl = freeBoardEntity.getWriterProfileUrl();
         this.writerNickname = freeBoardEntity.getWriterNickname();
-        this.viewCount = freeBoardEntity.getViewCount();
-        this.recommendCount = freeBoardEntity.getRecommendCount();
-        this.commentCount = freeBoardEntity.getCommentCount();
     }
 
-    public static List<GetFreeBoardListResponseDto> copyList (List<FreeBoardEntity> freeBoardEntityList) {
-        List<GetFreeBoardListResponseDto> list = new ArrayList<>();
+    public static List<GetSearchFreeBoardListResponseDto> copyList(List<FreeBoardEntity> freeBoardEntityList){
+        List<GetSearchFreeBoardListResponseDto> list = new ArrayList<>();
 
-        for (FreeBoardEntity freeBoardList :freeBoardEntityList) {
-            GetFreeBoardListResponseDto dto = new GetFreeBoardListResponseDto(freeBoardList);
+        for(FreeBoardEntity freeBoardEntity : freeBoardEntityList){
+            GetSearchFreeBoardListResponseDto dto = new GetSearchFreeBoardListResponseDto(freeBoardEntity);
             list.add(dto);
         }
         return list;

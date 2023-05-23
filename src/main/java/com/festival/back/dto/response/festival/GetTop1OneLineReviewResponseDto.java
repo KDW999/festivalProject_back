@@ -26,6 +26,7 @@ public class GetTop1OneLineReviewResponseDto {
     private String userNickname;
     @ApiModelProperty(value = "작성 날짜",example = "jonh",required = true)
     private String writeDatetime;
+    private int festivalNumber;
 
     public GetTop1OneLineReviewResponseDto(OneLineReviewEntity oneLineReviewEntity){
         this.average=oneLineReviewEntity.getAverage();
@@ -33,8 +34,9 @@ public class GetTop1OneLineReviewResponseDto {
         this.userProfileUrl=oneLineReviewEntity.getUserProfileUrl();
         this.userNickname=oneLineReviewEntity.getUserNickname();
         this.writeDatetime=oneLineReviewEntity.getWriteDatetime();
+        this.festivalNumber=oneLineReviewEntity.getFestivalNumber();
     } 
-   
+
     public static List<GetTop1OneLineReviewResponseDto> copyList(List<OneLineReviewEntity> oneLineReviewList){
         List<GetTop1OneLineReviewResponseDto> list=new ArrayList<>();
 
@@ -45,8 +47,4 @@ public class GetTop1OneLineReviewResponseDto {
         }
         return list;
     }
-
-
-
-    
 }

@@ -22,6 +22,7 @@ import lombok.NoArgsConstructor;
 @Entity(name = "Freeboard")
 @Table(name = "Freeboard")
 public class FreeBoardEntity {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int boardNumber;

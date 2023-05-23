@@ -34,7 +34,7 @@ public class GetOneLineReviewResponseDto {
         this.userNickname=oneLineReviewEntity.getUserNickname();
         this.writeDatetime=oneLineReviewEntity.getWriteDatetime();
     } 
-   
+
     public static List<GetOneLineReviewResponseDto> copyList(List<OneLineReviewEntity> oneLineReviewList){
         List<GetOneLineReviewResponseDto> list=new ArrayList<>();
 
@@ -45,9 +45,4 @@ public class GetOneLineReviewResponseDto {
         }
         return list;
     }
-
-
-
-
-    
 }

@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.festival.back.entity.BoardEntity;
 import com.festival.back.entity.CommentEntity;
-import com.festival.back.entity.FestivalEntity;
 import com.festival.back.entity.RecommendEntity;
 
 import io.swagger.annotations.ApiModel;
