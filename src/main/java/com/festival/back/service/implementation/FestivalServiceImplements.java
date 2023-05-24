@@ -86,8 +86,6 @@ public class FestivalServiceImplements implements FestivalService {
             OneLineReviewEntity oneLineReviewEntity = new OneLineReviewEntity(userEntity, dto);
             oneLineReviewRepository.save(oneLineReviewEntity);
 
-           
-            
             int festivalAvg = festivalRepository.setAverger(festivalNumber,festivalNumber);
 
             FestivalEntity festivalEntity = festivalRepository.findByFestivalNumber(festivalNumber);
@@ -123,8 +121,6 @@ public class FestivalServiceImplements implements FestivalService {
 
             oneLineReviewEntity.patch(dto);
             oneLineReviewRepository.save(oneLineReviewEntity);
-
-            int festivalAvg = festivalRepository.setAverger(festivalNumber,festivalNumber);
 
             List<OneLineReviewEntity> oneLineReviewList = oneLineReviewRepository.findByFestivalNumberOrderByWriteDatetimeDesc(festivalNumber);
 

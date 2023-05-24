@@ -32,7 +32,7 @@ public class FestivalEntity {
     private String festivalTime;
     private String festivalArea;
     private String festivalCost;
-    private int onelineReviewAverage;
+    private double onelineReviewAverage;
     private String festivalInformationUrl;
     private String festivalInformation;
     private String festivalHomepage;
