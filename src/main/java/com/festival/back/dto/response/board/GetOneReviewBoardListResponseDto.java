@@ -65,5 +65,6 @@ public class GetOneReviewBoardListResponseDto {
         }
         return list;
     }
+    
 
 }
