@@ -1,10 +1,8 @@
 package com.festival.back.service.implementation;
 
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,7 +85,7 @@ public class FestivalServiceImplements implements FestivalService {
             oneLineReviewRepository.save(oneLineReviewEntity);
 
             int festivalAvg = festivalRepository.setAverger(festivalNumber,festivalNumber);
-            
+
             FestivalEntity festivalEntity = festivalRepository.findByFestivalNumber(festivalNumber);
             if(festivalEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_FESTIVAL_NUMBER);
 
@@ -118,11 +116,11 @@ public class FestivalServiceImplements implements FestivalService {
 
             boolean isEqualUserId = userId.equals(oneLineReviewEntity.getUserId());
             if(!isEqualUserId) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSION);
+            
+            
 
             oneLineReviewEntity.patch(dto);
             oneLineReviewRepository.save(oneLineReviewEntity);
-
-            int festivalAvg = festivalRepository.setAverger(festivalNumber,festivalNumber);
 
             List<OneLineReviewEntity> oneLineReviewList = oneLineReviewRepository.findByFestivalNumberOrderByWriteDatetimeDesc(festivalNumber);
 
@@ -151,8 +149,8 @@ public class FestivalServiceImplements implements FestivalService {
             if(!isEqualUserId) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSION);
             
             oneLineReviewRepository.deleteById(new OneLineReviewPk(userId, festivalNumber));
-
             int festivalAvg = festivalRepository.setAverger(festivalNumber,festivalNumber);
+
             
             data = new DeleteOneLineReviewResponseDto(true);
             

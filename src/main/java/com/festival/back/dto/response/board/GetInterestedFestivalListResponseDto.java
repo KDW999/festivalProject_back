@@ -48,7 +48,7 @@ public class GetInterestedFestivalListResponseDto {
     private String festivalInformationUrl;
 
     @ApiModelProperty(value = "관광객 평점 평균",example = "7",required = true)
-    private int onelineReviewAverage;
+    private double onelineReviewAverage;
     
     public GetInterestedFestivalListResponseDto (FestivalEntity festivalEntity) {
         this.festivalNumber = festivalEntity.getFestivalNumber();

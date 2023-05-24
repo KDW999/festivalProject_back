@@ -23,8 +23,6 @@ public class UserEntity {
     private String password;
     private String profileUrl;
     private String telNumber;
-    private boolean adminCheck;
-    private boolean reportUser;
     
     public UserEntity(SignUpRequestDto dto) {
         this.userId = dto.getUserId();

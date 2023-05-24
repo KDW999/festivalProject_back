@@ -40,7 +40,7 @@ public class GetAllFestivalResponseDto {
     private String festivalCost;
 
     @ApiModelProperty(value = "관광객 평점 평균",example = "7",required = true)
-    private int onelineReviewAverage;
+    private double onelineReviewAverage;
 
     @ApiModelProperty(value = "축제 타이틀 이미지",example = "http url",required = true)
     private String festivalInformationUrl;
