@@ -220,8 +220,11 @@ public class BoardServiceImplements implements BoardService {
             BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
             boardEntity.decreaseCommentCount();
             boardRepository.save(boardEntity);
+
+            List<RecommendEntity> recommendList = recommendRepository.findByBoardNumber(boardNumber);
+            List<CommentEntity> commentList = commentRepository.findByBoardNumberOrderByWriteDatetimeDesc(boardNumber);
             
-            data = new DeleteCommentResponseDto(true);
+            data = new DeleteCommentResponseDto(boardEntity, recommendList, commentList);
         } catch(Exception exception) {
             exception.printStackTrace();
             return ResponseDto.setFail(ResponseMessage.DATABASE_ERROR);
@@ -351,7 +354,9 @@ public class BoardServiceImplements implements BoardService {
     //  ? 특정 축제 전체 후기 리스트 만 반환
     public ResponseDto<List<GetOneReviewBoardListResponseDto>> getOneFestivalReviewBoard(int festivalNumber) {
     
-        List<GetOneReviewBoardListResponseDto> data = null;
+    List<GetOneReviewBoardListResponseDto> data = null;
+
+
     
         try {
             List<BoardEntity> boardEntityList = boardRepository.findByFestivalNumberOrderByBoardWriteDatetimeDesc(festivalNumber);

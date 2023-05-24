@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @ApiModel(value = "특정 축제 전체 후기 게시글 LIST Response")
 public class GetOneReviewBoardListResponseDto {
-
     @ApiModelProperty(value = "후기 게시글 번호",example = "1",required = true)
     private int boardNumber;
     @ApiModelProperty(value = "후기 게시글 제목",example = "빙어가 없어요",required = true)
@@ -52,7 +51,7 @@ public class GetOneReviewBoardListResponseDto {
         this.recommendCount=boardEntity.getRecommendCount();
         this.commentCount=boardEntity.getCommentCount();
         this.writerUserId=boardEntity.getWriterUserId();
-        this.writerProfileUrl=boardEntity.getWriterNickname();
+        this.writerProfileUrl=boardEntity.getWriterProfileUrl();
         this.writerNickname=boardEntity.getWriterNickname();
         this.festivalNumber=boardEntity.getFestivalNumber();
     
