@@ -228,7 +228,7 @@ public class FreeBoardServiceImplements implements FreeBoardService {
             FreeBoardCommentEntity freeBoardCommentEntity = freeBoardCommentRepository.findByCommentNumber(commentNumber);
             if (freeBoardCommentEntity == null) return ResponseDto.setFail(ResponseMessage.NOT_EXIST_COMMENT_NUMBER);
 
-            boolean isEqualWriter = freeBoardEntity.getWriterUserId().equals(userId);
+            boolean isEqualWriter = freeBoardCommentEntity.getWriterUserId().equals(userId);
             if (!isEqualWriter) return ResponseDto.setFail(ResponseMessage.NOT_PERMISSION);
 
             boolean matchBoardNumber = freeBoardEntity.getBoardNumber() == freeBoardCommentEntity.getBoardNumber();
