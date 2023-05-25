@@ -59,9 +59,9 @@ public class GetInterestedFestivalListResponseDto {
         this.festivalTime = festivalEntity.getFestivalTime();
         this.festivalArea = festivalEntity.getFestivalArea();
         this.festivalCost = festivalEntity.getFestivalCost();
-        this.festivalInformation=festivalEntity.getFestivalInformation();
-        this.festivalInformationUrl=festivalEntity.getFestivalInformationUrl();
-        this.onelineReviewAverage=festivalEntity.getOnelineReviewAverage();
+        this.festivalInformation = festivalEntity.getFestivalInformation();
+        this.festivalInformationUrl = festivalEntity.getFestivalInformationUrl();
+        this.onelineReviewAverage = festivalEntity.getOnelineReviewAverage();
     }
 
     public static List<GetInterestedFestivalListResponseDto> copyList(List<FestivalEntity> festivaleEntityList) {

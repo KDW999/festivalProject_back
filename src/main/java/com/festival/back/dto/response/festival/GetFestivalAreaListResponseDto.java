@@ -24,7 +24,7 @@ public class GetFestivalAreaListResponseDto {
     private String festivalTime;
     private String festivalArea;
     private String festivalCost;
-    private int onelineReviewAverage;
+    private double onelineReviewAverage;
     private String festivalInformationUrl;
     private String festivalInformation;
     private String festivalHomepage;
@@ -38,6 +38,7 @@ public class GetFestivalAreaListResponseDto {
         this.festivalTime = festivalEntity.getFestivalTime();
         this.festivalArea = festivalEntity.getFestivalArea();
         this.festivalCost = festivalEntity.getFestivalCost();
+        this.onelineReviewAverage = festivalEntity.getOnelineReviewAverage();
         this.festivalInformationUrl = festivalEntity.getFestivalInformationUrl();
         this.festivalInformation = festivalEntity.getFestivalInformation();
         this.festivalHomepage=festivalEntity.getFestivalHomepage();
