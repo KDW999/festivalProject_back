@@ -1,4 +1,5 @@
-📹 <I>[구현 영상](https://github.com/jaehyeon502/festivalProject_front)</I>
+📹 <I>[구현 영상](https://github.com/jaehyeon502/festivalProject_front)</I> </br>
+🔧 <I>[여러가지 기능들](https://github.com/jaehyeon502/festivalProject_back/blob/main/team_project%20%EA%B8%B0%EB%8A%A5%20%EA%B5%AC%ED%98%84.md)</I>
 
 ## 프로젝트 동기
 #### 국내 축제의 정보를 보다 편리하게 알아볼수있고, 축제 경험을 유저간에 소통할 수 있는 커뮤니티를 만들기위해 프로젝트를 시작
