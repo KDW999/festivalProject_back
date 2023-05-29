@@ -1,4 +1,6 @@
 🔧 <I>[저희가 만든 여러가지 기능들](https://github.com/jaehyeon502/festivalProject_back/blob/main/team_project%20%EA%B8%B0%EB%8A%A5%20%EA%B5%AC%ED%98%84.md)</I>
+</br>
+⏰ <I>[요구사항 명세서](https://github.com/jaehyeon502/festivalProject_back/blob/main/%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD%20%EB%AA%85%EC%84%B8%EC%84%9C.md)</I>
 
 ## 프로젝트 구현 영상
 🎥 <I>[팀 프로젝트 시연 영상](https://nemnem-lifestory.tistory.com/entry/%EC%B6%95%EC%A0%9C-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%8B%9C%EC%97%B0-%EC%98%81%EC%83%81)</I>
